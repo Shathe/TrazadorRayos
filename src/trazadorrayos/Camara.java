@@ -23,7 +23,7 @@ public class Camara {
     private Vector4d w=new Vector4d();
     private Vector4d u=new Vector4d();
     private Vector4d v=new Vector4d();
-    private Matrix4d cambioBase=new Matrix4d();
+    private Matrix4d cambioBase=new Matrix4d();// [u v w posicion]
 
     
     public Camara(Vector4d direccion, int distanciaPantalla, Point4d posicion) {
