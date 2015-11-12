@@ -1,4 +1,4 @@
-figura:foco posicion:10,10,10 intensidad:1 color:255,255,255
-figura:camara posicion:7,4,1 distanciaPantalla:2 direccion:-1,1,0
+figura:foco posicion:10,10,10,1 intensidad:1 color:255,255,255
+figura:camara posicion:7,4,1,1 distanciaPantalla:2 direccion:-1,1,0,0
 figura:pantalla anchura:640 altura:480
-figura:esfera posicion:3,0,1 radio:3 color:255,0,0 refraccion:0 reflectividad:0.8 ks:0.5 kd:0.5
+figura:esfera posicion:3,0,1,1 radio:3 color:255,0,0 refraccion:0 reflectividad:0.8 ks:0.5 kd:0.5

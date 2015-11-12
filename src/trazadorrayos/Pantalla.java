@@ -11,9 +11,21 @@ package trazadorrayos;
  */
 public class Pantalla {
     //figura:pantalla anchura:640 altura:480
-private int anchura=0;
-private int altura=0;
+    private int anchura = 0;
+    private int altura = 0;
+    private Color[][] pantalla = null;
 
+    public Color[][] getPantalla() {
+        return pantalla;
+    }
 
+    public void setPantalla(Color[][] pantalla) {
+        this.pantalla = pantalla;
+    }
+    
+    public Pantalla(int anchura, int altura){
+     this.anchura = anchura; this.altura = altura;
+        pantalla = new Color[anchura][altura];
+    }
 
 }

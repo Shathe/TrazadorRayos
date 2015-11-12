@@ -12,7 +12,11 @@ package trazadorrayos;
 public class Color {
     private short red=0;
     private short green=0;
+    private short blue=0;
 
+    public Color(short r, short g, short b){
+        red=r; blue=b; green=g;
+    }
     public short getRed() {
         return red;
     }
@@ -36,6 +40,5 @@ public class Color {
     public void setBlue(short blue) {
         this.blue = blue;
     }
-    private short blue=0;
     
 }
