@@ -12,14 +12,14 @@ import javax.vecmath.Point4d;
 public class Foco {
 
     private Point4d posicion=null;
-    private int intensidad=0;
+    private double intensidad=0;
     private Color color=null;
 
     public Point4d getPosicion() {
         return posicion;
     }
 
-    public int getIntensidad() {
+    public double getIntensidad() {
         return intensidad;
     }
 
@@ -27,7 +27,7 @@ public class Foco {
         return color;
     }
 
-    public Foco(Point4d posicion, Color color, int ensidad) {
+    public Foco(Point4d posicion, Color color, double ensidad) {
         this.color=color; intensidad=ensidad;this.posicion=posicion;
     }
     
