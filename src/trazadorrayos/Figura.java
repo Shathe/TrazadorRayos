@@ -12,17 +12,15 @@ import javax.vecmath.Point4d;
  * @author shathe
  */
 public class Figura {
-	private Point4d posicion = null;
 	Color color = null;
 	private double indiceRefraccion = 0;
 	private double indiceReflectividad = 0;
 	private double indiceEspecularKS = 0;
 	private double indiceDifusionKD = 0;
 
-	public Figura(Point4d posicion, Color color, double refraccion,
+	public Figura(Color color, double refraccion,
 			double reflexion, double kd, double ks) {
 		this.color = color;
-		this.posicion = posicion;
 		indiceRefraccion = refraccion;
 		indiceReflectividad = reflexion;
 		indiceEspecularKS = ks;
@@ -31,9 +29,6 @@ public class Figura {
 	
 	
 
-	public Point4d getPosicion() {
-		return posicion;
-	}
 
 	public Color getColor() {
 		return color;

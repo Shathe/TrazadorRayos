@@ -51,6 +51,8 @@ public class Camara {
 		Vector3d aux=new Vector3d(a.x, a.y, a.z);
 		Vector3d bux=new Vector3d(b.x, b.y, b.z);
 		aux.cross(aux, bux);
+                Vector4d solucion=new Vector4d();
+                solucion.x=aux.x; solucion.y=aux.y; solucion.z=aux.z; solucion.w=a.w;
 		return new Vector4d(aux.x, aux.y, aux.z, a.w);
 	}
 	
@@ -58,8 +60,12 @@ public class Camara {
 		cambioBase.setRow(0, u);
 		cambioBase.setRow(1, v);
 		cambioBase.setRow(2, w);
-		cambioBase.setRow(3, direccion);
+		cambioBase.setRow(3, posicion.x,posicion.y,posicion.z,posicion.w);
 		return cambioBase;
 	}
+
+        public Point4d getPosicion() {
+            return posicion;
+        }
 
 }

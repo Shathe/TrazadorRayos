@@ -6,6 +6,7 @@
 package trazadorrayos;
 
 import javax.vecmath.Point4d;
+import javax.vecmath.Vector4d;
 
 /**
  *
@@ -14,11 +15,27 @@ import javax.vecmath.Point4d;
 public class Esfera extends Figura {
 
 	private double radio = 0.0;
+        private Point4d centro = null;
 
-	public Esfera(Point4d posicion, Color color, double refraccion,
+	public Esfera(Point4d centro, Color color, double refraccion,
 			double reflexion, double kd, double ks, double radio) {
-		super(posicion, color, refraccion, reflexion, kd, ks);
+		super(color, refraccion, reflexion, kd, ks);
 		this.radio = radio;
 	}
-
+        
+        public Vector4d getNormal(Point4d puntoInterseccion){
+            Vector4d normal=new Vector4d();
+            normal.x=puntoInterseccion.x-centro.x;
+            normal.y=puntoInterseccion.y-centro.y;
+            normal.z=puntoInterseccion.z-centro.z;
+            normal.w=0;
+            return normal;
+        }
+        
+        public double getRadio() {
+            return radio;
+        }
+        public Point4d getCentro() {
+        return centro;
+    }
 }

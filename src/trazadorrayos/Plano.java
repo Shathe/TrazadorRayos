@@ -5,13 +5,22 @@ import javax.vecmath.Vector4d;
 
 public class Plano extends Figura {
 
-	private Point4d punto = null;
-	private Vector4d vector = null;
+    private Point4d punto = null;
 
-	public Plano(Point4d posicion, Color color, double refraccion,
-			double reflexion, double kd, double ks, Vector4d vector) {
-		super(posicion, color, refraccion, reflexion, kd, ks);
-		this.punto = posicion;
-		this.vector = vector;
-	}
+    private Vector4d normal = null;
+
+    public Plano(Color color, double refraccion,
+                    double reflexion, double kd, double ks, Point4d punto, Vector4d normal) {
+            super(color, refraccion, reflexion, kd, ks);
+            this.punto = punto;
+            this.normal = normal;
+    }
+
+    public Point4d getPunto() {
+        return punto;
+    }
+
+    public Vector4d getNormal() {
+        return normal;
+    }
 }
