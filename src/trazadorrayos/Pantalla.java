@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package trazadorrayos;
+import java.awt.Color;
 
 /**
  *
@@ -11,8 +12,10 @@ package trazadorrayos;
  */
 public class Pantalla {
     //figura:pantalla anchura:640 altura:480
-    private int anchura = 0;
-    private int altura = 0;
+    private double anchura = 0;
+    private double altura = 0;
+    private double pixelesanchura = 0;
+    private double pixelesaltura = 0;
     private Color[][] pantalla = null;
 
     public Color[][] getPantalla() {
@@ -23,9 +26,26 @@ public class Pantalla {
         this.pantalla = pantalla;
     }
     
-    public Pantalla(int anchura, int altura){
+    public Pantalla(double pixelAncho, double pixelAlto,double anchura, double altura){
+     pixelesaltura=pixelAlto;pixelesanchura=pixelAncho;
      this.anchura = anchura; this.altura = altura;
-        pantalla = new Color[anchura][altura];
+        pantalla = new Color[(int)pixelAncho][(int)pixelAncho];
+    }
+
+    public double getPixelesanchura() {
+        return pixelesanchura;
+    }
+
+    public double getPixelesaltura() {
+        return pixelesaltura;
+    }
+
+    public double getAnchura() {
+        return anchura;
+    }
+
+    public double getAltura() {
+        return altura;
     }
 
 }

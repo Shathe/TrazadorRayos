@@ -5,6 +5,8 @@
  */
 package trazadorrayos;
 import javax.vecmath.Point4d;
+import java.awt.Color;
+
 /**
  *
  * @author shathe

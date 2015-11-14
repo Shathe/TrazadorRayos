@@ -2,14 +2,10 @@
 
 Los siguientes pasos que faltan son:
 
---Camara:calcular el vector v,u del nuevo sistema de coordenadas y la matriz de cambio de base (practica 2)
 
---Hacer la funciona ya definida del Trazador que se llama leerEscena que lee del fichero escena.txt y crea/carga todos los datos
+ahora mismo falta poner que pueda leer doubles de fichero con coma y con punto.
 
---Hacer las clases Plano Triangulo que extiendan de Figura
+En el MAIN del trazador, estamos cuadno tienes el punto  de la pantall(centro del pixel al calcular)a en coordenadas de la camara y tienes que pasarlo al del mundo, pero no he comprobado que el nuevo putno en coordanadas del mudno tenga sentido y parezca que este bien (una vez secalcula hay que reescalarlo segun k, el 4º elemento del punto)
 
-Hacer funciones de calcular la normal de cada ficura (ejemplo, en esfera, el argumento seria dado un punto, cogerias el centro que es un atributo y lo calcularias)
 
---Crear clase Rayo con intensidad color direccion punto
-
-Crear clase de operaciones que contendrá funciones como boolean Intersecta (Figura, Rayo) y mas oepraciones segun iremos neceistando para calcualr rayos, colores, etc..
+CUIDADO: el calculo de la normal para saber si ese punto se ve o no seve desde la camara sirve solo para la esfera(objeto 3d) qe tiene para su superficie uana cara visible y una oculta, para los triangulo y planos, ambas caras son visibles y no hay que hacer esa comprobacion

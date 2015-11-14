@@ -3,6 +3,7 @@ package trazadorrayos;
 import javax.vecmath.Point4d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector4d;
+import java.awt.Color;
 
 public class Triangulo extends Figura {
     private Point4d punto1 = null;

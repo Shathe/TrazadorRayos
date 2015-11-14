@@ -39,7 +39,7 @@ public class Camara {
 		w.z = -direccion.z;
 		w.normalize();
 		//calculamos u: up x w/|up x w|
-		Vector4d up=new Vector4d(1,1,1,1);
+		Vector4d up=new Vector4d(1,1,1,0);
 		u=crossProduct(up,w);
 		u.normalize();
 		//calculamos v: w x u
@@ -68,4 +68,24 @@ public class Camara {
             return posicion;
         }
 
+    public int getDistanciaPantalla() {
+        return distanciaPantalla;
+    }
+
+    public Vector4d getDireccion() {
+        return direccion;
+    }
+
+    public Vector4d getW() {
+        return w;
+    }
+
+    public Vector4d getU() {
+        return u;
+    }
+
+    public Vector4d getV() {
+        return v;
+    }
+        
 }

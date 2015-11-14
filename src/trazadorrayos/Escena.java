@@ -25,9 +25,24 @@ public class Escena {
     public void anadirFigura(Figura figura){
         figuras.add(figura);
     }
+    public void anadirSetFiguras( ArrayList<Figura> figuras){
+        this.figuras=figuras;
+    }
 
     public Pantalla getPantalla() {
         return pantalla;
+    }
+
+    public ArrayList<Figura> getFiguras() {
+        return figuras;
+    }
+
+    public Camara getCamara() {
+        return camara;
+    }
+
+    public Foco getFoco() {
+        return foco;
     }
     
     

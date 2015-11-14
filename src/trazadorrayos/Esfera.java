@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package trazadorrayos;
+import java.awt.Color;
 
 import javax.vecmath.Point4d;
 import javax.vecmath.Vector4d;
@@ -20,7 +21,8 @@ public class Esfera extends Figura {
 	public Esfera(Point4d centro, Color color, double refraccion,
 			double reflexion, double kd, double ks, double radio) {
 		super(color, refraccion, reflexion, kd, ks);
-		this.radio = radio;
+		this.radio = radio;this.centro=centro;
+                
 	}
         
         public Vector4d getNormal(Point4d puntoInterseccion){

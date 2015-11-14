@@ -2,6 +2,7 @@ package trazadorrayos;
 
 import javax.vecmath.Point4d;
 import javax.vecmath.Vector4d;
+import java.awt.Color;
 
 public class Plano extends Figura {
 

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package trazadorrayos;
+import java.awt.Color;
 
 import javax.vecmath.Point4d;
 
