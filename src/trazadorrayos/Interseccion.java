@@ -146,6 +146,7 @@ public class Interseccion {
 		return interseccion;
 	}
 
+	
 	public static double vectorPorVector(Vector4d v1, Vector4d v2) {
 		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 	}
