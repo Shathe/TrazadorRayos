@@ -9,6 +9,8 @@ public class Plano extends Figura {
     private Point4d punto = null;
 
     private Vector4d normal = null;
+    
+    private double D=0.0;
 
     public Plano(Color color, double refraccion,
                     double reflexion, double kd, double ks, Point4d punto, Vector4d normal) {
@@ -23,5 +25,9 @@ public class Plano extends Figura {
 
     public Vector4d getNormal() {
         return normal;
+    }
+    
+    public double getD(){
+    	return D;
     }
 }
