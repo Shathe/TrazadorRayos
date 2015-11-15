@@ -29,16 +29,14 @@ public class Trazador {
 	 * @param args
 	 *            the command line arguments
 	 */
-             Escena escena=null;
-
-
+	Escena escena = null;
 
 	public void leerEscena(String fichero) {
 		try {
-                        Foco foco=null;
-                        Camara camara=null;
-                        Pantalla pantalla=null;
-                        ArrayList<Figura> figuras= new ArrayList<Figura> ();
+			Foco foco = null;
+			Camara camara = null;
+			Pantalla pantalla = null;
+			ArrayList<Figura> figuras = new ArrayList<Figura>();
 			Scanner escenaFichero = new Scanner(new File(fichero));
 			String figura = "";
 			// recorremos el fichero
@@ -54,14 +52,15 @@ public class Trazador {
 					// color
 					escenaFichero.next();
 					Color color = new Color(escenaFichero.nextShort(),
-							escenaFichero.nextShort(), escenaFichero.nextShort());
+							escenaFichero.nextShort(),
+							escenaFichero.nextShort());
 					// intensidad
 					escenaFichero.next();
-					double intensidad = escenaFichero.nextDouble();
+					double intensidad = Float.parseFloat(escenaFichero.next());
 					foco = new Foco(punto, color, intensidad);
-                                       
+
 					System.out.println(foco);
-                                        
+
 					break;
 				case "figura:camara":
 					// direccion
@@ -77,8 +76,7 @@ public class Trazador {
 					Point4d posicion = new Point4d(escenaFichero.nextInt(),
 							escenaFichero.nextInt(), escenaFichero.nextInt(),
 							escenaFichero.nextInt());
-					camara = new Camara(direccion, distanciaPantalla,
-							posicion);
+					camara = new Camara(direccion, distanciaPantalla, posicion);
 					System.out.println(camara);
 					break;
 				case "figura:pantalla":
@@ -88,42 +86,46 @@ public class Trazador {
 					// altura
 					escenaFichero.next();
 					int alturaPixel = escenaFichero.nextInt();
-                                        escenaFichero.next();
+					escenaFichero.next();
 					int anchura = escenaFichero.nextInt();
 					// altura
 					escenaFichero.next();
 					int altura = escenaFichero.nextInt();
-					pantalla = new Pantalla(anchuraPixel, alturaPixel,anchura, altura);
+					pantalla = new Pantalla(anchuraPixel, alturaPixel, anchura,
+							altura);
 					System.out.println(pantalla);
 					break;
 				case "figura:esfera":
 					// posicion
 					escenaFichero.next();
-					posicion = new Point4d(escenaFichero.nextInt(), escenaFichero.nextInt(),
-							escenaFichero.nextInt(), escenaFichero.nextInt());
+					posicion = new Point4d(escenaFichero.nextInt(),
+							escenaFichero.nextInt(), escenaFichero.nextInt(),
+							escenaFichero.nextInt());
 					// color
 					escenaFichero.next();
-					color = new Color(escenaFichero.nextShort(), escenaFichero.nextShort(),
+					color = new Color(escenaFichero.nextShort(),
+							escenaFichero.nextShort(),
 							escenaFichero.nextShort());
 					// refraccion
 					escenaFichero.next();
-					double refraccion = escenaFichero.nextDouble();
+					double refraccion = Float.parseFloat(escenaFichero.next());
 					// reflectividad
 					escenaFichero.next();
-					double reflectividad = escenaFichero.nextDouble();
+					double reflectividad = Float.parseFloat(escenaFichero
+							.next());
 					// ks
 					escenaFichero.next();
-					double ks = escenaFichero.nextDouble();
+					double ks = Float.parseFloat(escenaFichero.next());
 					// kd
 					escenaFichero.next();
-					double kd = escenaFichero.nextDouble();
+					double kd = Float.parseFloat(escenaFichero.next());
 					// radio
 					escenaFichero.next();
 					int radio = escenaFichero.nextInt();
 					Esfera esfera = new Esfera(posicion, color, refraccion,
 							reflectividad, ks, kd, radio);
 					System.out.println(esfera);
-                                        figuras.add(esfera);
+					figuras.add(esfera);
 					break;
 				}
 				// Cargar escena del fichero
@@ -135,77 +137,90 @@ public class Trazador {
 				}
 
 			}
-                        
+
 			escenaFichero.close();
-                        escena=new Escena(foco, camara, pantalla);
-                        escena.anadirSetFiguras(figuras);
-                        
-                        
-                        
+			escena = new Escena(foco, camara, pantalla);
+			escena.anadirSetFiguras(figuras);
+
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-       public static void main(String[] args) {
-		// TODO code application logic here
-            Trazador trazador=new Trazador();
-            //Cargas la escena
-            trazador.leerEscena("escena.txt");
-            //Se crea el bufer para crear la imagen
-            BufferedImage imagen = new BufferedImage((int)trazador.escena.getPantalla().getAnchura()
-                    , (int)trazador.escena.getPantalla().getAltura(), BufferedImage.TYPE_INT_RGB);
-            //Para cada pixel
-            Pantalla pantalla=trazador.escena.getPantalla();
-            for(int i=0;i<pantalla.getAnchura();i++){
-                for(int j=0;j<pantalla.getAltura();j++){
-                     /*
-                    Pixel i,j pero no es lo mismo el pixel que lo que mide en distancia
-                    primero hay que calcular la distancia real entre pixeles y luego
-                    calcular los centros de los pixeles en el sistema de coordenadas
-                    de la camara, para luego pasarlo al sistema del mundo y trazar el 
-                    rayo. hay que recordar que el pixel 0,0 es el que esta abajo a la 
-                    izquierda pero en el sistema de la camara el 0,0 es el del centro.
-                    */
-                    double centroAn=pantalla.getPixelesanchura()/2;
-                    double centroAl=pantalla.getPixelesaltura()/2;
-                    double diffAn=pantalla.getAnchura()/(pantalla.getPixelesanchura());
-                    double diffAl=pantalla.getAltura()/(pantalla.getPixelesaltura());
-                    Point4d puntoPantalla=new Point4d();
-                    /*i-centroAn es debido a que en el sistema de la camara
-                    el pixel que se esta calculando, por ejemplo el (0,0)
-                    es el (-totalAncho/2, -totalAlto/2)
-                    */ 
-                    puntoPantalla.x=diffAn*(i-centroAn)+diffAn/2;puntoPantalla.y=diffAl*(j-centroAl)+diffAl/2;
-                    puntoPantalla.z=-trazador.escena.getCamara().getDistanciaPantalla();
-                    puntoPantalla.w=1;
-                    //Aqui tienes el centro del pixel en coordenadas de la camara
-                    Matrix4d cambioBase=trazador.escena.getCamara().getCambioBase();
-                    cambioBase.transform(puntoPantalla);
-                    Point4d otro=puntoPantalla;
-                    
-                    
-                    
-                    //imagen.setRGB(i,j,Color.red.getRGB() );
 
-                
-                }
-                
-            }
-            try {
-                    ImageIO.write(imagen, "jpg", new File("foto.jpg"));
-                 } catch (IOException e) {
-                    System.out.println("Error de escritura");
-                 }
-            
+	/**
+	 * Multiplica el punto por la matriz
+	 * 
+	 * @param point
+	 * @param matrix
+	 * @return
+	 */
+	public static Point4d multiplyPointMatrix(Point4d point, Matrix4d matrix) {
+		return new Point4d(point.x * matrix.m00 + point.y * matrix.m10
+				+ point.z * matrix.m20 + point.w * matrix.m30, point.x
+				* matrix.m01 + point.y * matrix.m11 + point.z * matrix.m21
+				+ point.w * matrix.m31, point.x * matrix.m02 + point.y
+				* matrix.m12 + point.z * matrix.m22 + point.w * matrix.m32,
+				point.x * matrix.m03 + point.y * matrix.m13 + point.z
+						* matrix.m23 + point.w * matrix.m33);
+	}
+
+	public static void main(String[] args) {
+		// TODO code application logic here
+		Trazador trazador = new Trazador();
+		// Cargas la escena
+		trazador.leerEscena("escena.txt");
+		// Se crea el bufer para crear la imagen
+		BufferedImage imagen = new BufferedImage((int) trazador.escena
+				.getPantalla().getAnchura(), (int) trazador.escena
+				.getPantalla().getAltura(), BufferedImage.TYPE_INT_RGB);
+		// Para cada pixel
+		Pantalla pantalla = trazador.escena.getPantalla();
+		for (int i = 0; i < pantalla.getAnchura(); i++) {
+			for (int j = 0; j < pantalla.getAltura(); j++) {
+				/*
+				 * Pixel i,j pero no es lo mismo el pixel que lo que mide en
+				 * distancia primero hay que calcular la distancia real entre
+				 * pixeles y luego calcular los centros de los pixeles en el
+				 * sistema de coordenadas de la camara, para luego pasarlo al
+				 * sistema del mundo y trazar el rayo. hay que recordar que el
+				 * pixel 0,0 es el que esta abajo a la izquierda pero en el
+				 * sistema de la camara el 0,0 es el del centro.
+				 */
+				double centroAn = pantalla.getPixelesanchura() / 2;
+				double centroAl = pantalla.getPixelesaltura() / 2;
+				double diffAn = pantalla.getAnchura()
+						/ (pantalla.getPixelesanchura());
+				double diffAl = pantalla.getAltura()
+						/ (pantalla.getPixelesaltura());
+				Point4d puntoPantalla = new Point4d();
+				/*
+				 * i-centroAn es debido a que en el sistema de la camara el
+				 * pixel que se esta calculando, por ejemplo el (0,0) es el
+				 * (-totalAncho/2, -totalAlto/2)
+				 */
+				puntoPantalla.x = diffAn * (i - centroAn) + diffAn / 2;
+				puntoPantalla.y = diffAl * (j - centroAl) + diffAl / 2;
+				puntoPantalla.z = -trazador.escena.getCamara()
+						.getDistanciaPantalla();
+				puntoPantalla.w = 1;
+				// Aqui tienes el centro del pixel en coordenadas de la camara
+				Matrix4d cambioBase = trazador.escena.getCamara()
+						.getCambioBase();
+				puntoPantalla = multiplyPointMatrix(puntoPantalla, cambioBase);
+				Point4d otro = puntoPantalla;
+
+				// imagen.setRGB(i,j,Color.red.getRGB() );
+
+			}
+
+		}
+		try {
+			ImageIO.write(imagen, "jpg", new File("foto.jpg"));
+		}
+		catch (IOException e) {
+			System.out.println("Error de escritura");
+		}
+
 	}
 }

@@ -3,7 +3,6 @@
 Los siguientes pasos que faltan son:
 
 
-ahora mismo falta poner que pueda leer doubles de fichero con coma y con punto.
 
 En el MAIN del trazador, estamos cuadno tienes el punto  de la pantall(centro del pixel al calcular)a en coordenadas de la camara y tienes que pasarlo al del mundo, pero no he comprobado que el nuevo putno en coordanadas del mudno tenga sentido y parezca que este bien (una vez secalcula hay que reescalarlo segun k, el 4º elemento del punto)
 

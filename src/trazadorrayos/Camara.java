@@ -33,59 +33,62 @@ public class Camara {
 		this.direccion = direccion;
 		// ahora se calcula el sistema de coordenadas
 		// w=normalize(-direccion)
-		w.w = -direccion.w;
+		w.w = direccion.w;
 		w.y = -direccion.y;
 		w.x = -direccion.x;
 		w.z = -direccion.z;
 		w.normalize();
-		//calculamos u: up x w/|up x w|
-		Vector4d up=new Vector4d(1,1,1,0);
-		u=crossProduct(up,w);
+		// calculamos u: up x w/|up x w|
+		Vector4d up = new Vector4d(1, 2, 3, 0);
+		u = crossProduct(up, w);
 		u.normalize();
-		//calculamos v: w x u
-		v=crossProduct(w,u);
+		// calculamos v: w x u
+		v = crossProduct(w, u);
 
 	}
 
-	public Vector4d crossProduct(Vector4d a, Vector4d b){
-		Vector3d aux=new Vector3d(a.x, a.y, a.z);
-		Vector3d bux=new Vector3d(b.x, b.y, b.z);
+	public Vector4d crossProduct(Vector4d a, Vector4d b) {
+		Vector3d aux = new Vector3d(a.x, a.y, a.z);
+		Vector3d bux = new Vector3d(b.x, b.y, b.z);
 		aux.cross(aux, bux);
-                Vector4d solucion=new Vector4d();
-                solucion.x=aux.x; solucion.y=aux.y; solucion.z=aux.z; solucion.w=a.w;
 		return new Vector4d(aux.x, aux.y, aux.z, a.w);
 	}
-	
+
 	public Matrix4d getCambioBase() {
 		cambioBase.setRow(0, u);
 		cambioBase.setRow(1, v);
 		cambioBase.setRow(2, w);
-		cambioBase.setRow(3, posicion.x,posicion.y,posicion.z,posicion.w);
+		cambioBase.setRow(3, posicion.x, posicion.y, posicion.z, posicion.w);
 		return cambioBase;
 	}
 
-        public Point4d getPosicion() {
-            return posicion;
-        }
+	public Point4d getPosicion() {
+		return posicion;
+	}
 
-    public int getDistanciaPantalla() {
-        return distanciaPantalla;
-    }
+	public int getDistanciaPantalla() {
+		return distanciaPantalla;
+	}
 
-    public Vector4d getDireccion() {
-        return direccion;
-    }
+	public Vector4d getDireccion() {
+		return direccion;
+	}
 
-    public Vector4d getW() {
-        return w;
-    }
+	public Vector4d getW() {
+		return w;
+	}
 
-    public Vector4d getU() {
-        return u;
-    }
+	public Vector4d getU() {
+		return u;
+	}
 
-    public Vector4d getV() {
-        return v;
-    }
-        
+	public Vector4d getV() {
+		return v;
+	}
+
+	public static void main(String[] args) {
+		Camara camara = new Camara(new Vector4d(3, 3, 3, 0), 10, new Point4d(5,
+				5, 5, 0));
+		System.out.println(camara);
+	}
 }
