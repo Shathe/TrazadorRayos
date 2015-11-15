@@ -9,13 +9,14 @@ public class Triangulo extends Figura {
 	private Point4d punto1 = null;
 	private Point4d punto2 = null;
 	private Point4d punto3 = null;
-
+ 
 	/**
 	 * @return the punto1
 	 */
 	public Point4d getPunto1() {
 		return punto1;
 	}
+
 
 	/**
 	 * @param punto1 the punto1 to set
@@ -59,8 +60,8 @@ public class Triangulo extends Figura {
 		this.punto2 = punto2;
 		this.punto3 = punto3;
 	}
-
-	public Vector4d getNormal() {
+        @Override
+	public Vector4d getNormal(Point4d punto) {
 		Vector4d vector1 = new Vector4d();
 		Vector4d vector2 = new Vector4d();
 		vector1.w = 0;

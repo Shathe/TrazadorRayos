@@ -40,6 +40,7 @@ public class Interseccion {
 			b -= 2 * centro.x * direccion.x - 2 * centro.y * direccion.y - 2
 					* centro.z * direccion.z;
 
+ 
 			double a = Math.pow(direccion.x, 2) + Math.pow(direccion.y, 2)
 					+ Math.pow(direccion.z, 2);
 			if (4 * a * c > 0) {
@@ -169,4 +170,5 @@ public class Interseccion {
 		aux.cross(aux, bux);
 		return new Point4d(aux.x, aux.y, aux.z, a.w);
 	}
+
 }

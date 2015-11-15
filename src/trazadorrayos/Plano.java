@@ -22,8 +22,9 @@ public class Plano extends Figura {
     public Point4d getPunto() {
         return punto;
     }
-
-    public Vector4d getNormal() {
+    
+    @Override
+    public Vector4d getNormal(Point4d puntoInterseccion) {
         return normal;
     }
     
