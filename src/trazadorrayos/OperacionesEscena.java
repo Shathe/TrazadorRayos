@@ -82,6 +82,10 @@ public class OperacionesEscena {
         
         double reflec=figura.getIndiceReflectividad();
         double refrac=figura.getIndiceRefraccion();
+        double kd=figura.getIndiceEspecularKS();
+        double ks=figura.getIndiceEspecularKS();
+                
+                
         /*
         Ahora se calcula la direccion del angulo refractado y del angulo reflejado
         */
@@ -105,9 +109,25 @@ public class OperacionesEscena {
         reflejado.w=normal.w-reflejado.w;
         
         //ahora calculas el angulo reflejado
+        //T=(Iref*(normal*Rayo)-Raiz(1-Iref²(1-(normal*rayo)²))) *normal-Iref*rayo
+        double auxR=refrac*(normal.dot(rayo.getDireccion()))
+                -Math.sqrt(1-refrac*refrac*(1-normal.dot(rayo.getDireccion()) * 
+                        normal.dot(rayo.getDireccion())));
         
+        refractado.x=auxR*normal.x-refrac*rayo.getDireccion().x;
+        refractado.y=auxR*normal.y-refrac*rayo.getDireccion().y;
+        refractado.z=auxR*normal.z-refrac*rayo.getDireccion().z;
+        refractado.w=auxR*normal.w-refrac*rayo.getDireccion().w;
         
-
+        /*
+        Ahora tienes el angulo refractado y el angulo reflejado, ahora para calcular
+        el color, primero tienes que mirar el color que tiene tu figura y la intensidad
+        del rayo que ha impacado contigo, y luego sumarle el color que te devuelvan
+        los dos rayos que salen de ese punto (reflejado y refractado) y normalizar
+        */
+        
+        //Calculas la intensidad en tu punto
+        
         return null;
     }
 }
