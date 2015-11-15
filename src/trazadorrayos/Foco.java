@@ -15,6 +15,8 @@ public class Foco {
 
     private Point4d posicion=null;
     private double intensidad=0;
+    private double intensidadAmbiente=0;
+
     private Color color=null;
 
     public Point4d getPosicion() {
@@ -24,13 +26,15 @@ public class Foco {
     public double getIntensidad() {
         return intensidad;
     }
-
+    public double getIntensidadAmbiente() {
+        return intensidadAmbiente;
+    }
     public Color getColor() {
         return color;
     }
 
-    public Foco(Point4d posicion, Color color, double ensidad) {
-        this.color=color; intensidad=ensidad;this.posicion=posicion;
+    public Foco(Point4d posicion, Color color, double ensidad,double intensidadAmbiente) {
+        this.color=color; intensidad=ensidad;this.posicion=posicion;this.intensidadAmbiente=intensidadAmbiente;
     }
     
     

@@ -2,10 +2,12 @@
 
 Los siguientes pasos que faltan son:
 
+En el calculo de S1S2,S3, en la interescion del trianuglo (para ver si tiene mismo signo) 
+Mirar cuadno se utiliza .dot, para a ver si lo que habia que hacer era vectorial como ahí o calcular el coseno (que habria que añadirle el dividirlo por sus modulos)
 
 
-En el MAIN del trazador, estamos cuadno tienes el punto  de la pantall(centro del pixel al calcular)a en coordenadas de la camara y tienes que pasarlo al del mundo, pero no he comprobado que el nuevo putno en coordanadas del mudno tenga sentido y parezca que este bien (una vez secalcula hay que reescalarlo segun k, el 4º elemento del punto)
+BUSCAR DONDE ESTA COMENTADA ESTA FUNCION InterseccionAFocoTapado(punto,escena.getFoco(),escena.getFiguras());
+Y REALIZAR ESA FUNCION que devuelve true si entre el putno y el foco hay algun objeto que interesecta y entonces habra sombra alli.
 
-
-CUIDADO: el calculo de la normal para saber si ese punto se ve o no seve desde la camara sirve solo para la esfera(objeto 3d) qe tiene para su superficie uana cara visible y una oculta, para los triangulo y planos, ambas caras son visibles y no hay que hacer esa comprobacion
-
+ 
+Una vez hehco esto hay que mirar errores de codigo, he empezado a mirar y hace mal la interseccion de la esfera, el programa al ejecutar sale una imagen negra, y los punto sde la interseccion de la esfera parece que se calcula mal, eso ya lo hare yo, pero empezar a mirar mas errores

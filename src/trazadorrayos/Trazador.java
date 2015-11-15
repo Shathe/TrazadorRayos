@@ -57,7 +57,11 @@ public class Trazador {
 					// intensidad
 					escenaFichero.next();
 					double intensidad = Float.parseFloat(escenaFichero.next());
-					foco = new Foco(punto, color, intensidad);
+                                        
+					// intensidad aambiente
+					escenaFichero.next();
+					double intensidadAmbiente = Float.parseFloat(escenaFichero.next());
+					foco = new Foco(punto, color, intensidad,intensidadAmbiente);
 
 					System.out.println(foco);
 

@@ -54,6 +54,7 @@ public class OperacionesEscena {
         mas cercano a pa pantalla
         */
        color=colorDesdeRayo(escena,rayo,maxDepth,minIntensity);
+       //¿aqui normalizar eel color que de devuelve con el de la luz del foco?
         return color;
         
     }
@@ -120,14 +121,86 @@ public class OperacionesEscena {
             del rayo que ha impacado contigo, y luego sumarle el color que te devuelvan
             los dos rayos que salen de ese punto (reflejado y refractado) y normalizar
             */
+            
+            
+            
+            /*primero tienes que mirar si desde ese punto hasta el foco no hay
+            inersecciones, si las hay, devuelves el llamado primer modelo de iliminacion, es decir
+            solo la luz ambiental, sino hay intereseccion ya pasas al tercer modelo
+            */
+            
+            boolean noVisible=false;//InterseccionAFocoTapado(punto,escena.getFoco(),escena.getFiguras());
+             
+            if(noVisible){
+                   double intensidad=escena.getFoco().getIntensidadAmbiente()*kd;
+                   int red=(int) intensidad*figura.color.getRed();
+                   int blue=(int) intensidad*figura.color.getBlue();
+                   int green=(int) intensidad*figura.color.getGreen();
+                   color=new Color(red,green,blue);
+                   
+            }
+            else{
+                //Calculas la intensidad en tu punto
+                Vector4d rayoAlOjo=new Vector4d();
+                rayoAlOjo.x=escena.getCamara().getPosicion().x-punto.x;
+                rayoAlOjo.y=escena.getCamara().getPosicion().y-punto.y;
+                rayoAlOjo.z=escena.getCamara().getPosicion().z-punto.z;
+                rayoAlOjo.w=0;
+                Vector4d rayoAlFoco=new Vector4d();
+                rayoAlFoco.x=escena.getFoco().getPosicion().x-punto.x;
+                rayoAlFoco.y=escena.getFoco().getPosicion().y-punto.y;
+                rayoAlFoco.z=escena.getFoco().getPosicion().z-punto.z;
+                rayoAlFoco.w=0;
 
-            //Calculas la intensidad en tu punto
-        
-        }
+                double intensidad=escena.getFoco().getIntensidadAmbiente()*kd+
+                        kd*rayo.getIntensidad()*rayoAlFoco.dot(normal)/normal.lengthSquared()/rayoAlFoco.lengthSquared()+
+                        ks*rayo.getIntensidad()*reflejado.dot(rayoAlOjo)/rayoAlOjo.lengthSquared()/reflejado.lengthSquared();
+
+                int red=(int) intensidad*figura.color.getRed();
+                int blue=(int) intensidad*figura.color.getBlue();
+                int green=(int) intensidad*figura.color.getGreen();
+
+
+                Rayo rayoReflejado=new Rayo(reflejado,punto,color,rayo.getIntensidad()*reflec);
+                Rayo rayoRefractado=new Rayo(refractado,punto,color,rayo.getIntensidad()*(1-reflec));
+
+
+                if(MaxDepth>0 &&  rayoReflejado.getIntensidad()>minIntensity){
+                    Color colorReflejado=colorDesdeRayo(escena,rayoReflejado, MaxDepth--, minIntensity);
+                    red+=colorReflejado.getRed();blue+=colorReflejado.getBlue();green+=colorReflejado.getGreen();
+                 }
+                if(MaxDepth>0 &&  rayoRefractado.getIntensidad()>minIntensity){
+                    Color colorRefractado=colorDesdeRayo(escena,rayoRefractado, MaxDepth--, minIntensity);
+                    red+=colorRefractado.getRed();blue+=colorRefractado.getBlue();green+=colorRefractado.getGreen();
+
+                 }
+                color=normalizarColor(red,green,blue);
+
+
+
+            }
+
+            }
+            else{
+                //No se intersecta con nada
+                color=new Color(0,0,0);
+            }
+        return color;
+    }
+    
+    public static Color normalizarColor(int red, int green, int blue){
+        int mayor=0;
+        if(blue>mayor)mayor=blue;
+        if(red>mayor)mayor=red;
+        if(green>mayor)mayor=green;
+        if(mayor<=255)return new Color(red,green,blue);
         else{
-            //No se intersecta con nada
-            color=new Color(0,0,0);
+            double indiceReduccion=mayor/255;
+            double redreducido=red/indiceReduccion;
+            double greenreducido=green/indiceReduccion;
+            double bluereducido=blue/indiceReduccion;
+            return new Color((int)redreducido,(int)greenreducido,(int)bluereducido);
         }
-        return null;
+         
     }
 }
