@@ -17,6 +17,7 @@ public class Triangulo extends Figura {
             this.punto2 = punto2;
             this.punto3 = punto3;
     }
+    @Override
     public Vector4d getNormal(Point4d puntoInterseccion){
         Vector4d vector1=new Vector4d();
         Vector4d vector2=new Vector4d();
