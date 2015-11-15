@@ -52,7 +52,7 @@ public class Figura  {
 		return indiceDifusionKD;
 	}
         
-        public Vector4d getNormal(Point4d puntoInterseccion){           
+        public Vector4d getNormal(Point4d puntoInterseccion){   
             return null;
         }
 }
