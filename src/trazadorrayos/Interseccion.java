@@ -69,68 +69,76 @@ public class Interseccion {
 		}
 		else if (figura instanceof Plano) {
 			Plano plano = (Plano) figura;
+
+			// intersecta con el plano
+			// calculamos el punto de la interseccion
+			// numerador(n * a + D)
+			double numerador = plano.getNormal().x * rayo.getPunto().x
+					+ plano.getNormal().y * rayo.getPunto().y
+					+ plano.getNormal().z * rayo.getPunto().z + plano.getD();
+			// denominador (d * n)
+			double denominador = plano.getNormal().x * rayo.getDireccion().x
+					+ plano.getNormal().y * rayo.getDireccion().y
+					+ plano.getNormal().z * rayo.getDireccion().z;
+			double landa = -(numerador / denominador);
+			// evaluamos t en la ecuacion del rayo
 			double casos = vectorPorVector(plano.getNormal(),
 					rayo.getDireccion());
-			if (casos != 0.0) {
-				// intersecta con el plano
-				// calculamos el punto de la interseccion
-				// numerador(n * a + D)
-				double numerador = plano.getNormal().x * rayo.getPunto().x
-						+ plano.getNormal().y * rayo.getPunto().y
-						+ plano.getNormal().z * rayo.getPunto().z
-						+ plano.getD();
-				// denominador (d * n)
-				double denominador = plano.getNormal().x
-						* rayo.getDireccion().x + plano.getNormal().y
-						* rayo.getDireccion().y + plano.getNormal().z
-						* rayo.getDireccion().z;
-				double landa = -(numerador / denominador);
-				// evaluamos t en la ecuacion del rayo
-				interseccion = rayo.evaluar(landa);
+			if (casos < 0.0) {
+				if (landa >= 0.0) {
+					interseccion = rayo.evaluar(landa);
+				}
+				// else no se ve
 			}
 			// else no intersecta
 		}
 		else if (figura instanceof Triangulo) {
 			Triangulo triangulo = (Triangulo) figura;
+			// intersecta con el plano en el que esta el triangulo
+			// calculamos el punto de interseccion de ese plano
+			// numerador=(p1-a)* n
+			Point4d puntoTriangulo = puntoMenosPunto(triangulo.getPunto1(),
+					rayo.getPunto());
+			double numerador = vectorPorVector(puntoTriangulo,
+					triangulo.getNormal());
+			// denominador=(d * n)
+			double denominador = vectorPorVector(rayo.getDireccion(),
+					triangulo.getNormal());
+			double landa = numerador / denominador;
+			// comprobar si rayo(landa) se encuentra dentro
+			// de los parametros del triangulo
+			Point4d p = rayo.evaluar(landa);
+			// comprobamos que tienen el mismo signo
+			// S1=((p2-p1)x(p-p1)) * n
+
+			double S1 = vectorPorVector(
+					puntoMenosPunto(triangulo.getPunto2(),
+							triangulo.getPunto1()),
+					puntoMenosPunto(p, triangulo.getPunto1()));
+			// S2=((p3-p2)x(p-p2))* n
+			double S2 = vectorPorVector(
+					puntoMenosPunto(triangulo.getPunto3(),
+							triangulo.getPunto2()),
+					puntoMenosPunto(p, triangulo.getPunto2()));
+			// S1=((p1-p3)x(p-p3)) * n
+			double S3 = vectorPorVector(
+					puntoMenosPunto(triangulo.getPunto1(),
+							triangulo.getPunto3()),
+					puntoMenosPunto(p, triangulo.getPunto2()));
+
+			// else no intersecta con el triangulo
 			double casos = vectorPorVector(triangulo.getNormal(),
 					rayo.getDireccion());
-			if (casos != 0.0) {
-				// intersecta con el plano en el que esta el triangulo
-				// calculamos el punto de interseccion de ese plano
-				// numerador=(p1-a)* n
-				Point4d puntoTriangulo = puntoMenosPunto(triangulo.getPunto1(),
-						rayo.getPunto());
-				double numerador = vectorPorVector(puntoTriangulo,
-						triangulo.getNormal());
-				// denominador=(d * n)
-				double denominador = vectorPorVector(rayo.getDireccion(),
-						triangulo.getNormal());
-				double landa = numerador / denominador;
-				// comprobar si rayo(landa) se encuentra dentro
-				// de los parametros del triangulo
-				Point4d p = rayo.evaluar(landa);
-				// comprobamos que tienen el mismo signo
-				// S1=((p2-p1)x(p-p1)) * n
-
-				double S1 = vectorPorVector(
-						puntoMenosPunto(triangulo.getPunto2(),
-								triangulo.getPunto1()),
-						puntoMenosPunto(p, triangulo.getPunto1()));
-				// S2=((p3-p2)x(p-p2))* n
-				double S2 = vectorPorVector(
-						puntoMenosPunto(triangulo.getPunto3(),
-								triangulo.getPunto2()),
-						puntoMenosPunto(p, triangulo.getPunto2()));
-				// S1=((p1-p3)x(p-p3)) * n
-				double S3 = vectorPorVector(
-						puntoMenosPunto(triangulo.getPunto1(),
-								triangulo.getPunto3()),
-						puntoMenosPunto(p, triangulo.getPunto2()));
-				if(S1>=0 && S2 >= 0 && S3 >=0 || S1<0 && S2 < 0 && S3 <0){
-					//esta dentro del triangulo
-					interseccion=rayo.evaluar(landa);
+			if (casos < 0.0) {
+				if (landa >= 0.0) {
+					if (S1 >= 0 && S2 >= 0 && S3 >= 0 || S1 < 0 && S2 < 0
+							&& S3 < 0) {
+						// esta dentro del triangulo
+						interseccion = rayo.evaluar(landa);
+					}
+					//else no da en el triangulo
 				}
-				//else no intersecta con el triangulo
+				// else no se ve
 			}
 			// else no intersecta
 		}
