@@ -24,7 +24,7 @@ public class Esfera extends Figura {
 		this.radio = radio;this.centro=centro;
                 
 	}
-        
+        @Override
         public Vector4d getNormal(Point4d puntoInterseccion){
             Vector4d normal=new Vector4d();
             normal.x=puntoInterseccion.x-centro.x;

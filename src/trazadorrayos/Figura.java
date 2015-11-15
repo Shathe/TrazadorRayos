@@ -7,12 +7,13 @@ package trazadorrayos;
 import java.awt.Color;
 
 import javax.vecmath.Point4d;
+import javax.vecmath.Vector4d;
 
 /**
  *
  * @author shathe
  */
-public class Figura {
+public class Figura  {
 	Color color = null;
 	private double indiceRefraccion = 0;
 	private double indiceReflectividad = 0;
@@ -50,5 +51,8 @@ public class Figura {
 	public double getIndiceDifusionKD() {
 		return indiceDifusionKD;
 	}
-
+        
+        public Vector4d getNormal(Point4d puntoInterseccion){           
+            return null;
+        }
 }
