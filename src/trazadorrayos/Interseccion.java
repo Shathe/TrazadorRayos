@@ -60,10 +60,10 @@ public class Interseccion {
 
         }
         else if(figura instanceof Plano) {
-
+            
         }
         else if(figura instanceof Triangulo) {
-
+            
         }
         
         
