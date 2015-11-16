@@ -101,9 +101,9 @@ public class Camara {
 			System.out.println(i);
 			System.out.println(rayo.evaluar(i));
 		}
-		Triangulo triangulo = new Triangulo(new Point4d(6, 3, 1, 1),
-				new Point4d(5, -5, 0, 1), new Point4d(5, -5, 0, 1), null, 0.8,
-				1, 0.5, 0.5);
+		Triangulo triangulo = new Triangulo(new Point4d(8, 2, 1, 1),new Point4d(6, 6, 3, 1),
+				new Point4d(4, 2, 1, 1),  null, 0.8, 1,
+				0.5, 0.5);
 		System.out.println(Interseccion.intersecta(rayo, triangulo, camara));
 		// figura:triangulo punto1: 6 3 1 1 punto2: 5 -5 0 1 punto3: 10 -5 0 1
 		// color: 255 0 0

@@ -81,12 +81,15 @@ public class Interseccion {
 			// (p1 -a)n
 			double numerador = puntoMenosPunto(plano.getPunto(),
 					rayo.getPunto()).dot(plano.getNormal(null));
+			double landa=0.0;
+			if (numerador != 0.0) {
+				// denominador (d * n)
+				// d*n
+				double denominador = rayo.getDireccion().dot(
+						plano.getNormal(null));
 
-			// denominador (d * n)
-			// d*n
-			double denominador = rayo.getDireccion().dot(plano.getNormal(null));
-
-			double landa = numerador / denominador;
+				landa = numerador / denominador;
+			}	
 			// evaluamos t en la ecuacion del rayo
 			double casos = rayo.getDireccion().dot(plano.getNormal(null));
 
@@ -107,11 +110,13 @@ public class Interseccion {
 			Vector4d vectorTriangulo = puntoMenosPunto(triangulo.getPunto1(),
 					rayo.getPunto());
 			double numerador = vectorTriangulo.dot(N);
+			double landa = 0.0;
+			if (numerador != 0.0) {
+				// denominador=(d * n)
+				double denominador = rayo.getDireccion().dot(N);
 
-			// denominador=(d * n)
-			double denominador = rayo.getDireccion().dot(N);
-
-			double landa = numerador / denominador;
+				landa = numerador / denominador;
+			}
 			// comprobar si rayo(landa) se encuentra dentro
 			// de los parametros del triangulo
 			Point4d p = rayo.evaluar(landa);
@@ -132,14 +137,26 @@ public class Interseccion {
 			double S3 = crossProduct(
 					puntoMenosPunto(triangulo.getPunto1(),
 							triangulo.getPunto3()),
-					puntoMenosPunto(p, triangulo.getPunto2())).dot(N);
+					puntoMenosPunto(p, triangulo.getPunto3())).dot(N);
 
 			// else no intersecta con el triangulo
 			double casos = rayo.getDireccion().dot(N);
 			if (casos < 0.0) {
 				if (landa >= 0.0) {
-					if (S1 >= 0 && S2 >= 0 && S3 >= 0 || S1 < 0 && S2 < 0
-							&& S3 < 0) {
+					if ((S1 >= 0 && S2 >= 0 && S3 >= 0) || (S1 <= 0 && S2 <= 0
+							&& S3 <= 0)) {
+						// esta dentro del triangulo
+						interseccion = rayo.evaluar(landa);
+					}
+					// else no da en el triangulo
+				}
+				// else no se ve
+			}
+			else if(casos > 0.0){
+				triangulo.getNormal(null).negate();
+				N.negate();
+				if (landa >= 0.0) {
+					if ((S1 >= 0 && S2 >= 0 && S3 >= 0) || (S1 <= 0 && S2 <= 0 && S3 <= 0)) {
 						// esta dentro del triangulo
 						interseccion = rayo.evaluar(landa);
 					}
