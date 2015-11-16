@@ -10,10 +10,10 @@ public class Plano extends Figura {
 
     private Vector4d normal = null;
     
-    private double D=0.0;
+    private double D=2;
 
-    public Plano(Color color, double refraccion,
-                    double reflexion, double kd, double ks, Point4d punto, Vector4d normal) {
+    public Plano(Point4d punto, Vector4d normal,Color color, double refraccion,
+                    double reflexion, double kd, double ks ) {
             super(color, refraccion, reflexion, kd, ks);
             this.punto = punto;
             this.normal = normal;

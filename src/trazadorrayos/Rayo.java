@@ -1,7 +1,9 @@
 package trazadorrayos;
 
 import javax.vecmath.Point4d;
+import javax.vecmath.Vector3d;
 import javax.vecmath.Vector4d;
+
 import java.awt.Color;
 
 public class Rayo {
@@ -18,6 +20,11 @@ public class Rayo {
 		this.punto = punto;
 		this.color = color;
 		this.intensidad = intensidad;
+	}
+
+	public Rayo(Vector4d direccion, Point4d punto) {
+		this.direccion = direccion;
+		this.punto = punto;
 	}
 
 	public Vector4d getDireccion() {
@@ -54,9 +61,11 @@ public class Rayo {
 
 	public Point4d evaluar(double x) {
 
-		direccion.scale(x);
-		Point4d resultado = new Point4d(punto.x + direccion.x, punto.y
-				+ direccion.y, punto.z + direccion.z, 1);
+		
+		Vector3d aux=new Vector3d(direccion.x, direccion.y, direccion.z);
+		aux.scale(x);
+		Point4d resultado = new Point4d(punto.x + aux.x, punto.y
+				+ aux.y, punto.z + aux.z, 1);
 		return resultado;
 	}
 }

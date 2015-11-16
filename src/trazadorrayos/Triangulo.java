@@ -9,7 +9,16 @@ public class Triangulo extends Figura {
 	private Point4d punto1 = null;
 	private Point4d punto2 = null;
 	private Point4d punto3 = null;
- 
+
+	public Triangulo(Point4d punto1, Point4d punto2, Point4d punto3,
+			Color color, double refraccion, double reflexion, double kd,
+			double ks) {
+		super(color, refraccion, reflexion, kd, ks);
+		this.punto1 = punto1;
+		this.punto2 = punto2;
+		this.punto3 = punto3;
+	}
+
 	/**
 	 * @return the punto1
 	 */
@@ -17,9 +26,9 @@ public class Triangulo extends Figura {
 		return punto1;
 	}
 
-
 	/**
-	 * @param punto1 the punto1 to set
+	 * @param punto1
+	 *            the punto1 to set
 	 */
 	public void setPunto1(Point4d punto1) {
 		this.punto1 = punto1;
@@ -33,7 +42,8 @@ public class Triangulo extends Figura {
 	}
 
 	/**
-	 * @param punto2 the punto2 to set
+	 * @param punto2
+	 *            the punto2 to set
 	 */
 	public void setPunto2(Point4d punto2) {
 		this.punto2 = punto2;
@@ -47,20 +57,14 @@ public class Triangulo extends Figura {
 	}
 
 	/**
-	 * @param punto3 the punto3 to set
+	 * @param punto3
+	 *            the punto3 to set
 	 */
 	public void setPunto3(Point4d punto3) {
 		this.punto3 = punto3;
 	}
 
-	public Triangulo(Color color, double refraccion, double reflexion,
-			double kd, double ks, Point4d punto1, Point4d punto2, Point4d punto3) {
-		super(color, refraccion, reflexion, kd, ks);
-		this.punto1 = punto1;
-		this.punto2 = punto2;
-		this.punto3 = punto3;
-	}
-        @Override
+	@Override
 	public Vector4d getNormal(Point4d punto) {
 		Vector4d vector1 = new Vector4d();
 		Vector4d vector2 = new Vector4d();

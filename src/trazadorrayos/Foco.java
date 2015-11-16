@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package trazadorrayos;
+
 import javax.vecmath.Point4d;
 import java.awt.Color;
 
@@ -13,30 +14,34 @@ import java.awt.Color;
  */
 public class Foco {
 
-    private Point4d posicion=null;
-    private double intensidad=0;
-    private double intensidadAmbiente=0;
+	private Point4d posicion = null;
+	private double intensidad = 0;
+	private double intensidadAmbiente = 0;
 
-    private Color color=null;
+	private Color color = null;
 
-    public Point4d getPosicion() {
-        return posicion;
-    }
+	public Point4d getPosicion() {
+		return posicion;
+	}
 
-    public double getIntensidad() {
-        return intensidad;
-    }
-    public double getIntensidadAmbiente() {
-        return intensidadAmbiente;
-    }
-    public Color getColor() {
-        return color;
-    }
+	public double getIntensidad() {
+		return intensidad;
+	}
 
-    public Foco(Point4d posicion, Color color, double ensidad,double intensidadAmbiente) {
-        this.color=color; intensidad=ensidad;this.posicion=posicion;this.intensidadAmbiente=intensidadAmbiente;
-    }
-    
-    
-    
+	public double getIntensidadAmbiente() {
+		return intensidadAmbiente;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public Foco(Point4d posicion, Color color, double intensidad,
+			double intensidadAmbiente) {
+		this.color = color;
+		this.intensidad = intensidad;
+		this.posicion = posicion;
+		this.intensidadAmbiente = intensidadAmbiente;
+	}
+
 }
