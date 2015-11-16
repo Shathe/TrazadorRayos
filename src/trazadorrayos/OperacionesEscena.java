@@ -148,9 +148,9 @@ public class OperacionesEscena {
 			if (noVisible) {
 				double intensidad = escena.getFoco().getIntensidadAmbiente()
 						* kd;
-				int red = (int) intensidad * figura.color.getRed();
-				int blue = (int) intensidad * figura.color.getBlue();
-				int green = (int) intensidad * figura.color.getGreen();
+				int red = (int) (intensidad * figura.color.getRed());
+				int blue = (int) (intensidad * figura.color.getBlue());
+				int green = (int) (intensidad * figura.color.getGreen());
 				color = new Color(red, green, blue);
 
 			}
@@ -168,12 +168,15 @@ public class OperacionesEscena {
 				rayoAlFoco.w = 0;
 
 				double intensidad = escena.getFoco().getIntensidadAmbiente()
-						* kd + kd * rayo.getIntensidad()
-						* rayoAlFoco.dot(normal) / normal.lengthSquared()
-						/ rayoAlFoco.lengthSquared() + ks
-						* rayo.getIntensidad() * reflejado.dot(rayoAlOjo)
+						* kd ;
+                                double coseno=reflejado.dot(rayoAlOjo)
 						/ rayoAlOjo.lengthSquared() / reflejado.lengthSquared();
-
+                                double Ipart2=ks
+						* rayo.getIntensidad() * coseno;
+                                coseno=rayoAlFoco.dot(normal) / normal.lengthSquared()
+						/ rayoAlFoco.lengthSquared();
+                                double Ipart3=kd * rayo.getIntensidad()*coseno;
+                                intensidad+=Ipart2+Ipart3;
 				int red = (int) (intensidad * figura.color.getRed());
 				int blue = (int) (intensidad * figura.color.getBlue());
 				int green = (int) (intensidad * figura.color.getGreen());
@@ -217,8 +220,9 @@ public class OperacionesEscena {
 		if (blue > mayor) mayor = blue;
 		if (red > mayor) mayor = red;
 		if (green > mayor) mayor = green;
-		if (mayor <= 255)
-			return new Color(red, green, blue);
+		if (mayor <= 255){
+                    return new Color(red, green, blue);
+                }
 		else {
 			double indiceReduccion = (double) mayor / 255;
 			double redreducido = red / indiceReduccion;
