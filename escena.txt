@@ -1,6 +1,6 @@
-figura:foco posicion: 10 10 10 1 color: 255 255 255 intensidad: 1 Iambiente: 0.1
+figura:foco posicion: 0 0 10 1 color: 255 255 255 intensidad: 1 Iambiente: 0.1
 figura:camara direccion: -1 -1 0 0 distanciaPantalla: 2  posicion: 7 4 1 1 
 figura:pantalla pixelanchura: 640 pixelaltura: 480 anchura: 6 altura: 4
 // figura:esfera posicion: 3 0 1 1 color: 255 0 0 indicerefraccion: 0.8 reflectividad: 1 ks: 0.5 kd: 0.5 radio: 3
-figura:plano posicion: 2 -1 1 1 normal: 1 0 1 0 color: 255 0 0 indicerefraccion: 0.8 reflectividad: 1 ks: 0.5 kd: 0.5
-figura:triangulo punto1: 10 -10 0 1 punto2: 5 -5 0 1 punto3: 10 -5 0 1 color: 255 0 0 indicerefraccion: 0.8 reflectividad: 1 ks: 0.5 kd: 0.5
+// figura:plano posicion: 2 -1 1 1 normal: 1 0 1 0 color: 255 0 0 indicerefraccion: 0.8 reflectividad: 1 ks: 0.5 kd: 0.5
+figura:triangulo punto1: 6 3 1 1 punto2: 5 -5 0 1 punto3: 10 -5 0 1 color: 255 0 0 indicerefraccion: 0.8 reflectividad: 1 ks: 0.5 kd: 0.5

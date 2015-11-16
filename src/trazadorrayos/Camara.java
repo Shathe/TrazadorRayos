@@ -39,7 +39,7 @@ public class Camara {
 		w.z = -direccion.z;
 		w.normalize();
 		// calculamos u: up x w/|up x w|
-		Vector4d up = new Vector4d(1, 2, 3, 0);
+		Vector4d up = new Vector4d(1, 0, 0, 0);
 		u = crossProduct(up, w);
 		u.normalize();
 		// calculamos v: w x u
@@ -97,9 +97,17 @@ public class Camara {
 		System.out.println(camara);
 		Rayo rayo = new Rayo(new Vector4d(-1, -1, 0, 0),
 				new Point4d(7, 4, 1, 1));
-		Plano plano = new Plano(new Point4d(2, -1, 1, 1), new Vector4d(1, 0, 1,
-				0), null, 0.8, 1, 0.5, 0.5);
-		System.out.println(Interseccion.intersecta(rayo, plano, camara));
+		for (int i = 0; i < 30; i++) {
+			System.out.println(i);
+			System.out.println(rayo.evaluar(i));
+		}
+		Triangulo triangulo = new Triangulo(new Point4d(6, 3, 1, 1),
+				new Point4d(5, -5, 0, 1), new Point4d(5, -5, 0, 1), null, 0.8,
+				1, 0.5, 0.5);
+		System.out.println(Interseccion.intersecta(rayo, triangulo, camara));
+		// figura:triangulo punto1: 6 3 1 1 punto2: 5 -5 0 1 punto3: 10 -5 0 1
+		// color: 255 0 0
+		// indicerefraccion: 0.8 reflectividad: 1 ks: 0.5 kd: 0.5
 		// figura:camara direccion: -1 -1 0 0 distanciaPantalla: 2 posicion: 7 4
 		// figura:plano posicion: 2 -1 1 1 normal: 1 0 1 0 color: 255 0 0
 		// indicerefraccion: 0.8

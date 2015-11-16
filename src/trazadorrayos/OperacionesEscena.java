@@ -144,7 +144,7 @@ public class OperacionesEscena {
 			 */
 
 			boolean noVisible = interseccionAFocoTapado(punto,
-					escena.getFoco(), escena.getFiguras());
+					escena.getFoco(), escena.getFiguras(), figura);
 
 			if (noVisible) {
 				double intensidad = escena.getFoco().getIntensidadAmbiente()
@@ -175,9 +175,9 @@ public class OperacionesEscena {
 						* rayo.getIntensidad() * reflejado.dot(rayoAlOjo)
 						/ rayoAlOjo.lengthSquared() / reflejado.lengthSquared();
 
-				int red = (int) intensidad * figura.color.getRed();
-				int blue = (int) intensidad * figura.color.getBlue();
-				int green = (int) intensidad * figura.color.getGreen();
+				int red = (int) (intensidad * figura.color.getRed());
+				int blue = (int) (intensidad * figura.color.getBlue());
+				int green = (int) (intensidad * figura.color.getGreen());
 
 				Rayo rayoReflejado = new Rayo(reflejado, punto, color,
 						rayo.getIntensidad() * reflec);
@@ -241,17 +241,20 @@ public class OperacionesEscena {
 	 * @return
 	 */
 	public static boolean interseccionAFocoTapado(Point4d punto, Foco foco,
-			ArrayList<Figura> figuras) {
+			ArrayList<Figura> figuras, Figura figura) {
 		boolean intersecta = false;
 		Camara cam = new Camara(foco.getPosicion());
 		for (int i = 0; i < figuras.size() && !intersecta; i++) {
-			Vector4d direccionRayo = Interseccion.puntoMenosPunto(punto,
-					foco.getPosicion());
-			Rayo rayoPuntoFoco = new Rayo(direccionRayo, punto);
-			if (Interseccion.intersecta(rayoPuntoFoco, figuras.get(i), cam) != null) {
-				intersecta = true;
+
+			if (figura != figuras.get(i)) {
+				Vector4d direccionRayo = Interseccion.puntoMenosPunto(punto,
+						foco.getPosicion());
+				Rayo rayoPuntoFoco = new Rayo(direccionRayo, punto);
+				if (Interseccion.intersecta(rayoPuntoFoco, figuras.get(i), cam) != null) {
+					intersecta = true;
+				}
 			}
 		}
-		return true;
+		return intersecta;
 	}
 }
