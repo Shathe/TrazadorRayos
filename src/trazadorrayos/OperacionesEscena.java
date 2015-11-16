@@ -221,7 +221,7 @@ public class OperacionesEscena {
 		if (mayor <= 255)
 			return new Color(red, green, blue);
 		else {
-			double indiceReduccion = mayor / 255;
+			double indiceReduccion = (double) mayor / 255;
 			double redreducido = red / indiceReduccion;
 			double greenreducido = green / indiceReduccion;
 			double bluereducido = blue / indiceReduccion;
