@@ -27,49 +27,64 @@ public class Interseccion {
 			 * (pRayo-centroEsfera)²=radioEsfera² y sacar los terminos a,b,c de
 			 * la ecuacion cuadrática.
 			 */
-			double c = Math.pow(puntoRayo.x, 2) + Math.pow(puntoRayo.y, 2)
-					+ Math.pow(puntoRayo.z, 2);
-			c += Math.pow(centro.x, 2) + Math.pow(centro.y, 2)
-					+ Math.pow(centro.z, 2);
-			c -= 2 * centro.x * puntoRayo.x - 2 * centro.y * puntoRayo.y - 2
-					* centro.z * puntoRayo.z;
-			c -= Math.pow(esfera.getRadio(), 2);
-
-			double b = 2 * direccion.x * puntoRayo.x + 2 * direccion.y
-					* puntoRayo.y + 2 * direccion.z * puntoRayo.z;
-			b -= 2 * centro.x * direccion.x - 2 * centro.y * direccion.y - 2
-					* centro.z * direccion.z;
-
-			double a = Math.pow(direccion.x, 2) + Math.pow(direccion.y, 2)
-					+ Math.pow(direccion.z, 2);
-			if (4 * a * c > 0) {
-				double sol1 = (b * b + Math.sqrt(4 * a * c)) / (2 * a);
-				double sol2 = (b * b - Math.sqrt(4 * a * c)) / (2 * a);
-				Point4d primero = new Point4d();
-				// Ahora calculas los dos puntos que intersecta si esque hay dos
-				primero.x = sol1 * direccion.x + puntoRayo.x;
-				primero.y = sol1 * direccion.y + puntoRayo.y;
-				primero.z = sol1 * direccion.z + puntoRayo.z;
-				Point4d segundo = new Point4d();
-				segundo.x = sol2 * direccion.x + puntoRayo.x;
-				segundo.y = sol2 * direccion.y + puntoRayo.y;
-				segundo.z = sol2 * direccion.z + puntoRayo.z;
-				// El de menor distancia con la camara es el que se tiene que
-				// devolver
-				if (sol1 > 0 && sol2 > 0) {
-					if (camara.getPosicion().distanceSquared(primero) <= camara
-							.getPosicion().distanceSquared(primero)) {
-						interseccion = primero;
-					}
-					else {
-						interseccion = segundo;
-					}
-				}
-				else if (sol1 > 0 && sol2 < 0) {
-					interseccion = primero;
-				}
-				// else no se ve
+			
+                Vector4d r1 = rayo.getDireccion();
+		double a = r1.dot(rayo.getDireccion());
+		Point4d p0 = rayo.getPunto();
+		Vector4d ca = new Vector4d();
+		ca.sub(p0,esfera.getCentro() );
+		double b = r1.dot(ca);
+		Vector4d ca2 = ca;
+		double c = ca.dot(ca2);
+                c-=esfera.getRadio()*esfera.getRadio();
+                double d = Math.pow(b, 2) - a*c;
+		if (d<0) {
+			//no hay interseccion
+		} else if (d==0) {
+                    //un punto de interseccion
+			double lambda = -2*b / (double) (2*a);
+                        interseccion=new Point4d(); 
+                        interseccion.x+=rayo.getPunto().x+lambda*rayo.getDireccion().x;
+                        interseccion.y+=rayo.getPunto().y+lambda*rayo.getDireccion().y;
+                        interseccion.z+=rayo.getPunto().z+lambda*rayo.getDireccion().z;
+                        
+                        
+		} else {
+			double lambda1 = (-2*b + Math.sqrt(4*Math.pow(b, 2) - 4*a*c)) / (double) (2*a);
+			double lambda2 = (-2*b - Math.sqrt(4*Math.pow(b, 2) - 4*a*c)) / (double) (2*a);
+			if (lambda1<0 && lambda2<0) {
+                            
+			} 
+                        else if (lambda1>0 && lambda2<0) {
+                            interseccion=new Point4d();
+                        interseccion.x+=rayo.getPunto().x+lambda1*rayo.getDireccion().x;
+                        interseccion.y+=rayo.getPunto().y+lambda1*rayo.getDireccion().y;
+                        interseccion.z+=rayo.getPunto().z+lambda1*rayo.getDireccion().z;
+                                
+			} 
+                        else if (lambda1>lambda2 && lambda2>0) {
+                            interseccion=new Point4d();
+                            interseccion=rayo.getPunto();
+                        interseccion.x+=rayo.getPunto().x+lambda2*rayo.getDireccion().x;
+                        interseccion.y+=rayo.getPunto().y+lambda2*rayo.getDireccion().y;
+                        interseccion.z+=rayo.getPunto().z+lambda2*rayo.getDireccion().z;
 			}
+                        else if (lambda1<0 && lambda2>0) {
+                             interseccion=new Point4d();
+                            interseccion=rayo.getPunto();
+
+                        interseccion.x+=rayo.getPunto().x+lambda2*rayo.getDireccion().x;
+                        interseccion.y+=rayo.getPunto().y+lambda2*rayo.getDireccion().y;
+                        interseccion.z+=rayo.getPunto().z+lambda2*rayo.getDireccion().z;
+			}
+                        else {
+                             interseccion=new Point4d();
+                            interseccion=rayo.getPunto();
+                        interseccion.x+=rayo.getPunto().x+lambda1*rayo.getDireccion().x;
+                        interseccion.y+=rayo.getPunto().y+lambda1*rayo.getDireccion().y;
+                        interseccion.z+=rayo.getPunto().z+lambda1*rayo.getDireccion().z;
+			}
+		}
 
 		}
 		else if (figura instanceof Plano) {
