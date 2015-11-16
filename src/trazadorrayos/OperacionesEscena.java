@@ -24,7 +24,7 @@ public class OperacionesEscena {
 		for (int i = 0; i < figuras.size(); i++) {
 			Figura siguienteFigura = figuras.get(i);
 			Point4d puntoInterseccion = Interseccion.intersecta(rayo,
-					siguienteFigura, camara);
+					siguienteFigura);
 			if (puntoInterseccion != null) {
 				double distancia = punto.distanceSquared(puntoInterseccion);
 				if (distancia < distanciaMenor) {
@@ -74,13 +74,12 @@ public class OperacionesEscena {
 		Figura figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
 				rayo.getPunto(), rayo, escena.getCamara());
 		if (figura != null
-				&& Interseccion.intersecta(rayo, figura, escena.getCamara()) != null) {
+				&& Interseccion.intersecta(rayo, figura) != null) {
 			/*
 			 * Ahora tenemos que intersecta con la figura y tenemos que obtener
 			 * su color
 			 */
-			Point4d punto = Interseccion.intersecta(rayo, figura,
-					escena.getCamara());
+			Point4d punto = Interseccion.intersecta(rayo, figura);
 
 			double reflec = figura.getIndiceReflectividad();
 			double refrac = figura.getIndiceRefraccion();
@@ -250,7 +249,7 @@ public class OperacionesEscena {
 				Vector4d direccionRayo = Interseccion.puntoMenosPunto(punto,
 						foco.getPosicion());
 				Rayo rayoPuntoFoco = new Rayo(direccionRayo, punto);
-				if (Interseccion.intersecta(rayoPuntoFoco, figuras.get(i), cam) != null) {
+				if (Interseccion.intersecta(rayoPuntoFoco, figuras.get(i)) != null) {
 					intersecta = true;
 				}
 			}

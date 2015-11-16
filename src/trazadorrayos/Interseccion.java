@@ -15,7 +15,7 @@ import javax.vecmath.Vector4d;
  */
 public class Interseccion {
 
-	public static Point4d intersecta(Rayo rayo, Figura figura, Camara camara) {
+	public static Point4d intersecta(Rayo rayo, Figura figura) {
 		Point4d interseccion = null;
 		if (figura instanceof Esfera) {
 			Esfera esfera = (Esfera) figura;
@@ -27,65 +27,78 @@ public class Interseccion {
 			 * (pRayo-centroEsfera)²=radioEsfera² y sacar los terminos a,b,c de
 			 * la ecuacion cuadrática.
 			 */
-			
-                Vector4d r1 = rayo.getDireccion();
-		double a = r1.dot(rayo.getDireccion());
-		Point4d p0 = rayo.getPunto();
-		Vector4d ca = new Vector4d();
-		ca.sub(p0,esfera.getCentro() );
-		double b = r1.dot(ca);
-		Vector4d ca2 = ca;
-		double c = ca.dot(ca2);
-                c-=esfera.getRadio()*esfera.getRadio();
-                double d = Math.pow(b, 2) - a*c;
-		if (d<0) {
-			//no hay interseccion
-		} else if (d==0) {
-                    //un punto de interseccion
-			double lambda = -2*b / (double) (2*a);
-                        interseccion=new Point4d(); 
-                        interseccion.x+=rayo.getPunto().x+lambda*rayo.getDireccion().x;
-                        interseccion.y+=rayo.getPunto().y+lambda*rayo.getDireccion().y;
-                        interseccion.z+=rayo.getPunto().z+lambda*rayo.getDireccion().z;
-                        
-                        
-		} else {
-			double lambda1 = (-2*b + Math.sqrt(4*Math.pow(b, 2) - 4*a*c)) / (double) (2*a);
-			double lambda2 = (-2*b - Math.sqrt(4*Math.pow(b, 2) - 4*a*c)) / (double) (2*a);
-			if (lambda1<0 && lambda2<0) {
-                            
-			} 
-                        else if (lambda1>0 && lambda2<0) {
-                            interseccion=new Point4d();
-                        interseccion.x+=rayo.getPunto().x+lambda1*rayo.getDireccion().x;
-                        interseccion.y+=rayo.getPunto().y+lambda1*rayo.getDireccion().y;
-                        interseccion.z+=rayo.getPunto().z+lambda1*rayo.getDireccion().z;
-                                
-			} 
-                        else if (lambda1>lambda2 && lambda2>0) {
-                            interseccion=new Point4d();
-                            interseccion=rayo.getPunto();
-                        interseccion.x+=rayo.getPunto().x+lambda2*rayo.getDireccion().x;
-                        interseccion.y+=rayo.getPunto().y+lambda2*rayo.getDireccion().y;
-                        interseccion.z+=rayo.getPunto().z+lambda2*rayo.getDireccion().z;
+			Vector4d r1 = rayo.getDireccion();
+			double a = r1.dot(rayo.getDireccion());
+			Point4d p0 = rayo.getPunto();
+			Vector4d ca = new Vector4d();
+			ca.sub(p0, esfera.getCentro());
+			double b = r1.dot(ca);
+			Vector4d ca2 = ca;
+			double c = ca.dot(ca2);
+			c -= esfera.getRadio() * esfera.getRadio();
+			double d = Math.pow(b, 2) - a * c;
+			if (d < 0) {
+				// no hay interseccion
 			}
-                        else if (lambda1<0 && lambda2>0) {
-                             interseccion=new Point4d();
-                            interseccion=rayo.getPunto();
+			else if (d == 0) {
+				// un punto de interseccion
+				double lambda = -2 * b / (double) (2 * a);
+				interseccion = new Point4d();
+				interseccion.x += rayo.getPunto().x + lambda
+						* rayo.getDireccion().x;
+				interseccion.y += rayo.getPunto().y + lambda
+						* rayo.getDireccion().y;
+				interseccion.z += rayo.getPunto().z + lambda
+						* rayo.getDireccion().z;
+			}
+			else {
+				double lambda1 = (-2 * b + Math.sqrt(4 * Math.pow(b, 2) - 4 * a
+						* c))
+						/ (double) (2 * a);
+				double lambda2 = (-2 * b - Math.sqrt(4 * Math.pow(b, 2) - 4 * a
+						* c))
+						/ (double) (2 * a);
+				if (lambda1 < 0 && lambda2 < 0) {
 
-                        interseccion.x+=rayo.getPunto().x+lambda2*rayo.getDireccion().x;
-                        interseccion.y+=rayo.getPunto().y+lambda2*rayo.getDireccion().y;
-                        interseccion.z+=rayo.getPunto().z+lambda2*rayo.getDireccion().z;
-			}
-                        else {
-                             interseccion=new Point4d();
-                            interseccion=rayo.getPunto();
-                        interseccion.x+=rayo.getPunto().x+lambda1*rayo.getDireccion().x;
-                        interseccion.y+=rayo.getPunto().y+lambda1*rayo.getDireccion().y;
-                        interseccion.z+=rayo.getPunto().z+lambda1*rayo.getDireccion().z;
-			}
-		}
+				}
+				else if (lambda1 > 0 && lambda2 < 0) {
+					interseccion = new Point4d();
+					interseccion.x += rayo.getPunto().x + lambda1
+							* rayo.getDireccion().x;
+					interseccion.y += rayo.getPunto().y + lambda1
+							* rayo.getDireccion().y;
+					interseccion.z += rayo.getPunto().z + lambda1
+							* rayo.getDireccion().z;
 
+				}
+				else if (lambda1 > lambda2 && lambda2 > 0) {
+					interseccion = new Point4d();
+					interseccion.x += rayo.getPunto().x + lambda2
+							* rayo.getDireccion().x;
+					interseccion.y += rayo.getPunto().y + lambda2
+							* rayo.getDireccion().y;
+					interseccion.z += rayo.getPunto().z + lambda2
+							* rayo.getDireccion().z;
+				}
+				else if (lambda1 < 0 && lambda2 > 0) {
+					interseccion = new Point4d();
+					interseccion.x += rayo.getPunto().x + lambda2
+							* rayo.getDireccion().x;
+					interseccion.y += rayo.getPunto().y + lambda2
+							* rayo.getDireccion().y;
+					interseccion.z += rayo.getPunto().z + lambda2
+							* rayo.getDireccion().z;
+				}
+				else {
+					interseccion = new Point4d();
+					interseccion.x += rayo.getPunto().x + lambda1
+							* rayo.getDireccion().x;
+					interseccion.y += rayo.getPunto().y + lambda1
+							* rayo.getDireccion().y;
+					interseccion.z += rayo.getPunto().z + lambda1
+							* rayo.getDireccion().z;
+				}
+			}
 		}
 		else if (figura instanceof Plano) {
 			Plano plano = (Plano) figura;
@@ -96,15 +109,14 @@ public class Interseccion {
 			// (p1 -a)n
 			double numerador = puntoMenosPunto(plano.getPunto(),
 					rayo.getPunto()).dot(plano.getNormal(null));
-			double landa=0.0;
+			double landa = 0.0;
 			if (numerador != 0.0) {
 				// denominador (d * n)
 				// d*n
 				double denominador = rayo.getDireccion().dot(
 						plano.getNormal(null));
-
 				landa = numerador / denominador;
-			}	
+			}
 			// evaluamos t en la ecuacion del rayo
 			double casos = rayo.getDireccion().dot(plano.getNormal(null));
 
@@ -129,7 +141,6 @@ public class Interseccion {
 			if (numerador != 0.0) {
 				// denominador=(d * n)
 				double denominador = rayo.getDireccion().dot(N);
-
 				landa = numerador / denominador;
 			}
 			// comprobar si rayo(landa) se encuentra dentro
@@ -158,8 +169,8 @@ public class Interseccion {
 			double casos = rayo.getDireccion().dot(N);
 			if (casos < 0.0) {
 				if (landa >= 0.0) {
-					if ((S1 >= 0 && S2 >= 0 && S3 >= 0) || (S1 <= 0 && S2 <= 0
-							&& S3 <= 0)) {
+					if ((S1 >= 0 && S2 >= 0 && S3 >= 0)
+							|| (S1 <= 0 && S2 <= 0 && S3 <= 0)) {
 						// esta dentro del triangulo
 						interseccion = rayo.evaluar(landa);
 					}
@@ -167,11 +178,12 @@ public class Interseccion {
 				}
 				// else no se ve
 			}
-			else if(casos > 0.0){
+			else if (casos > 0.0) {
 				triangulo.getNormal(null).negate();
 				N.negate();
 				if (landa >= 0.0) {
-					if ((S1 >= 0 && S2 >= 0 && S3 >= 0) || (S1 <= 0 && S2 <= 0 && S3 <= 0)) {
+					if ((S1 >= 0 && S2 >= 0 && S3 >= 0)
+							|| (S1 <= 0 && S2 <= 0 && S3 <= 0)) {
 						// esta dentro del triangulo
 						interseccion = rayo.evaluar(landa);
 					}
