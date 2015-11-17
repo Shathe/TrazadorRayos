@@ -107,11 +107,7 @@ public class Trazador {
 					posicion = new Point4d(escenaFichero.nextInt(),
 							escenaFichero.nextInt(), escenaFichero.nextInt(),
 							escenaFichero.nextInt());
-					// color
-					escenaFichero.next();
-					color = new Color(escenaFichero.nextShort(),
-							escenaFichero.nextShort(),
-							escenaFichero.nextShort());
+				 
 					// refraccion
 					escenaFichero.next();
 					double refraccion = Float.parseFloat(escenaFichero.next());
@@ -119,17 +115,21 @@ public class Trazador {
 					escenaFichero.next();
 					double reflectividad = Float.parseFloat(escenaFichero
 							.next());
-					// ks
-					escenaFichero.next();
-					double ks = Float.parseFloat(escenaFichero.next());
 					// kd
 					escenaFichero.next();
-					double kd = Float.parseFloat(escenaFichero.next());
+					Color KD = new Color(escenaFichero.nextShort(),
+							escenaFichero.nextShort(),
+							escenaFichero.nextShort());
+					// ks
+					escenaFichero.next();
+					Color KS = new Color(escenaFichero.nextShort(),
+							escenaFichero.nextShort(),
+							escenaFichero.nextShort());
 					// radio
 					escenaFichero.next();
 					int radio = escenaFichero.nextInt();
-					Esfera esfera = new Esfera(posicion, color, refraccion,
-							reflectividad, ks, kd, radio);
+					Esfera esfera = new Esfera(posicion, refraccion,
+							reflectividad, KD, KS, radio);
 					System.out.println(esfera);
 					figuras.add(esfera);
 					break;
@@ -144,11 +144,7 @@ public class Trazador {
 					Vector4d normal = new Vector4d(escenaFichero.nextInt(),
 							escenaFichero.nextInt(), escenaFichero.nextInt(),
 							escenaFichero.nextInt());
-					// color
-					escenaFichero.next();
-					color = new Color(escenaFichero.nextShort(),
-							escenaFichero.nextShort(),
-							escenaFichero.nextShort());
+					 
 					// refraccion
 					escenaFichero.next();
 					double refraccionP = Float.parseFloat(escenaFichero.next());
@@ -156,14 +152,18 @@ public class Trazador {
 					escenaFichero.next();
 					double reflectividadP = Float.parseFloat(escenaFichero
 							.next());
-					// ks
-					escenaFichero.next();
-					double ksP = Float.parseFloat(escenaFichero.next());
 					// kd
 					escenaFichero.next();
-					double kdP = Float.parseFloat(escenaFichero.next());
+					KD = new Color(escenaFichero.nextShort(),
+							escenaFichero.nextShort(),
+							escenaFichero.nextShort());
+					// ks
+					escenaFichero.next();
+					 KS = new Color(escenaFichero.nextShort(),
+							escenaFichero.nextShort(),
+							escenaFichero.nextShort());
 					Plano plano = new Plano(puntoP, normal, color, refraccionP,
-							reflectividadP, ksP, kdP);
+							reflectividadP, KD, KS);
 					System.out.println(plano);
 					figuras.add(plano);
 
@@ -183,12 +183,7 @@ public class Trazador {
 					escenaFichero.next();
 					Point4d punto3 = new Point4d(escenaFichero.nextInt(),
 							escenaFichero.nextInt(), escenaFichero.nextInt(),
-							escenaFichero.nextInt());
-					// color
-					escenaFichero.next();
-					color = new Color(escenaFichero.nextShort(),
-							escenaFichero.nextShort(),
-							escenaFichero.nextShort());
+							escenaFichero.nextInt()); 
 					// refraccion
 					escenaFichero.next();
 					double refraccionT = Float.parseFloat(escenaFichero.next());
@@ -196,14 +191,19 @@ public class Trazador {
 					escenaFichero.next();
 					double reflectividadT = Float.parseFloat(escenaFichero
 							.next());
+					/// kd
+					escenaFichero.next();
+					KD = new Color(escenaFichero.nextShort(),
+							escenaFichero.nextShort(),
+							escenaFichero.nextShort());
 					// ks
 					escenaFichero.next();
-					double ksT = Float.parseFloat(escenaFichero.next());
-					// kd
-					escenaFichero.next();
-					double kdT = Float.parseFloat(escenaFichero.next());
+					 KS = new Color(escenaFichero.nextShort(),
+							escenaFichero.nextShort(),
+							escenaFichero.nextShort());
+                                         
 					Triangulo triangulo = new Triangulo(punto1, punto2, punto3,
-							color, refraccionT, reflectividadT, ksT, kdT);
+							 refraccionT, reflectividadT, KD, KS);
 					System.out.println(triangulo);
 					figuras.add(triangulo);
 					break;
