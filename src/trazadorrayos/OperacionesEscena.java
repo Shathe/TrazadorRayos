@@ -18,20 +18,22 @@ import javax.vecmath.Vector4d;
 public class OperacionesEscena {
 
 	public static Figura FiguraMasCercana(ArrayList<Figura> figuras,
-			Point4d punto, Rayo rayo, Camara camara) {
+			Point4d punto, Rayo rayo, Camara camara, Figura desde) {
 		Figura figura = null;
 		double distanciaMenor = Double.MAX_VALUE;
 		for (int i = 0; i < figuras.size(); i++) {
 			Figura siguienteFigura = figuras.get(i);
-			Point4d puntoInterseccion = Interseccion.intersecta(rayo,
-					siguienteFigura);
-			if (puntoInterseccion != null) {
-				double distancia = punto.distanceSquared(puntoInterseccion);
-				if (distancia < distanciaMenor) {
-					distanciaMenor = distancia;
-					figura = siguienteFigura;
-				}
+			if (desde != siguienteFigura) {
+				Point4d puntoInterseccion = Interseccion.intersecta(rayo,
+						siguienteFigura);
+				if (puntoInterseccion != null) {
+					double distancia = punto.distanceSquared(puntoInterseccion);
+					if (distancia < distanciaMenor) {
+						distanciaMenor = distancia;
+						figura = siguienteFigura;
+					}
 
+				}
 			}
 		}
 
@@ -58,8 +60,8 @@ public class OperacionesEscena {
 		 * la escen, y si lo hace, quedarnos unicamente con el objeto mas
 		 * cercano a pa pantalla
 		 */
-		color = colorDesdeRayo(escena, rayo, maxDepth, minIntensity);
-                
+		color = colorDesdeRayo(escena, rayo, maxDepth, minIntensity, null);
+
 		return color;
 
 	}
@@ -68,13 +70,12 @@ public class OperacionesEscena {
 	 * Devuelve el color que devuelve un rayo al golpear una figura en un punto
 	 */
 	public static Color colorDesdeRayo(Escena escena, Rayo rayo, int MaxDepth,
-			double minIntensity) {
+			double minIntensity, Figura desde) {
 		Color color = new Color(0, 0, 0);
 
 		Figura figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
-				rayo.getPunto(), rayo, escena.getCamara());
-		if (figura != null
-				&& Interseccion.intersecta(rayo, figura) != null) {
+				rayo.getPunto(), rayo, escena.getCamara(), desde);
+		if (figura != null && Interseccion.intersecta(rayo, figura) != null) {
 			/*
 			 * Ahora tenemos que intersecta con la figura y tenemos que obtener
 			 * su color
@@ -98,8 +99,8 @@ public class OperacionesEscena {
 			// reflejado => V-2*(V*N)N
 
 			// aux=2*(V*N)
-                        normal.normalize();
-                        rayo.getDireccion().normalize();
+			normal.normalize();
+			rayo.getDireccion().normalize();
 			double aux = 2 * normal.dot(rayo.getDireccion());
 			Vector4d reflejado = new Vector4d();
 			// 2*(V*N)N
@@ -112,7 +113,7 @@ public class OperacionesEscena {
 			reflejado.z = normal.z - reflejado.z;
 			reflejado.y = normal.y - reflejado.y;
 			reflejado.w = normal.w - reflejado.w;
-                        reflejado.normalize();
+			reflejado.normalize();
 			// ahora calculas el angulo reflejado
 			// T=(Iref*(normal*Rayo)-Raiz(1-Iref²(1-(normal*rayo)²)))
 			// *normal-Iref*rayo
@@ -128,7 +129,7 @@ public class OperacionesEscena {
 			refractado.y = auxR * normal.y - refrac * rayo.getDireccion().y;
 			refractado.z = auxR * normal.z - refrac * rayo.getDireccion().z;
 			refractado.w = auxR * normal.w - refrac * rayo.getDireccion().w;
-                        refractado.normalize();
+			refractado.normalize();
 
 			/*
 			 * Ahora tienes el angulo refractado y el angulo reflejado, ahora
@@ -171,15 +172,14 @@ public class OperacionesEscena {
 				rayoAlFoco.w = 0;
 
 				double intensidad = escena.getFoco().getIntensidadAmbiente()
-						* kd ;
-                                double coseno=reflejado.dot(rayoAlOjo)
-						/ rayoAlOjo.length() / reflejado.length();
-                                double Ipart2=ks
-						* rayo.getIntensidad() * coseno;
-                                coseno=rayoAlFoco.dot(normal) / normal.length()
+						* kd;
+				double coseno = reflejado.dot(rayoAlOjo) / rayoAlOjo.length()
+						/ reflejado.length();
+				double Ipart2 = ks * rayo.getIntensidad() * coseno;
+				coseno = rayoAlFoco.dot(normal) / normal.length()
 						/ rayoAlFoco.length();
-                                double Ipart3=kd * rayo.getIntensidad()*coseno;
-                                intensidad+=Ipart2+Ipart3;
+				double Ipart3 = kd * rayo.getIntensidad() * coseno;
+				intensidad += Ipart2 + Ipart3;
 				int red = (int) (intensidad * figura.color.getRed());
 				int blue = (int) (intensidad * figura.color.getBlue());
 				int green = (int) (intensidad * figura.color.getGreen());
@@ -192,7 +192,7 @@ public class OperacionesEscena {
 				if (MaxDepth > 0
 						&& rayoReflejado.getIntensidad() > minIntensity) {
 					Color colorReflejado = colorDesdeRayo(escena,
-							rayoReflejado, MaxDepth--, minIntensity);
+							rayoReflejado, MaxDepth--, minIntensity, figura);
 					red += colorReflejado.getRed();
 					blue += colorReflejado.getBlue();
 					green += colorReflejado.getGreen();
@@ -200,7 +200,7 @@ public class OperacionesEscena {
 				if (MaxDepth > 0
 						&& rayoRefractado.getIntensidad() > minIntensity) {
 					Color colorRefractado = colorDesdeRayo(escena,
-							rayoRefractado, MaxDepth--, minIntensity);
+							rayoRefractado, MaxDepth--, minIntensity, figura);
 					red += colorRefractado.getRed();
 					blue += colorRefractado.getBlue();
 					green += colorRefractado.getGreen();
@@ -223,9 +223,10 @@ public class OperacionesEscena {
 		if (blue > mayor) mayor = blue;
 		if (red > mayor) mayor = red;
 		if (green > mayor) mayor = green;
-		if (mayor <= 255){
-                    return new Color(red, green, blue);
-                }
+		if (mayor <= 255) {
+			System.out.println(red);
+			return new Color(red, green, blue);
+		}
 		else {
 			double indiceReduccion = (double) mayor / 255;
 			double redreducido = red / indiceReduccion;
@@ -249,15 +250,22 @@ public class OperacionesEscena {
 	public static boolean interseccionAFocoTapado(Point4d punto, Foco foco,
 			ArrayList<Figura> figuras, Figura figura) {
 		boolean intersecta = false;
-		Camara cam = new Camara(foco.getPosicion());
 		for (int i = 0; i < figuras.size() && !intersecta; i++) {
 
 			if (figura != figuras.get(i)) {
 				Vector4d direccionRayo = Interseccion.puntoMenosPunto(punto,
 						foco.getPosicion());
 				Rayo rayoPuntoFoco = new Rayo(direccionRayo, punto);
-				if (Interseccion.intersecta(rayoPuntoFoco, figuras.get(i)) != null) {
-					intersecta = true;
+				Point4d puntoInterseccion = Interseccion.intersecta(
+						rayoPuntoFoco, figuras.get(i));
+				if (puntoInterseccion != null) {
+					double distanciaPuntoFoco = punto.distanceSquared(foco
+							.getPosicion());
+					double distanciaInterseccionFoco = puntoInterseccion
+							.distanceSquared(foco.getPosicion());
+					if (distanciaInterseccionFoco < distanciaPuntoFoco) {
+						intersecta = true;
+					}
 				}
 			}
 		}

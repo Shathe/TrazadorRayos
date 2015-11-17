@@ -105,6 +105,11 @@ public class Camara {
 				new Point4d(4, 2, 1, 1),  null, 0.8, 1,
 				0.5, 0.5);
 		System.out.println(Interseccion.intersecta(rayo, triangulo));
+		Vector4d reflejado=new Vector4d(1,1,0,0);
+		Vector4d rayoAlOjo=new Vector4d(1,1,0,0);
+		double coseno = reflejado.dot(rayoAlOjo) / rayoAlOjo.length()
+				/ reflejado.length();
+		System.out.println(coseno);
 		// figura:triangulo punto1: 6 3 1 1 punto2: 5 -5 0 1 punto3: 10 -5 0 1
 		// color: 255 0 0
 		// indicerefraccion: 0.8 reflectividad: 1 ks: 0.5 kd: 0.5
