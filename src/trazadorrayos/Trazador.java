@@ -283,7 +283,7 @@ public class Trazador {
 				 * pixel que se esta calculando, por ejemplo el (0,0) es el
 				 * (-totalAncho/2, -totalAlto/2)
 				 */
-                                 
+                                //i=320;j=240;
 				puntoPantalla.x = diffAn * (i - centroAn) + diffAn / 2;
 				puntoPantalla.y = diffAl * (j - centroAl) + diffAl / 2;
 				puntoPantalla.z = -trazador.escena.getCamara()
