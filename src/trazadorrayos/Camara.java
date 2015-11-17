@@ -101,10 +101,6 @@ public class Camara {
 			System.out.println(i);
 			System.out.println(rayo.evaluar(i));
 		}
-		Triangulo triangulo = new Triangulo(new Point4d(8, 2, 1, 1),new Point4d(6, 6, 3, 1),
-				new Point4d(4, 2, 1, 1),  null, 0.8, 1,
-				0.5, 0.5);
-		System.out.println(Interseccion.intersecta(rayo, triangulo));
 		Vector4d reflejado=new Vector4d(1,1,0,0);
 		Vector4d rayoAlOjo=new Vector4d(1,1,0,0);
 		double coseno = reflejado.dot(rayoAlOjo) / rayoAlOjo.length()

@@ -84,8 +84,6 @@ public class OperacionesEscena {
 
 			double reflec = figura.getIndiceReflectividad();
 			double refrac = figura.getIndiceRefraccion();
-			double kd = figura.getIndiceDifusionKD();
-			double ks = figura.getIndiceEspecularKS();
 
 			/*
 			 * Ahora se calcula la direccion del angulo refractado y del angulo
@@ -150,11 +148,10 @@ public class OperacionesEscena {
 					escena.getFoco(), escena.getFiguras(), figura);
 
 			if (noVisible) {
-				double intensidad = escena.getFoco().getIntensidadAmbiente()
-						* kd;
-				int red = (int) (intensidad * figura.color.getRed());
-				int blue = (int) (intensidad * figura.color.getBlue());
-				int green = (int) (intensidad * figura.color.getGreen());
+				double intensidad = escena.getFoco().getIntensidadAmbiente();
+				int red = (int) (intensidad * figura.kd.getRed());
+				int blue = (int) (intensidad * figura.kd.getBlue());
+				int green = (int) (intensidad * figura.kd.getGreen());
 				color = new Color(red, green, blue);
 
 			}
@@ -170,19 +167,29 @@ public class OperacionesEscena {
 				rayoAlFoco.y = escena.getFoco().getPosicion().y - punto.y;
 				rayoAlFoco.z = escena.getFoco().getPosicion().z - punto.z;
 				rayoAlFoco.w = 0;
-
-				double intensidad = escena.getFoco().getIntensidadAmbiente()
-						* kd;
-				double coseno = reflejado.dot(rayoAlOjo) / rayoAlOjo.length()
-						/ reflejado.length();
-				double Ipart2 = ks * rayo.getIntensidad() * coseno;
-				coseno = rayoAlFoco.dot(normal) / normal.length()
+				// ambiental
+				double intensidadR = escena.getFoco().getIntensidadAmbiente();
+				double intensidadG = escena.getFoco().getIntensidadAmbiente();
+				double intensidadB = escena.getFoco().getIntensidadAmbiente();
+				// difusa
+				double coseno = rayoAlFoco.dot(normal) / normal.length()
 						/ rayoAlFoco.length();
-				double Ipart3 = kd * rayo.getIntensidad() * coseno;
-				intensidad += Ipart2 + Ipart3;
-				int red = (int) (intensidad * figura.color.getRed());
-				int blue = (int) (intensidad * figura.color.getBlue());
-				int green = (int) (intensidad * figura.color.getGreen());
+				double Ipart2R = figura.kd.getRed() * rayo.getIntensidad() * coseno;
+				double Ipart2G = figura.kd.getGreen() * rayo.getIntensidad() * coseno;
+				double Ipart2B = figura.kd.getBlue() * rayo.getIntensidad() * coseno;
+				// especular
+				coseno = reflejado.dot(rayoAlOjo) / rayoAlOjo.length()
+						/ reflejado.length();
+				double Ipart3R = figura.ks.getRed() * rayo.getIntensidad() * coseno;
+				double Ipart3G = figura.ks.getGreen() * rayo.getIntensidad() * coseno;
+				double Ipart3B = figura.ks.getBlue() * rayo.getIntensidad() * coseno;
+
+				intensidadR += Ipart2R + Ipart3R;
+				intensidadG += Ipart2G + Ipart3G;
+				intensidadB += Ipart2B + Ipart3B;
+				int red = (int) intensidadR;
+				int blue = (int) intensidadG ;
+				int green = (int) intensidadB ;
 
 				Rayo rayoReflejado = new Rayo(reflejado, punto, color,
 						rayo.getIntensidad() * reflec);

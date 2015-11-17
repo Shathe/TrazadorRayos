@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package trazadorrayos;
+
 import java.awt.Color;
 
 import javax.vecmath.Point4d;
@@ -13,27 +14,47 @@ import javax.vecmath.Vector4d;
  *
  * @author shathe
  */
-public class Figura  {
-	Color color = null;
+public class Figura {
+	Color kd = null;
+	Color ks = null;
 	private double indiceRefraccion = 0;
 	private double indiceReflectividad = 0;
-	private double indiceEspecularKS = 0;
-	private double indiceDifusionKD = 0;
 
-	public Figura(Color color, double refraccion,
-			double reflexion, double kd, double ks) {
-		this.color = color;
+	public Figura(double refraccion, double reflexion, Color kd, Color ks) {
+		this.kd = kd;
+		this.ks = ks;
 		indiceRefraccion = refraccion;
 		indiceReflectividad = reflexion;
-		indiceEspecularKS = ks;
-		indiceDifusionKD = kd;
 	}
-	
-	
 
+	/**
+	 * @return the kd
+	 */
+	public Color getKd() {
+		return kd;
+	}
 
-	public Color getColor() {
-		return color;
+	/**
+	 * @param kd
+	 *            the kd to set
+	 */
+	public void setKd(Color kd) {
+		this.kd = kd;
+	}
+
+	/**
+	 * @return the ks
+	 */
+	public Color getKs() {
+		return ks;
+	}
+
+	/**
+	 * @param ks
+	 *            the ks to set
+	 */
+	public void setKs(Color ks) {
+		this.ks = ks;
 	}
 
 	public double getIndiceRefraccion() {
@@ -44,15 +65,7 @@ public class Figura  {
 		return indiceReflectividad;
 	}
 
-	public double getIndiceEspecularKS() {
-		return indiceEspecularKS;
+	public Vector4d getNormal(Point4d puntoInterseccion) {
+		return null;
 	}
-
-	public double getIndiceDifusionKD() {
-		return indiceDifusionKD;
-	}
-        
-        public Vector4d getNormal(Point4d puntoInterseccion){   
-            return null;
-        }
 }
