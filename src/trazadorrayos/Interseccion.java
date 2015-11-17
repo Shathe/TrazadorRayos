@@ -19,9 +19,6 @@ public class Interseccion {
 		Point4d interseccion = null;
 		if (figura instanceof Esfera) {
 			Esfera esfera = (Esfera) figura;
-			Vector4d direccion = rayo.getDireccion();
-			Point4d puntoRayo = rayo.getPunto();
-			Point4d centro = esfera.getCentro();
 			/*
 			 * Ahora lo que se hace es sacar la ecuacion
 			 * (pRayo-centroEsfera)²=radioEsfera² y sacar los terminos a,b,c de
@@ -169,9 +166,10 @@ public class Interseccion {
 			double casos = rayo.getDireccion().dot(N);
 			if (casos < 0.0) {
 				if (landa >= 0.0) {
-					if ((S1 >= 0 && S2 >= 0 && S3 >= 0)
-							|| (S1 <= 0 && S2 <= 0 && S3 <= 0)) {
+					if ((S1 > 0 && S2 > 0 && S3 > 0)
+							|| (S1 < 0 && S2 < 0 && S3 < 0)) {
 						// esta dentro del triangulo
+						//System.out.println(landa);
 						interseccion = rayo.evaluar(landa);
 					}
 					// else no da en el triangulo
@@ -182,9 +180,10 @@ public class Interseccion {
 				triangulo.getNormal(null).negate();
 				N.negate();
 				if (landa >= 0.0) {
-					if ((S1 >= 0 && S2 >= 0 && S3 >= 0)
-							|| (S1 <= 0 && S2 <= 0 && S3 <= 0)) {
+					if ((S1 > 0 && S2 > 0 && S3 > 0)
+							|| (S1 < 0 && S2 < 0 && S3 < 0)) {
 						// esta dentro del triangulo
+						//System.out.println(landa);
 						interseccion = rayo.evaluar(landa);
 					}
 					// else no da en el triangulo
