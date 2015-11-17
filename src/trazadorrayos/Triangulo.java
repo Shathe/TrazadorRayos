@@ -11,7 +11,7 @@ public class Triangulo extends Figura {
 	private Point4d punto3 = null;
 
 	public Triangulo(Point4d punto1, Point4d punto2, Point4d punto3,
-			Color color, double refraccion, double reflexion, Color kd, Color ks) {
+                double refraccion, double reflexion, Color kd, Color ks) {
 		super(refraccion, reflexion, kd, ks);
 		this.punto1 = punto1;
 		this.punto2 = punto2;

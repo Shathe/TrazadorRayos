@@ -162,7 +162,7 @@ public class Trazador {
 					 KS = new Color(escenaFichero.nextShort(),
 							escenaFichero.nextShort(),
 							escenaFichero.nextShort());
-					Plano plano = new Plano(puntoP, normal, color, refraccionP,
+					Plano plano = new Plano(puntoP, normal, refraccionP,
 							reflectividadP, KD, KS);
 					System.out.println(plano);
 					figuras.add(plano);
