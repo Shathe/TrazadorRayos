@@ -59,7 +59,7 @@ public class OperacionesEscena {
 		 * cercano a pa pantalla
 		 */
 		color = colorDesdeRayo(escena, rayo, maxDepth, minIntensity);
-		// ¿aqui normalizar eel color que de devuelve con el de la luz del foco?
+                
 		return color;
 
 	}
@@ -83,7 +83,7 @@ public class OperacionesEscena {
 
 			double reflec = figura.getIndiceReflectividad();
 			double refrac = figura.getIndiceRefraccion();
-			double kd = figura.getIndiceEspecularKS();
+			double kd = figura.getIndiceDifusionKD();
 			double ks = figura.getIndiceEspecularKS();
 
 			/*
@@ -98,6 +98,8 @@ public class OperacionesEscena {
 			// reflejado => V-2*(V*N)N
 
 			// aux=2*(V*N)
+                        normal.normalize();
+                        rayo.getDireccion().normalize();
 			double aux = 2 * normal.dot(rayo.getDireccion());
 			Vector4d reflejado = new Vector4d();
 			// 2*(V*N)N
@@ -110,7 +112,7 @@ public class OperacionesEscena {
 			reflejado.z = normal.z - reflejado.z;
 			reflejado.y = normal.y - reflejado.y;
 			reflejado.w = normal.w - reflejado.w;
-
+                        reflejado.normalize();
 			// ahora calculas el angulo reflejado
 			// T=(Iref*(normal*Rayo)-Raiz(1-Iref²(1-(normal*rayo)²)))
 			// *normal-Iref*rayo
@@ -126,6 +128,7 @@ public class OperacionesEscena {
 			refractado.y = auxR * normal.y - refrac * rayo.getDireccion().y;
 			refractado.z = auxR * normal.z - refrac * rayo.getDireccion().z;
 			refractado.w = auxR * normal.w - refrac * rayo.getDireccion().w;
+                        refractado.normalize();
 
 			/*
 			 * Ahora tienes el angulo refractado y el angulo reflejado, ahora
@@ -170,11 +173,11 @@ public class OperacionesEscena {
 				double intensidad = escena.getFoco().getIntensidadAmbiente()
 						* kd ;
                                 double coseno=reflejado.dot(rayoAlOjo)
-						/ rayoAlOjo.lengthSquared() / reflejado.lengthSquared();
+						/ rayoAlOjo.length() / reflejado.length();
                                 double Ipart2=ks
 						* rayo.getIntensidad() * coseno;
-                                coseno=rayoAlFoco.dot(normal) / normal.lengthSquared()
-						/ rayoAlFoco.lengthSquared();
+                                coseno=rayoAlFoco.dot(normal) / normal.length()
+						/ rayoAlFoco.length();
                                 double Ipart3=kd * rayo.getIntensidad()*coseno;
                                 intensidad+=Ipart2+Ipart3;
 				int red = (int) (intensidad * figura.color.getRed());
