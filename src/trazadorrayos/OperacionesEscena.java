@@ -25,7 +25,7 @@ public class OperacionesEscena {
 			Figura siguienteFigura = figuras.get(i);
 			if (desde != siguienteFigura) {
 				Point4d puntoInterseccion = Interseccion.intersecta(rayo,
-						siguienteFigura);
+						siguienteFigura,1);
 				if (puntoInterseccion != null) {
 					double distancia = punto.distanceSquared(puntoInterseccion);
 					if (distancia < distanciaMenor) {
@@ -61,7 +61,7 @@ public class OperacionesEscena {
 		 * cercano a pa pantalla
 		 */
 		color = colorDesdeRayo(escena, rayo, maxDepth, minIntensity, null);
-                
+
 		return color;
 
 	}
@@ -71,17 +71,17 @@ public class OperacionesEscena {
 	 */
 	public static Color colorDesdeRayo(Escena escena, Rayo rayo, int MaxDepth,
 			double minIntensity, Figura desde) {
-            			
+
 		Color color = null;
 
 		Figura figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
 				rayo.getPunto(), rayo, escena.getCamara(), desde);
-		if (figura != null && Interseccion.intersecta(rayo, figura) != null) {
+		if (figura != null && Interseccion.intersecta(rayo, figura,1) != null) {
 			/*
 			 * Ahora tenemos que intersecta con la figura y tenemos que obtener
 			 * su color
 			 */
-			Point4d punto = Interseccion.intersecta(rayo, figura);
+			Point4d punto = Interseccion.intersecta(rayo, figura,1);
 
 			double reflec = figura.getIndiceReflectividad();
 			double refrac = figura.getIndiceRefraccion();
@@ -168,32 +168,41 @@ public class OperacionesEscena {
 				rayoAlFoco.y = escena.getFoco().getPosicion().y - punto.y;
 				rayoAlFoco.z = escena.getFoco().getPosicion().z - punto.z;
 				rayoAlFoco.w = 0;
-                                rayoAlFoco.normalize();
-                                rayoAlOjo.normalize();
+				rayoAlFoco.normalize();
+				rayoAlOjo.normalize();
 				// ambiental
-				double intensidadR = escena.getFoco().getIntensidadAmbiente()* figura.kd.getRed();
-				double intensidadG = escena.getFoco().getIntensidadAmbiente()* figura.kd.getGreen();
-				double intensidadB = escena.getFoco().getIntensidadAmbiente()* figura.kd.getBlue();
+				double intensidadR = escena.getFoco().getIntensidadAmbiente()
+						* figura.kd.getRed();
+				double intensidadG = escena.getFoco().getIntensidadAmbiente()
+						* figura.kd.getGreen();
+				double intensidadB = escena.getFoco().getIntensidadAmbiente()
+						* figura.kd.getBlue();
 				// difusa
 				double cosenoDif = rayoAlFoco.dot(normal) / normal.length()
 						/ rayoAlFoco.length();
-				double Ipart2R = figura.kd.getRed() * rayo.getIntensidad() * cosenoDif;
-				double Ipart2G = figura.kd.getGreen() * rayo.getIntensidad() * cosenoDif;
-				double Ipart2B = figura.kd.getBlue() * rayo.getIntensidad() * cosenoDif;
+				double Ipart2R = figura.kd.getRed() * rayo.getIntensidad()
+						* cosenoDif;
+				double Ipart2G = figura.kd.getGreen() * rayo.getIntensidad()
+						* cosenoDif;
+				double Ipart2B = figura.kd.getBlue() * rayo.getIntensidad()
+						* cosenoDif;
 				// especular
-				double cosenoEsp = reflejado.dot(rayoAlOjo) / rayoAlOjo.length()
-						/ reflejado.length();
-                                cosenoEsp=Math.pow(cosenoEsp,150);
-				double Ipart3R = figura.ks.getRed() * rayo.getIntensidad() * cosenoEsp;
-				double Ipart3G = figura.ks.getGreen() * rayo.getIntensidad() * cosenoEsp;
-				double Ipart3B = figura.ks.getBlue() * rayo.getIntensidad() * cosenoEsp;
+				double cosenoEsp = reflejado.dot(rayoAlOjo)
+						/ rayoAlOjo.length() / reflejado.length();
+				cosenoEsp = Math.pow(cosenoEsp, 150);
+				double Ipart3R = figura.ks.getRed() * rayo.getIntensidad()
+						* cosenoEsp;
+				double Ipart3G = figura.ks.getGreen() * rayo.getIntensidad()
+						* cosenoEsp;
+				double Ipart3B = figura.ks.getBlue() * rayo.getIntensidad()
+						* cosenoEsp;
 
 				intensidadR += Ipart2R + Ipart3R;
 				intensidadG += Ipart2G + Ipart3G;
 				intensidadB += Ipart2B + Ipart3B;
 				int red = (int) intensidadR;
-				int green = (int) intensidadG ;
-				int blue = (int) intensidadB ;
+				int green = (int) intensidadG;
+				int blue = (int) intensidadB;
 
 				Rayo rayoReflejado = new Rayo(reflejado, punto, color,
 						rayo.getIntensidad() * reflec);
@@ -230,26 +239,21 @@ public class OperacionesEscena {
 	}
 
 	public static Color normalizarColor(int red, int green, int blue) {
-		/*/int mayor = 0;
-		if (blue > mayor) mayor = blue;
-		if (red > mayor) mayor = red;
-		if (green > mayor) mayor = green;
-		if (mayor <= 255) {
-			System.out.println(red);
-			return new Color(red, green, blue);
-		}
-		else {
-			double indiceReduccion = (double) mayor / 255;
-			double redreducido = red / indiceReduccion;
-			double greenreducido = green / indiceReduccion;
-			double bluereducido = blue / indiceReduccion;
-			return new Color((int) redreducido, (int) greenreducido,
-					(int) bluereducido);
-		}*/
-            if(red>255)red=255;
-            if(green>255)green=255;
-            if(blue>255)blue=255;
-            return new Color(red,green,blue);
+		/*
+		 * /int mayor = 0; if (blue > mayor) mayor = blue; if (red > mayor)
+		 * mayor = red; if (green > mayor) mayor = green; if (mayor <= 255) {
+		 * System.out.println(red); return new Color(red, green, blue); } else {
+		 * double indiceReduccion = (double) mayor / 255; double redreducido =
+		 * red / indiceReduccion; double greenreducido = green /
+		 * indiceReduccion; double bluereducido = blue / indiceReduccion; return
+		 * new Color((int) redreducido, (int) greenreducido, (int)
+		 * bluereducido); }
+		 */
+		if (red > 255) red = 255;
+		if (green > 255) green = 255;
+		if (blue > 255) blue = 255;
+		//System.out.println(red+" "+green+" "+blue);
+		return new Color(red, green, blue);
 
 	}
 
@@ -265,23 +269,22 @@ public class OperacionesEscena {
 	public static boolean interseccionAFocoTapado(Point4d punto, Foco foco,
 			ArrayList<Figura> figuras, Figura figura) {
 		boolean intersecta = false;
-                		Vector4d rayoAlFoco = new Vector4d();
-				rayoAlFoco.x =foco.getPosicion().x - punto.x;
-				rayoAlFoco.y = foco.getPosicion().y - punto.y;
-				rayoAlFoco.z = foco.getPosicion().z - punto.z;
-				rayoAlFoco.w = 0;
-                                rayoAlFoco.normalize();
-                                double cosenoDif = rayoAlFoco.dot(figura.getNormal(punto)) / 
-                                        figura.getNormal(punto).length() / rayoAlFoco.length();
-                                if(cosenoDif>0){
-                                    	for (int i = 0; i < figuras.size() && !intersecta; i++) {
+		Vector4d rayoAlFoco = new Vector4d();
+		rayoAlFoco.x = foco.getPosicion().x - punto.x;
+		rayoAlFoco.y = foco.getPosicion().y - punto.y;
+		rayoAlFoco.z = foco.getPosicion().z - punto.z;
+		rayoAlFoco.w = 0;
+		rayoAlFoco.normalize();
+		double cosenoDif = rayoAlFoco.dot(figura.getNormal(punto))
+				/ figura.getNormal(punto).length() / rayoAlFoco.length();
+		if (cosenoDif > 0) {
+			for (int i = 0; i < figuras.size() && !intersecta; i++) {
 
-			 
-				Vector4d direccionRayo = Interseccion.puntoMenosPunto(punto,
-						foco.getPosicion());
+				Vector4d direccionRayo = Interseccion.puntoMenosPunto(
+						foco.getPosicion(), punto);
 				Rayo rayoPuntoFoco = new Rayo(direccionRayo, punto);
 				Point4d puntoInterseccion = Interseccion.intersecta(
-						rayoPuntoFoco, figuras.get(i));
+						rayoPuntoFoco, figuras.get(i),0);
 				if (puntoInterseccion != null) {
 					double distanciaPuntoFoco = punto.distanceSquared(foco
 							.getPosicion());
@@ -291,13 +294,13 @@ public class OperacionesEscena {
 						intersecta = true;
 					}
 				}
-			
+
+			}
 		}
-                                }
-                              
-                                else{
-                                    intersecta=true;
-                                }
+
+		else {
+			intersecta = true;
+		}
 		return intersecta;
 	}
 }

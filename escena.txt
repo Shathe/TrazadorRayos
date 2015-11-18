@@ -1,7 +1,7 @@
-figura:foco posicion: 7 4 3 1 color: 255 255 255 intensidad: 4 Iambiente: 0.1
-figura:camara direccion: -1 -1 0 0 distanciaPantalla: 2  posicion: 7 4 3 1 
-figura:pantalla pixelanchura: 640 pixelaltura: 480 anchura: 6 altura: 4
-figura:esfera posicion: 4 3 1 1  indicerefraccion: 0.8 reflectividad: 1 kd: 255 0 0 ks: 255 255 255 radio: 2
-figura:esfera posicion: 1 0 1 1  indicerefraccion: 0.8 reflectividad: 1 kd: 0 255 0 ks: 255 255 255 radio: 2
-// figura:plano posicion: 2 -1 1 1 normal: 1 0 1 0  indicerefraccion: 0.8 reflectividad: 0 kd: 0 255 0 ks: 255 255 255
-// figura:triangulo punto1: 2 -3 1 1 punto2: 4 -4 1 1 punto3: 10 -3 1 1  indicerefraccion: 0.8 reflectividad: 1 kd: 0 255 0 ks: 255 255 255
+figura:foco posicion: 3 2 0 1 color: 255 255 255 intensidad: 4 Iambiente: 0.1
+figura:camara direccion: 1 1 1 0 distanciaPantalla: 2  posicion: 0 0 0 1 
+figura:pantalla pixelanchura: 1420 pixelaltura: 1100 anchura: 6 altura: 4
+figura:esfera posicion: 4 4 4 1  indicerefraccion: 0.8 reflectividad: 1 kd: 255 0 0 ks: 255 255 255 radio: 2
+figura:esfera posicion: 1 7 7 1  indicerefraccion: 0.8 reflectividad: 1 kd: 0 255 0 ks: 255 255 255 radio: 2
+figura:plano posicion: 10 10 10 1 normal: -1 -1 -1 0  indicerefraccion: 0.8 reflectividad: 0 kd: 0 255 0 ks: 255 255 255
+figura:triangulo punto1: 10 7 4 1 punto2: 8 2 4 1 punto3: 10 3 4 1  indicerefraccion: 0.8 reflectividad: 1 kd: 0 0 255 ks: 255 255 255

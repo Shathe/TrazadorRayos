@@ -15,7 +15,15 @@ import javax.vecmath.Vector4d;
  */
 public class Interseccion {
 
-	public static Point4d intersecta(Rayo rayo, Figura figura) {
+	/**
+	 * aux==1 con camara, aux==0 con foco
+	 * 
+	 * @param rayo
+	 * @param figura
+	 * @param aux
+	 * @return
+	 */
+	public static Point4d intersecta(Rayo rayo, Figura figura, int aux) {
 		Point4d interseccion = null;
 		if (figura instanceof Esfera) {
 			Esfera esfera = (Esfera) figura;
@@ -123,6 +131,14 @@ public class Interseccion {
 				}
 				// else no se ve
 			}
+			/*
+			 * else if (casos > 0.0) { if (aux == 1) {
+			 * figura.getNormal(null).negate();
+			 * 
+			 * if (landa >= 0.0) { interseccion = rayo.evaluar(landa); } }
+			 * 
+			 * // else no se ve }
+			 */
 			// else no intersecta
 		}
 		else if (figura instanceof Triangulo) {
@@ -169,27 +185,22 @@ public class Interseccion {
 					if ((S1 > 0 && S2 > 0 && S3 > 0)
 							|| (S1 < 0 && S2 < 0 && S3 < 0)) {
 						// esta dentro del triangulo
-						//System.out.println(landa);
+						// System.out.println(landa);
 						interseccion = rayo.evaluar(landa);
 					}
 					// else no da en el triangulo
 				}
 				// else no se ve
 			}
-			else if (casos > 0.0) {
-				triangulo.getNormal(null).negate();
-				N.negate();
-				if (landa >= 0.0) {
-					if ((S1 > 0 && S2 > 0 && S3 > 0)
-							|| (S1 < 0 && S2 < 0 && S3 < 0)) {
-						// esta dentro del triangulo
-						//System.out.println(landa);
-						interseccion = rayo.evaluar(landa);
-					}
-					// else no da en el triangulo
-				}
-				// else no se ve
-			}
+			/*
+			 * else if (casos > 0.0) { // triangulo.getNormal(null).negate(); if
+			 * (aux == 1) { N.negate(); } if (landa >= 0.0) { if ((S1 > 0 && S2
+			 * > 0 && S3 > 0) || (S1 < 0 && S2 < 0 && S3 < 0)) { // esta dentro
+			 * del triangulo // System.out.println(landa); interseccion =
+			 * rayo.evaluar(landa); } // else no da en el triangulo
+			 * 
+			 * } // else no se ve }
+			 */
 			// else no intersecta
 		}
 
