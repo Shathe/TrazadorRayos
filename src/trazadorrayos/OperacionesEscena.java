@@ -108,10 +108,10 @@ public class OperacionesEscena {
 			reflejado.z = aux * normal.z;
 			reflejado.w = normal.w;
 			// V-2*(V*N)N
-			reflejado.x = normal.x - reflejado.x;
-			reflejado.z = normal.z - reflejado.z;
-			reflejado.y = normal.y - reflejado.y;
-			reflejado.w = normal.w - reflejado.w;
+			reflejado.x = rayo.getDireccion().x - reflejado.x;
+			reflejado.z = rayo.getDireccion().z - reflejado.z;
+			reflejado.y = rayo.getDireccion().y - reflejado.y;
+			reflejado.w = rayo.getDireccion().w - reflejado.w;
 			reflejado.normalize();
 			// ahora calculas el angulo reflejado
 			// T=(Iref*(normal*Rayo)-Raiz(1-Iref²(1-(normal*rayo)²)))
@@ -187,8 +187,21 @@ public class OperacionesEscena {
 				double Ipart2B = figura.kd.getBlue() * rayo.getIntensidad()
 						* cosenoDif;
 				// especular
-				double cosenoEsp = reflejado.dot(rayoAlOjo)
-						/ rayoAlOjo.length() / reflejado.length();
+				double aux2 = 2 * normal.dot(rayoAlFoco);
+				Vector4d reflejado2 = new Vector4d();
+				// 2*(V*N)N
+				reflejado2.x = aux2 * normal.x;
+				reflejado2.y = aux2 * normal.y;
+				reflejado2.z = aux2 * normal.z;
+				reflejado2.w = normal.w;
+				// V-2*(V*N)N
+				reflejado2.x = rayoAlFoco.x - reflejado2.x;
+				reflejado2.z = rayoAlFoco.z - reflejado2.z;
+				reflejado2.y = rayoAlFoco.y - reflejado2.y;
+				reflejado2.w = rayoAlFoco.w - reflejado2.w;
+				reflejado2.normalize();
+				double cosenoEsp = reflejado2.dot(rayoAlOjo)
+						/ rayoAlOjo.length() / reflejado2.length();
 				cosenoEsp = Math.pow(cosenoEsp, 150);
 				double Ipart3R = figura.ks.getRed() * rayo.getIntensidad()
 						* cosenoEsp;
