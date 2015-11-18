@@ -61,7 +61,7 @@ public class OperacionesEscena {
 		 * cercano a pa pantalla
 		 */
 		color = colorDesdeRayo(escena, rayo, maxDepth, minIntensity, null);
-
+                
 		return color;
 
 	}
@@ -71,7 +71,8 @@ public class OperacionesEscena {
 	 */
 	public static Color colorDesdeRayo(Escena escena, Rayo rayo, int MaxDepth,
 			double minIntensity, Figura desde) {
-		Color color = new Color(0, 0, 0);
+            			
+		Color color = null;
 
 		Figura figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
 				rayo.getPunto(), rayo, escena.getCamara(), desde);
@@ -170,9 +171,9 @@ public class OperacionesEscena {
                                 rayoAlFoco.normalize();
                                 rayoAlOjo.normalize();
 				// ambiental
-				double intensidadR = escena.getFoco().getIntensidadAmbiente();
-				double intensidadG = escena.getFoco().getIntensidadAmbiente();
-				double intensidadB = escena.getFoco().getIntensidadAmbiente();
+				double intensidadR = escena.getFoco().getIntensidadAmbiente()* figura.kd.getRed();
+				double intensidadG = escena.getFoco().getIntensidadAmbiente()* figura.kd.getGreen();
+				double intensidadB = escena.getFoco().getIntensidadAmbiente()* figura.kd.getBlue();
 				// difusa
 				double cosenoDif = rayoAlFoco.dot(normal) / normal.length()
 						/ rayoAlFoco.length();
@@ -275,23 +276,23 @@ public class OperacionesEscena {
                                 if(cosenoDif>0){
                                     	for (int i = 0; i < figuras.size() && !intersecta; i++) {
 
-
-                                        Vector4d direccionRayo = Interseccion.puntoMenosPunto(punto,
-                                                        foco.getPosicion());
-                                        Rayo rayoPuntoFoco = new Rayo(direccionRayo, punto);
-                                        Point4d puntoInterseccion = Interseccion.intersecta(
-                                                        rayoPuntoFoco, figuras.get(i));
-                                        if (puntoInterseccion != null) {
-                                                double distanciaPuntoFoco = punto.distanceSquared(foco
-                                                                .getPosicion());
-                                                double distanciaInterseccionFoco = puntoInterseccion
-                                                                .distanceSquared(foco.getPosicion());
-                                                if (distanciaInterseccionFoco < distanciaPuntoFoco) {
-                                                        intersecta = true;
-                                                }
-                                        }
-
-                                    }
+			 
+				Vector4d direccionRayo = Interseccion.puntoMenosPunto(punto,
+						foco.getPosicion());
+				Rayo rayoPuntoFoco = new Rayo(direccionRayo, punto);
+				Point4d puntoInterseccion = Interseccion.intersecta(
+						rayoPuntoFoco, figuras.get(i));
+				if (puntoInterseccion != null) {
+					double distanciaPuntoFoco = punto.distanceSquared(foco
+							.getPosicion());
+					double distanciaInterseccionFoco = puntoInterseccion
+							.distanceSquared(foco.getPosicion());
+					if (distanciaInterseccionFoco < distanciaPuntoFoco) {
+						intersecta = true;
+					}
+				}
+			
+		}
                                 }
                               
                                 else{
