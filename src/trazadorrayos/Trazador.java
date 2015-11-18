@@ -238,15 +238,21 @@ public class Trazador {
 	 * @return
 	 */
 	public static Point4d multiplyPointMatrix(Point4d point, Matrix4d matrix) {
-		return new Point4d(point.x * matrix.m00 + point.y * matrix.m10
-				+ point.z * matrix.m20 + point.w * matrix.m30, point.x
-				* matrix.m01 + point.y * matrix.m11 + point.z * matrix.m21
-				+ point.w * matrix.m31, point.x * matrix.m02 + point.y
-				* matrix.m12 + point.z * matrix.m22 + point.w * matrix.m32,
-				point.x * matrix.m03 + point.y * matrix.m13 + point.z
-						* matrix.m23 + point.w * matrix.m33);
+		return new Point4d(point.x * matrix.getElement(0,0) + point.y * matrix.getElement(1,0) 
+				+ point.z * matrix.getElement(2,0)  + point.w * matrix.getElement(3,0), point.x
+				* matrix.getElement(0,1) + point.y * matrix.getElement(1,1) + point.z * matrix.getElement(2,1)
+				+ point.w * matrix.getElement(3,1), point.x * matrix.getElement(0,2) + point.y
+				* matrix.getElement(1,2) + point.z * matrix.getElement(2,2) + point.w * matrix.getElement(3,2),
+				point.x * matrix.getElement(0,3) + point.y * matrix.getElement(1,3) + point.z
+						* matrix.getElement(2,3) + point.w * matrix.getElement(3,3));
 	}
-
+     public static Point4d multiplicar(Matrix4d A, double[] x) {
+        double[] y = new double[x.length];
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
+                y[i] += A.getElement(i, j) * x[j];
+        return new Point4d(y[0], y[1], y[2],1);
+                }
 	public static void main(String[] args) {
 		int MaxDepth = 15;
 		double minIntensity = 0.05;
@@ -274,9 +280,9 @@ public class Trazador {
 				double centroAn = pantalla.getPixelesanchura() / 2;
 				double centroAl = pantalla.getPixelesaltura() / 2;
 				double diffAn = pantalla.getAnchura()
-						/ (pantalla.getPixelesanchura());
+						/ (double)(pantalla.getPixelesanchura()-1);
 				double diffAl = pantalla.getAltura()
-						/ (pantalla.getPixelesaltura());
+						/ (double)(pantalla.getPixelesaltura()-1);
 				Point4d puntoPantalla = new Point4d();
 				/*
 				 * i-centroAn es debido a que en el sistema de la camara el
@@ -284,8 +290,8 @@ public class Trazador {
 				 * (-totalAncho/2, -totalAlto/2)
 				 */
                                   
-				puntoPantalla.x = diffAn * (i - centroAn) + diffAn / 2;
-				puntoPantalla.y = diffAl * (j - centroAl) + diffAl / 2;
+				puntoPantalla.x = diffAn * (i - centroAn) + diffAn;
+				puntoPantalla.y = diffAl * (-j + centroAl) + diffAl;
 				puntoPantalla.z = -trazador.escena.getCamara()
 						.getDistanciaPantalla();
 				puntoPantalla.w = 1;
@@ -297,13 +303,20 @@ public class Trazador {
 				 * mundo
 				 */
 
+                                  //  double []a={puntoPantalla.x,puntoPantalla.y,puntoPantalla.z,1};
+				//puntoPantalla = multiplicar(cambioBase,  a);
+                                
 				puntoPantalla = multiplyPointMatrix(puntoPantalla, cambioBase);
 				Color color = OperacionesEscena.colorPuntoPantalla(
 						puntoPantalla, trazador.escena, MaxDepth, minIntensity);
+                               
 				imagen.setRGB(i, j, color.getRGB());
+                                  
                               
 
 			}
+                      
+                        
 
 		}
 		try {
