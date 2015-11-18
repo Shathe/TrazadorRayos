@@ -131,14 +131,7 @@ public class Interseccion {
 				}
 				// else no se ve
 			}
-			/*
-			 * else if (casos > 0.0) { if (aux == 1) {
-			 * figura.getNormal(null).negate();
-			 * 
-			 * if (landa >= 0.0) { interseccion = rayo.evaluar(landa); } }
-			 * 
-			 * // else no se ve }
-			 */
+
 			// else no intersecta
 		}
 		else if (figura instanceof Triangulo) {
@@ -192,15 +185,6 @@ public class Interseccion {
 				}
 				// else no se ve
 			}
-			/*
-			 * else if (casos > 0.0) { // triangulo.getNormal(null).negate(); if
-			 * (aux == 1) { N.negate(); } if (landa >= 0.0) { if ((S1 > 0 && S2
-			 * > 0 && S3 > 0) || (S1 < 0 && S2 < 0 && S3 < 0)) { // esta dentro
-			 * del triangulo // System.out.println(landa); interseccion =
-			 * rayo.evaluar(landa); } // else no da en el triangulo
-			 * 
-			 * } // else no se ve }
-			 */
 			// else no intersecta
 		}
 
