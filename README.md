@@ -2,17 +2,9 @@
 
 Los siguientes pasos que faltan son:
 
-EL COLOR DEL RAYO AFECTA A KS*COLOR.RAYO
-EL LOS NUEVO COLORES REL RAYO SERANEL COLOR QUE LLEVAS ACUMULADO (LO TENDRAS QUE NORMALIZAR PERO NO LO NORMALICES GAURDANDOLO, PORQUE
-SINO, AL SUMAR LUEGO LOS ACUMULADOS LOS PESOS NO SERAN LOS MISMOS)
-
-la intensidad que pasa al rayo reflejado no es reflec*rayo.getIntensidad es reflec*rayo.getIntensidad*cosenoModelo2
-Kd es el color del objeto(hay que pensar tambien si se cuenta la luz del rayo)
-Ks es como se comporta el objeto especular(la anerior luz 255,255,255)
+si el objeto es transparente al mirar si tapa, no hay que contarlo, pensar si se peude mirar si es solo algo transaparente
 Angulo refractado en la esfera hay que esperar a que vuelv a refractarse (devolver solo el rayo refactado)
 que vaa la especular
-//cosenos negatios?
-//error de colores cambiado foco por ejemplo
 
 
  
