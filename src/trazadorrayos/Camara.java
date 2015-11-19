@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 
@@ -12,16 +11,16 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Point4d;
 
 /**
+ * Clase que representa la camara, con su posicion, vector direccion y su
+ * sistema de coordenadas propio
  *
- * @author shathe
  */
 public class Camara {
-	// figura:camara posicion:7,4,1 distanciaPantalla:2 direccion:-1,1,0
 
-	private Point4d posicion = null;
+	private Point4d posicion = null; // e
 	private int distanciaPantalla = 0;
-	private Vector4d direccion = new Vector4d();
-	// ahora vienen los vectores del sistema de coordenadas de la camara
+	private Vector4d direccion = new Vector4d();// el vector g
+	// vectores del sistema de coordenadas de la camara
 	private Vector4d w = new Vector4d();
 	private Vector4d u = new Vector4d();
 	private Vector4d v = new Vector4d();
@@ -32,18 +31,16 @@ public class Camara {
 		this.distanciaPantalla = distanciaPantalla;
 		this.direccion = direccion;
 		// ahora se calcula el sistema de coordenadas
-		// w=normalize(-direccion)
-		w.w = direccion.w;
-		w.y = -direccion.y;
-		w.x = -direccion.x;
-		w.z = -direccion.z;
+		// w = -g/|g|
+		w = new Vector4d(direccion);
+		w.negate();
 		w.normalize();
-		// calculamos u: up x w/|up x w|
-		Vector4d up = new Vector4d(1, 0, 0, 0);
-		u = crossProduct(up, w);
+		// u = up x w/|up x w|
+		Vector4d up = new Vector4d(1, 0, 0, 0); //puede ser cualquiera
+		u = OperacionesVectores.crossProduct(up, w);
 		u.normalize();
-		// calculamos v: w x u
-		v = crossProduct(w, u);
+		// v = w x u
+		v = OperacionesVectores.crossProduct(w, u);
 
 	}
 
@@ -52,13 +49,12 @@ public class Camara {
 
 	}
 
-	public Vector4d crossProduct(Vector4d a, Vector4d b) {
-		Vector3d aux = new Vector3d(a.x, a.y, a.z);
-		Vector3d bux = new Vector3d(b.x, b.y, b.z);
-		aux.cross(aux, bux);
-		return new Vector4d(aux.x, aux.y, aux.z, a.w);
-	}
-
+	/**
+	 * Establece la matriz de cambio de base | ux uy uz uw | | vx vy vz vw | |
+	 * wx wy wz ww | | ex ey ez ew |
+	 * 
+	 * @return
+	 */
 	public Matrix4d getCambioBase() {
 		cambioBase.setRow(0, u);
 		cambioBase.setRow(1, v);
@@ -91,28 +87,4 @@ public class Camara {
 		return v;
 	}
 
-	public static void main(String[] args) {
-		Camara camara = new Camara(new Vector4d(-1, -1, 0, 0), 2, new Point4d(
-				7, 4, 1, 1));
-		System.out.println(camara);
-		Rayo rayo = new Rayo(new Vector4d(-1, -1, 0, 0),
-				new Point4d(7, 4, 1, 1));
-		for (int i = 0; i < 30; i++) {
-			System.out.println(i);
-			System.out.println(rayo.evaluar(i));
-		}
-		Vector4d reflejado=new Vector4d(1,1,0,0);
-		Vector4d rayoAlOjo=new Vector4d(1,1,0,0);
-		double coseno = reflejado.dot(rayoAlOjo) / rayoAlOjo.length()
-				/ reflejado.length();
-		System.out.println(coseno);
-		// figura:triangulo punto1: 6 3 1 1 punto2: 5 -5 0 1 punto3: 10 -5 0 1
-		// color: 255 0 0
-		// indicerefraccion: 0.8 reflectividad: 1 ks: 0.5 kd: 0.5
-		// figura:camara direccion: -1 -1 0 0 distanciaPantalla: 2 posicion: 7 4
-		// figura:plano posicion: 2 -1 1 1 normal: 1 0 1 0 color: 255 0 0
-		// indicerefraccion: 0.8
-		// reflectividad: 1 ks: 0.5 kd: 0.5
-		// 1 1
-	}
 }

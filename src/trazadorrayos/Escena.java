@@ -1,49 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 
 import java.util.ArrayList;
 
 /**
+ * Clase que representa la escena con la camara, la pantalla, el foco de luz y
+ * la lista de figuras
  *
- * @author shathe
  */
 public class Escena {
-    private ArrayList<Figura> figuras= new ArrayList<Figura> ();
-    private Pantalla pantalla=null;
-    private Camara camara=null;
-    private Foco foco=null;
+	private ArrayList<Figura> figuras = new ArrayList<Figura>();
+	private Pantalla pantalla = null;
+	private Camara camara = null;
+	private Foco foco = null;
 
+	public Escena(Foco foco, Camara camara, Pantalla pantalla) {
+		this.foco = foco;
+		this.camara = camara;
+		this.pantalla = pantalla;
+	}
 
-    public Escena(Foco foco, Camara camara, Pantalla pantalla){
-        this.foco=foco; this.camara=camara; this.pantalla=pantalla;
-    }
-    
-    public void anadirFigura(Figura figura){
-        figuras.add(figura);
-    }
-    public void anadirSetFiguras( ArrayList<Figura> figuras){
-        this.figuras=figuras;
-    }
+	public void anadirFigura(Figura figura) {
+		figuras.add(figura);
+	}
 
-    public Pantalla getPantalla() {
-        return pantalla;
-    }
+	public void anadirSetFiguras(ArrayList<Figura> figuras) {
+		this.figuras = figuras;
+	}
 
-    public ArrayList<Figura> getFiguras() {
-        return figuras;
-    }
+	public Pantalla getPantalla() {
+		return pantalla;
+	}
 
-    public Camara getCamara() {
-        return camara;
-    }
+	public ArrayList<Figura> getFiguras() {
+		return figuras;
+	}
 
-    public Foco getFoco() {
-        return foco;
-    }
-    
-    
+	public Camara getCamara() {
+		return camara;
+	}
+
+	public Foco getFoco() {
+		return foco;
+	}
+
 }

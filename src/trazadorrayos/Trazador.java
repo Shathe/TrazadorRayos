@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 
@@ -20,10 +19,6 @@ import javax.vecmath.Vector3d;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author shathe
- */
 public class Trazador {
 	/**
 	 * @param args

@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 
@@ -11,8 +10,8 @@ import javax.vecmath.Point4d;
 import javax.vecmath.Vector4d;
 
 /**
+ * Clase que representa el objeto esfera. Tiene radio y un radio.
  *
- * @author shathe
  */
 public class Esfera extends Figura {
 
@@ -27,12 +26,13 @@ public class Esfera extends Figura {
 
 	}
 
+	/**
+	 * Dado un punto de la esfera, halla el vector normal
+	 */
 	@Override
 	public Vector4d getNormal(Point4d puntoInterseccion) {
-		Vector4d normal = new Vector4d();
-		normal.x = puntoInterseccion.x - centro.x;
-		normal.y = puntoInterseccion.y - centro.y;
-		normal.z = puntoInterseccion.z - centro.z;
+		Vector4d normal = new Vector4d(puntoInterseccion);
+		normal.sub(centro);
 		normal.w = 0;
 		return normal;
 	}

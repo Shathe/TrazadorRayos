@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 
@@ -9,8 +8,9 @@ import javax.vecmath.Point4d;
 import java.awt.Color;
 
 /**
+ * Clase que representa el foco de luz de la escena. Tiene posicion, intensidad,
+ * y la intensidad ambiente
  *
- * @author shathe
  */
 public class Foco {
 
@@ -19,6 +19,14 @@ public class Foco {
 	private double intensidadAmbiente = 0;
 
 	private Color color = null;
+
+	public Foco(Point4d posicion, Color color, double intensidad,
+			double intensidadAmbiente) {
+		this.color = color;
+		this.intensidad = intensidad;
+		this.posicion = posicion;
+		this.intensidadAmbiente = intensidadAmbiente;
+	}
 
 	public Point4d getPosicion() {
 		return posicion;
@@ -34,14 +42,6 @@ public class Foco {
 
 	public Color getColor() {
 		return color;
-	}
-
-	public Foco(Point4d posicion, Color color, double intensidad,
-			double intensidadAmbiente) {
-		this.color = color;
-		this.intensidad = intensidad;
-		this.posicion = posicion;
-		this.intensidadAmbiente = intensidadAmbiente;
 	}
 
 }
