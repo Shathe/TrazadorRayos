@@ -187,10 +187,7 @@ public class OperacionesEscena {
 				double IpartDifB = figura.kd.getBlue()
 						* rayo.getColor().getBlue() / 255 * cosenoDif;
 				// especular
-				Vector4d FocoAlPunto = new Vector4d(rayoAlFoco);
-				FocoAlPunto.negate();
-				FocoAlPunto.normalize();
-				double aux2 = 2 * normal.dot(FocoAlPunto);
+				double aux2 = 2 * normal.dot(rayoAlFoco);
 
 				Vector4d reflejado2 = new Vector4d();
 				// 2*(V*N)N
@@ -199,18 +196,17 @@ public class OperacionesEscena {
 				reflejado2.z = aux2 * normal.z;
 				reflejado2.w = normal.w;
 				// V-2*(V*N)N
-				reflejado2.x = FocoAlPunto.x - reflejado2.x;
-				reflejado2.z = FocoAlPunto.z - reflejado2.z;
-				reflejado2.y = FocoAlPunto.y - reflejado2.y;
-				reflejado2.w = FocoAlPunto.w - reflejado2.w;
+				reflejado2.x = rayoAlFoco.x - reflejado2.x;
+				reflejado2.z = rayoAlFoco.z - reflejado2.z;
+				reflejado2.y = rayoAlFoco.y - reflejado2.y;
+				reflejado2.w = rayoAlFoco.w - reflejado2.w;
 				reflejado2.normalize();
-				double cosenoEsp = reflejado2.dot(FocoAlPunto)
-						/ FocoAlPunto.length() / reflejado2.length();
+				double cosenoEsp = reflejado2.dot(rayoAlFoco)
+						/ rayoAlFoco.length() / reflejado2.length();
                                 if(cosenoEsp>0){
                                     cosenoEsp=0;
                                 }
 				cosenoEsp = Math.pow(cosenoEsp, 150);
-				if(cosenoEsp>0)cosenoEsp=0;
 				double IpartEspR = figura.ks.getRed()
 						* rayo.getColor().getRed() / 255 * cosenoEsp;
 				double IpartEspG = figura.ks.getGreen()
