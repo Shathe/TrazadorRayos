@@ -1,3 +1,7 @@
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
+ */
 package trazadorrayos;
 
 import javax.vecmath.Point4d;

@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 
@@ -10,44 +9,47 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector4d;
 
 /**
+ * Clase que las intersecciones de las figuras de la escena, con los rayos.
  *
- * @author shathe
  */
 public class Interseccion {
 
 	/**
-	 * aux==1 con camara, aux==0 con foco
+	 * Dado un rayo y una figura, determina si hay interseccion. Si la hay,
+	 * devuelve el punto de la interseccion, si no, devuelve null
 	 * 
-	 * @param rayo
-	 * @param figura
-	 * @param aux
-	 * @return
 	 */
-	public static Point4d intersecta(Rayo rayo, Figura figura, int aux) {
+	public static Point4d intersecta(Rayo rayo, Figura figura) {
 		Point4d interseccion = null;
+		//si la figura es una esfera
 		if (figura instanceof Esfera) {
 			Esfera esfera = (Esfera) figura;
 			/*
-			 * Ahora lo que se hace es sacar la ecuacion
-			 * (pRayo-centroEsfera)²=radioEsfera² y sacar los terminos a,b,c de
+			 * ecuacion de la esfera:
+			 * (p-centroEsfera)^2=radioEsfera^2 y sacar los terminos a,b,c de
 			 * la ecuacion cuadrática.
 			 */
-			Vector4d r1 = rayo.getDireccion();
-			double a = r1.dot(rayo.getDireccion());
-			Point4d p0 = rayo.getPunto();
-			Vector4d ca = new Vector4d();
-			ca.sub(p0, esfera.getCentro());
-			double b = r1.dot(ca);
-			Vector4d ca2 = ca;
-			double c = ca.dot(ca2);
-			c -= esfera.getRadio() * esfera.getRadio();
-			double d = Math.pow(b, 2) - a * c;
-			if (d < 0) {
+			// A = d . d
+			double A = rayo.getDireccion().dot(rayo.getDireccion());
+			Point4d p = rayo.getPunto();
+			Vector4d a = new Vector4d();
+			// ( a - c )
+			a.sub(p, esfera.getCentro());
+			// B = d . ( a - c )
+			double B = rayo.getDireccion().dot(a);
+			// ( a - c ) . ( a - c ) 
+			double C = a.dot(a);
+			// ( a - c ) . ( a - c ) - r ^2
+			C -= esfera.getRadio() * esfera.getRadio();
+			// d = B ^ 2 - A * C
+			double D = Math.pow(B, 2) - A * C;
+			if (D < 0) {
 				// no hay interseccion
 			}
-			else if (d == 0) {
-				// un punto de interseccion
-				double lambda = -2 * b / (double) (2 * a);
+			else if (D == 0) {
+				// hay una interseccion
+				// lambda = -2B / 2A
+				double lambda = -2 * B / (double) (2 * A);
 				interseccion = new Point4d();
 				interseccion.x += rayo.getPunto().x + lambda
 						* rayo.getDireccion().x;
@@ -57,16 +59,19 @@ public class Interseccion {
 						* rayo.getDireccion().z;
 			}
 			else {
-				double lambda1 = (-2 * b + Math.sqrt(4 * Math.pow(b, 2) - 4 * a
-						* c))
-						/ (double) (2 * a);
-				double lambda2 = (-2 * b - Math.sqrt(4 * Math.pow(b, 2) - 4 * a
-						* c))
-						/ (double) (2 * a);
+				// hay dos intersecciones
+				// -2B	+- (( 4B^2-4AC)^1/2)/2A
+				double lambda1 = (-2 * B + Math.sqrt(4 * Math.pow(B, 2) - 4 * A
+						* C))
+						/ (double) (2 * A);
+				double lambda2 = (-2 * B - Math.sqrt(4 * Math.pow(B, 2) - 4 * A
+						* C))
+						/ (double) (2 * A);
 				if (lambda1 < 0 && lambda2 < 0) {
-
+					//intersecciones entre pantalla y ojo
 				}
 				else if (lambda1 > 0 && lambda2 < 0) {
+					//rayo(lambda1) visible, pero rayo(lambda2) no
 					interseccion = new Point4d();
 					interseccion.x += rayo.getPunto().x + lambda1
 							* rayo.getDireccion().x;
@@ -74,9 +79,11 @@ public class Interseccion {
 							* rayo.getDireccion().y;
 					interseccion.z += rayo.getPunto().z + lambda1
 							* rayo.getDireccion().z;
+					interseccion=rayo.evaluar(lambda1);
 
 				}
 				else if (lambda1 > lambda2 && lambda2 > 0) {
+					//se ven las dos intersecciones, y lambda 2 esta mas cerca
 					interseccion = new Point4d();
 					interseccion.x += rayo.getPunto().x + lambda2
 							* rayo.getDireccion().x;
@@ -86,6 +93,7 @@ public class Interseccion {
 							* rayo.getDireccion().z;
 				}
 				else if (lambda1 < 0 && lambda2 > 0) {
+					//rayo(lambda2) visible, pero rayo(lambda1) no
 					interseccion = new Point4d();
 					interseccion.x += rayo.getPunto().x + lambda2
 							* rayo.getDireccion().x;
@@ -95,6 +103,7 @@ public class Interseccion {
 							* rayo.getDireccion().z;
 				}
 				else {
+					//se ven las dos intersecciones, y lambda 1 esta mas cerca
 					interseccion = new Point4d();
 					interseccion.x += rayo.getPunto().x + lambda1
 							* rayo.getDireccion().x;

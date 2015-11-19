@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 
@@ -11,10 +10,6 @@ import java.util.ArrayList;
 import javax.vecmath.Point4d;
 import javax.vecmath.Vector4d;
 
-/**
- *
- * @author shathe
- */
 public class OperacionesEscena {
 
 	public static Figura FiguraMasCercana(ArrayList<Figura> figuras,
@@ -25,7 +20,7 @@ public class OperacionesEscena {
 			Figura siguienteFigura = figuras.get(i);
 			if (desde != siguienteFigura) {
 				Point4d puntoInterseccion = Interseccion.intersecta(rayo,
-						siguienteFigura, 1);
+						siguienteFigura);
 				if (puntoInterseccion != null) {
 					double distancia = punto.distanceSquared(puntoInterseccion);
 					if (distancia < distanciaMenor) {
@@ -76,12 +71,12 @@ public class OperacionesEscena {
 
 		Figura figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
 				rayo.getPunto(), rayo, escena.getCamara(), desde);
-		if (figura != null && Interseccion.intersecta(rayo, figura, 1) != null) {
+		if (figura != null && Interseccion.intersecta(rayo, figura) != null) {
 			/*
 			 * Ahora tenemos que intersecta con la figura y tenemos que obtener
 			 * su color
 			 */
-			Point4d punto = Interseccion.intersecta(rayo, figura, 1);
+			Point4d punto = Interseccion.intersecta(rayo, figura);
 
 			double reflec = figura.getIndiceReflectividad();
 			double refrac = figura.getIndiceRefraccion();
@@ -334,7 +329,7 @@ public class OperacionesEscena {
 
 				Rayo rayoPuntoFoco = new Rayo(rayoAlFoco, punto);
 				Point4d puntoInterseccion = Interseccion.intersecta(
-						rayoPuntoFoco, figuras.get(i), 0);
+						rayoPuntoFoco, figuras.get(i));
 				if (puntoInterseccion != null) {
 					double distanciaPuntoFoco = punto.distanceSquared(foco
 							.getPosicion());

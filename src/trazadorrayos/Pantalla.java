@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 import java.awt.Color;
 
-/**
- *
- * @author shathe
- */
 public class Pantalla {
     //figura:pantalla anchura:640 altura:480
     private double anchura = 0;

@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Iñigo Alonso - 665959
+ * Alejandro Dieste - 541892
  */
 package trazadorrayos;
 
@@ -11,8 +10,8 @@ import javax.vecmath.Point4d;
 import javax.vecmath.Vector4d;
 
 /**
+ * Clase que representa cualquier figura que se puede poner en la escena
  *
- * @author shathe
  */
 public class Figura {
 	Color kd = null;
@@ -27,32 +26,18 @@ public class Figura {
 		indiceReflectividad = reflexion;
 	}
 
-	/**
-	 * @return the kd
-	 */
 	public Color getKd() {
 		return kd;
 	}
 
-	/**
-	 * @param kd
-	 *            the kd to set
-	 */
 	public void setKd(Color kd) {
 		this.kd = kd;
 	}
 
-	/**
-	 * @return the ks
-	 */
 	public Color getKs() {
 		return ks;
 	}
 
-	/**
-	 * @param ks
-	 *            the ks to set
-	 */
 	public void setKs(Color ks) {
 		this.ks = ks;
 	}
