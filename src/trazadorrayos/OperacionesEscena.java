@@ -206,6 +206,9 @@ public class OperacionesEscena {
 				reflejado2.normalize();
 				double cosenoEsp = reflejado2.dot(FocoAlPunto)
 						/ FocoAlPunto.length() / reflejado2.length();
+                                if(cosenoEsp>0){
+                                    cosenoEsp=0;
+                                }
 				cosenoEsp = Math.pow(cosenoEsp, 150);
 				if(cosenoEsp>0)cosenoEsp=0;
 				double IpartEspR = figura.ks.getRed()
