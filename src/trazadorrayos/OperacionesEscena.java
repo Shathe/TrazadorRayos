@@ -180,14 +180,18 @@ public class OperacionesEscena {
 				// difusa
 				double cosenoDif = rayoAlFoco.dot(normal) / normal.length()
 						/ rayoAlFoco.length();
-				double Ipart2R = figura.kd.getRed() * rayo.getColor().getRed()/255
+				double IpartDifR = figura.kd.getRed() * rayo.getColor().getRed()/255
 						* cosenoDif;
-				double Ipart2G = figura.kd.getGreen() * rayo.getColor().getGreen()/255
+				double IpartDifG = figura.kd.getGreen() * rayo.getColor().getGreen()/255
 						* cosenoDif;
-				double Ipart2B = figura.kd.getBlue() * rayo.getColor().getBlue()/255
+				double IpartDifB = figura.kd.getBlue() * rayo.getColor().getBlue()/255
 						* cosenoDif;
 				// especular
-				double aux2 = 2 * normal.dot(rayoAlFoco);
+                                Vector4d FocoAlPunto= new Vector4d(rayoAlFoco);
+                                FocoAlPunto.negate();
+                                FocoAlPunto.normalize();
+				double aux2 = 2 * normal.dot(FocoAlPunto);
+                               
 				Vector4d reflejado2 = new Vector4d();
 				// 2*(V*N)N
 				reflejado2.x = aux2 * normal.x;
@@ -195,32 +199,32 @@ public class OperacionesEscena {
 				reflejado2.z = aux2 * normal.z;
 				reflejado2.w = normal.w;
 				// V-2*(V*N)N
-				reflejado2.x = rayoAlFoco.x - reflejado2.x;
-				reflejado2.z = rayoAlFoco.z - reflejado2.z;
-				reflejado2.y = rayoAlFoco.y - reflejado2.y;
-				reflejado2.w = rayoAlFoco.w - reflejado2.w;
+				reflejado2.x = FocoAlPunto.x - reflejado2.x;
+				reflejado2.z = FocoAlPunto.z - reflejado2.z;
+				reflejado2.y = FocoAlPunto.y - reflejado2.y;
+				reflejado2.w = FocoAlPunto.w - reflejado2.w;
 				reflejado2.normalize();
-				double cosenoEsp = reflejado2.dot(rayoAlOjo)
-						/ rayoAlOjo.length() / reflejado2.length();
+				double cosenoEsp = reflejado2.dot(FocoAlPunto)
+						/ FocoAlPunto.length() / reflejado2.length();
 				cosenoEsp = Math.pow(cosenoEsp, 150);
-				double Ipart3R = figura.ks.getRed() * rayo.getColor().getRed()/255
+				double IpartEspR = figura.ks.getRed() * rayo.getColor().getRed()/255
 						* cosenoEsp;
-				double Ipart3G = figura.ks.getGreen() * rayo.getColor().getGreen()/255
+				double IpartEspG = figura.ks.getGreen() * rayo.getColor().getGreen()/255
 						* cosenoEsp;
-				double Ipart3B = figura.ks.getBlue() * rayo.getColor().getBlue()/255
+				double IpartEspB = figura.ks.getBlue() * rayo.getColor().getBlue()/255
 						* cosenoEsp;
 
-				intensidadR += Ipart2R + Ipart3R;
-				intensidadG += Ipart2G + Ipart3G;
-				intensidadB += Ipart2B + Ipart3B;
+				intensidadR += IpartDifR + IpartEspR;
+				intensidadG += IpartDifG + IpartEspG;
+				intensidadB += IpartDifB + IpartEspB;
 				int red = (int) intensidadR;
 				int green = (int) intensidadG;
 				int blue = (int) intensidadB;
                                 
                                 
-                                double intensidadReflejadaR=reflec*figura.kd.getRed();
-                                double intensidadReflejadaG=reflec*figura.kd.getGreen();
-                                double intensidadReflejadaB=reflec*figura.kd.getBlue();
+                                double intensidadReflejadaR=reflec*IpartDifR;
+                                double intensidadReflejadaG=reflec*IpartDifG;
+                                double intensidadReflejadaB=reflec*IpartDifB;
                                 Color colorRayoReflejado=new Color((int)intensidadReflejadaR,
                                         (int)intensidadReflejadaG,(int)intensidadReflejadaB);
 				Rayo rayoReflejado = new Rayo(reflejado, punto, colorRayoReflejado);
@@ -308,10 +312,8 @@ public class OperacionesEscena {
 				/ figura.getNormal(punto).length() / rayoAlFoco.length();
 		if (cosenoDif > 0) {
 			for (int i = 0; i < figuras.size() && !intersecta; i++) {
-
-				Vector4d direccionRayo = Interseccion.puntoMenosPunto(
-						foco.getPosicion(), punto);
-				Rayo rayoPuntoFoco = new Rayo(direccionRayo, punto);
+ 
+				Rayo rayoPuntoFoco = new Rayo(rayoAlFoco, punto);
 				Point4d puntoInterseccion = Interseccion.intersecta(
 						rayoPuntoFoco, figuras.get(i),0);
 				if (puntoInterseccion != null) {
