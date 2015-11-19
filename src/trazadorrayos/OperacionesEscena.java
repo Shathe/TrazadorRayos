@@ -53,8 +53,7 @@ public class OperacionesEscena {
 		direccion.y = (puntoPixelPantalla.y - escena.getCamara().getPosicion().y);
 		direccion.z = (puntoPixelPantalla.z - escena.getCamara().getPosicion().z);
 		direccion.w = 0;
-		Rayo rayo = new Rayo(direccion, escena.getCamara().getPosicion(), new Color(255, 255,
-				255));
+		Rayo rayo = new Rayo(direccion, escena.getCamara().getPosicion(), escena.getFoco().getColor());
 		/*
 		 * Ahora hay que ver si el rayo intersecta con alguno de los objetos de
 		 * la escen, y si lo hace, quedarnos unicamente con el objeto mas
