@@ -54,7 +54,7 @@ public class OperacionesEscena {
 		direccion.z = (puntoPixelPantalla.z - escena.getCamara().getPosicion().z);
 		direccion.w = 0;
 		Rayo rayo = new Rayo(direccion, escena.getCamara().getPosicion(), new Color(255, 255,
-				255), 1);
+				255));
 		/*
 		 * Ahora hay que ver si el rayo intersecta con alguno de los objetos de
 		 * la escen, y si lo hace, quedarnos unicamente con el objeto mas
@@ -180,11 +180,11 @@ public class OperacionesEscena {
 				// difusa
 				double cosenoDif = rayoAlFoco.dot(normal) / normal.length()
 						/ rayoAlFoco.length();
-				double Ipart2R = figura.kd.getRed() * rayo.getIntensidad()
+				double Ipart2R = figura.kd.getRed() * rayo.getColor().getRed()/255
 						* cosenoDif;
-				double Ipart2G = figura.kd.getGreen() * rayo.getIntensidad()
+				double Ipart2G = figura.kd.getGreen() * rayo.getColor().getGreen()/255
 						* cosenoDif;
-				double Ipart2B = figura.kd.getBlue() * rayo.getIntensidad()
+				double Ipart2B = figura.kd.getBlue() * rayo.getColor().getBlue()/255
 						* cosenoDif;
 				// especular
 				double aux2 = 2 * normal.dot(rayoAlFoco);
@@ -203,11 +203,11 @@ public class OperacionesEscena {
 				double cosenoEsp = reflejado2.dot(rayoAlOjo)
 						/ rayoAlOjo.length() / reflejado2.length();
 				cosenoEsp = Math.pow(cosenoEsp, 150);
-				double Ipart3R = figura.ks.getRed() * rayo.getIntensidad()
+				double Ipart3R = figura.ks.getRed() * rayo.getColor().getRed()/255
 						* cosenoEsp;
-				double Ipart3G = figura.ks.getGreen() * rayo.getIntensidad()
+				double Ipart3G = figura.ks.getGreen() * rayo.getColor().getGreen()/255
 						* cosenoEsp;
-				double Ipart3B = figura.ks.getBlue() * rayo.getIntensidad()
+				double Ipart3B = figura.ks.getBlue() * rayo.getColor().getBlue()/255
 						* cosenoEsp;
 
 				intensidadR += Ipart2R + Ipart3R;
@@ -216,29 +216,41 @@ public class OperacionesEscena {
 				int red = (int) intensidadR;
 				int green = (int) intensidadG;
 				int blue = (int) intensidadB;
+                                
+                                
+                                double intensidadReflejadaR=reflec*figura.kd.getRed();
+                                double intensidadReflejadaG=reflec*figura.kd.getGreen();
+                                double intensidadReflejadaB=reflec*figura.kd.getBlue();
+                                Color colorRayoReflejado=new Color((int)intensidadReflejadaR,
+                                        (int)intensidadReflejadaG,(int)intensidadReflejadaB);
+				Rayo rayoReflejado = new Rayo(reflejado, punto, colorRayoReflejado);
+                                
+                            /*    double intensidadRefractadoR=(1-reflec)*rayo.getColor().getRed();
+                                double intensidadRefractadoG=(1-reflec)*rayo.getColor().getGreen();
+                                double intensidadRefractadoB=(1-reflec)*rayo.getColor().getBlue();
+                                Color colorRayoRefractado=new Color((int)intensidadRefractadoR,
+                                        (int)intensidadRefractadoG,(int)intensidadRefractadoB);
+				Rayo rayoRefractado = new Rayo(refractado, punto, colorRayoRefractado);*/
 
-				Rayo rayoReflejado = new Rayo(reflejado, punto, color,
-						rayo.getIntensidad() * reflec);
-				Rayo rayoRefractado = new Rayo(refractado, punto, color,
-						rayo.getIntensidad() * (1 - reflec));
-
+                                
+                                
 				if (MaxDepth > 0
-						&& rayoReflejado.getIntensidad() > minIntensity) {
+						&& (intensidadReflejadaR+intensidadReflejadaG+intensidadReflejadaB) > minIntensity) {
 					Color colorReflejado = colorDesdeRayo(escena,
 							rayoReflejado, MaxDepth--, minIntensity, figura);
 					red += colorReflejado.getRed();
 					blue += colorReflejado.getBlue();
 					green += colorReflejado.getGreen();
 				}
-				if (MaxDepth > 0
-						&& rayoRefractado.getIntensidad() > minIntensity) {
+				/*if (MaxDepth > 0
+						&& (intensidadReflejadaR+intensidadReflejadaG+intensidadReflejadaB) > minIntensity) {
 					Color colorRefractado = colorDesdeRayo(escena,
 							rayoRefractado, MaxDepth--, minIntensity, figura);
 					red += colorRefractado.getRed();
 					blue += colorRefractado.getBlue();
 					green += colorRefractado.getGreen();
 
-				}
+				}*/
 				color = normalizarColor(red, green, blue);
 
 			}
@@ -252,16 +264,20 @@ public class OperacionesEscena {
 	}
 
 	public static Color normalizarColor(int red, int green, int blue) {
-		/*
-		 * /int mayor = 0; if (blue > mayor) mayor = blue; if (red > mayor)
-		 * mayor = red; if (green > mayor) mayor = green; if (mayor <= 255) {
-		 * System.out.println(red); return new Color(red, green, blue); } else {
-		 * double indiceReduccion = (double) mayor / 255; double redreducido =
-		 * red / indiceReduccion; double greenreducido = green /
-		 * indiceReduccion; double bluereducido = blue / indiceReduccion; return
-		 * new Color((int) redreducido, (int) greenreducido, (int)
-		 * bluereducido); }
-		 */
+		
+		int mayor = 0;
+                if (blue > mayor) mayor = blue; 
+                if (red > mayor)mayor = red; 
+                if (green > mayor) mayor = green; 
+                if (mayor > 255) {
+		 
+		  double indiceReduccion = (double) mayor / 255;
+                  indiceReduccion=Math.sqrt(indiceReduccion);
+                   red = (int)(red / indiceReduccion);
+                   green = (int)(green / indiceReduccion); 
+                   blue = (int)(blue / indiceReduccion); 
+		  }
+		 
 		if (red > 255) red = 255;
 		if (green > 255) green = 255;
 		if (blue > 255) blue = 255;

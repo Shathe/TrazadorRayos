@@ -12,14 +12,11 @@ public class Rayo {
 	private Point4d punto;
 	private Color color;
 
-	private double intensidad;
 
-	public Rayo(Vector4d direccion, Point4d punto, Color color,
-			double intensidad) {
+	public Rayo(Vector4d direccion, Point4d punto, Color color) {
 		this.direccion = direccion;
 		this.punto = punto;
 		this.color = color;
-		this.intensidad = intensidad;
 	}
 
 	public Rayo(Vector4d direccion, Point4d punto) {
@@ -49,14 +46,6 @@ public class Rayo {
 
 	public void setColor(Color color) {
 		this.color = color;
-	}
-
-	public double getIntensidad() {
-		return intensidad;
-	}
-
-	public void setIntensidad(double intensidad) {
-		this.intensidad = intensidad;
 	}
 
 	public Point4d evaluar(double x) {

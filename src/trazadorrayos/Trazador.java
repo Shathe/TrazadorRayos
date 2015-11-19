@@ -255,7 +255,7 @@ public class Trazador {
                 }
 	public static void main(String[] args) {
 		int MaxDepth = 15;
-		double minIntensity = 0.05;
+		double minIntensity = 1;
 		// TODO code application logic here
 		Trazador trazador = new Trazador();
 		// Cargas la escena
