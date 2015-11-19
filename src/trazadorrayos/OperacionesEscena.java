@@ -181,11 +181,11 @@ public class OperacionesEscena {
 				double cosenoDif = rayoAlFoco.dot(normal) / normal.length()
 						/ rayoAlFoco.length();
 				double IpartDifR = figura.kd.getRed()
-						* escena.getFoco().getColor().getRed() / 255 * cosenoDif;
+						* rayo.getColor().getRed() / 255 * cosenoDif;
 				double IpartDifG = figura.kd.getGreen()
-						* escena.getFoco().getColor().getGreen() / 255 * cosenoDif;
+						* rayo.getColor().getGreen() / 255 * cosenoDif;
 				double IpartDifB = figura.kd.getBlue()
-						* escena.getFoco().getColor().getBlue() / 255 * cosenoDif;
+						* rayo.getColor().getBlue() / 255 * cosenoDif;
 				// especular
 				double aux2 = 2 * normal.dot(rayoAlOjo);
 
@@ -203,14 +203,13 @@ public class OperacionesEscena {
 				reflejado2.normalize();
 				double cosenoEsp = reflejado2.dot(rayoAlOjo)
 						/ rayoAlOjo.length() / reflejado2.length();
-                               
 				cosenoEsp = Math.pow(cosenoEsp, 150);
 				double IpartEspR = figura.ks.getRed()
-						* escena.getFoco().getColor().getRed() / 255 * cosenoEsp;
+						* rayo.getColor().getRed() / 255 * cosenoEsp;
 				double IpartEspG = figura.ks.getGreen()
-						* escena.getFoco().getColor().getGreen() / 255 * cosenoEsp;
+						* rayo.getColor().getGreen() / 255 * cosenoEsp;
 				double IpartEspB = figura.ks.getBlue()
-						* escena.getFoco().getColor().getBlue() / 255 * cosenoEsp;
+						* rayo.getColor().getBlue() / 255 * cosenoEsp;
 
 				intensidadR += IpartDifR + IpartEspR;
 				intensidadG += IpartDifG + IpartEspG;
@@ -229,7 +228,6 @@ public class OperacionesEscena {
 						colorRayoReflejado);
 
 				/*
-                                //escena.getFoco() en vez de rayo color?
 				 * double
 				 * intensidadRefractadoR=(1-reflec)*rayo.getColor().getRed();
 				 * double
