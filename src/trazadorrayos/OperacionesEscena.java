@@ -195,13 +195,13 @@ public class OperacionesEscena {
 				double aux2 = 2 * normal.dot(rayoAlFoco);
 
 				Vector4d reflejado2 = new Vector4d();
-				// 2*(V*N)N
+				// 2*(l*N)N
 				reflejado2.x = aux2 * normal.x;
 				reflejado2.y = aux2 * normal.y;
 				reflejado2.z = aux2 * normal.z;
 				reflejado2.w = normal.w;
-				// V-2*(V*N)N
 
+				// 2*(V*N)N - l
 				reflejado2.x = rayoAlFoco.x - reflejado2.x;
 				reflejado2.z = rayoAlFoco.z - reflejado2.z;
 				reflejado2.y = rayoAlFoco.y - reflejado2.y;
