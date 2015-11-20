@@ -187,7 +187,8 @@ public class OperacionesEscena {
                                     // difusa
                                     double cosenoDif = rayoAlFoco.dot(normal) / normal.length()
                                                     / rayoAlFoco.length();
-
+                                    //Caso en el que da negativo debido a que el objeto refracta por dentro 
+                                    cosenoDif=Math.abs(cosenoDif);
                                     double IpartDifR = figura.kd.getRed()
                                                     * escena.getFoco().getColor().getRed() / 255
                                                     * cosenoDif;
@@ -340,10 +341,16 @@ public class OperacionesEscena {
 		double cosenoDif = rayoAlFoco.dot(figura.getNormal(punto))
 				/ figura.getNormal(punto).length() / rayoAlFoco.length();
 
-		if (cosenoDif > 0) {
+		if (cosenoDif < 0) {
+                    //solo se ve si la figura refracta
+                    intersecta = figura.getIndiceReflectividad();
+                }
+                
 			for (int i = 0; i < figuras.size() && intersecta!=1; i++) {
 
 				Rayo rayoPuntoFoco = new Rayo(rayoAlFoco, punto);
+                                
+                                
 				Point4d puntoInterseccion = Interseccion.intersecta(
 						rayoPuntoFoco, figuras.get(i));
 				if (puntoInterseccion != null) {
@@ -351,17 +358,14 @@ public class OperacionesEscena {
 							.getPosicion());
 					double distanciaInterseccionFoco = puntoInterseccion
 							.distanceSquared(foco.getPosicion());
-					if (distanciaInterseccionFoco < distanciaPuntoFoco) {
+					if (distanciaInterseccionFoco < distanciaPuntoFoco
+                                                && intersecta<figuras.get(i).getIndiceReflectividad()) {
 						intersecta = figuras.get(i).getIndiceReflectividad();
 					}
 				}
 
 			}
-		}
-
-		else {
-			intersecta = 1;
-		}
+		
 		return intersecta;
 	}
 }
