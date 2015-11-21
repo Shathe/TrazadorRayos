@@ -92,7 +92,6 @@ public class OperacionesEscena {
 			Vector4d normal = figura.getNormal(punto);
 
 			// reflejado => V-2*(V*N)N
-
 			// aux=2*(V*N)
 			normal.normalize();
 			rayo.getDireccion().normalize();
