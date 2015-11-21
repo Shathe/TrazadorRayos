@@ -75,20 +75,20 @@ public class Trazador {
 				for (int a = 0; a < antialiasing * antialiasing; a++) {
 					for (int b = 0; b < antialiasing / antialiasing; b++) {
 						if (xPantalla > 0) {
-							puntoPantalla.x = (Math.random() * diffAnAntialiasing)
+							puntoPantalla.x = (Math.random() * a*diffAnAntialiasing)
 									+ xPantalla;
 						}
 						else {
 							puntoPantalla.x = xPantalla
-									- (diffAnAntialiasing * Math.random());
+									- (diffAnAntialiasing * a* Math.random());
 						}
 						if (yPantalla > 0) {
-							puntoPantalla.y = (-Math.random() * diffAlAntialiasing)
+							puntoPantalla.y = (-Math.random() * b*diffAlAntialiasing)
 									+ yPantalla;
 						}
 						else {
 							puntoPantalla.y = yPantalla
-									- (diffAlAntialiasing * Math.random());
+									- (diffAlAntialiasing * b*Math.random());
 						}
 
 						puntoPantalla.z = -escena.getCamara()
