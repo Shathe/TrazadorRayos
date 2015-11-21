@@ -24,6 +24,8 @@ public class Trazador {
 
 
 
+
+
 	public static void main(String[] args) {
 		int MaxDepth = 15;
 		double minIntensity = 1;
@@ -59,8 +61,8 @@ public class Trazador {
 				 * i-centroAn es debido a que en el sistema de la camara el
 				 * pixel que se esta calculando, por ejemplo el (0,0) es el
 				 * (-totalAncho/2, -totalAlto/2)
-				 */
-
+				 
+*/
 				puntoPantalla.x = diffAn * (i - centroAn) + diffAn;
 				puntoPantalla.y = diffAl * (-j + centroAl) + diffAl;
 				puntoPantalla.z = -escena.getCamara().getDistanciaPantalla();
@@ -70,27 +72,26 @@ public class Trazador {
 				/*
 				 * Este es el punto del centro del pixel(i,j) en coordenadas del
 				 * mundo
-				 */
-
+				 
+*/
 				// double
 				// []a={puntoPantalla.x,puntoPantalla.y,puntoPantalla.z,1};
-				// puntoPantalla = multiplicar(cambioBase, a);
-
-				puntoPantalla = Escena.multiplyPointMatrix(puntoPantalla, cambioBase);
+				// puntoPantalla = multiplicar(cambioBase, a
+				puntoPantalla = Escena.multiplyPointMatrix(puntoPantalla,cambioBase);
 				Color color = OperacionesEscena.colorPuntoPantalla(
 						puntoPantalla, escena, MaxDepth, minIntensity);
 
-				imagen.setRGB(i, j, color.getRGB());
-
-			}
-
+				imagen.setRGB(i, j, color.getRGB()
+);
+		
+	}
 		}
 		try {
 			ImageIO.write(imagen, "jpg", new File("foto.jpg"));
 		}
 		catch (IOException e) {
 			System.out.println("Error de escritura");
-		}
-
+	
+	}
 	}
 }

@@ -8,4 +8,4 @@ figura:esfera posicion: 7 2 3 1  indicerefraccion: 0.9 reflectividad_Transparent
 figura:plano posicion: 10 30 10 0 normal: -1 -1 0 0  indicerefraccion: 0.8 reflectividad_Transparente: 1 kd: 55 230 55  ks: 200 25 200 .
 figura:plano posicion: 20 30 10 0 normal: -1 0 -1 0  indicerefraccion: 0.8 reflectividad_Transparente: 1 kd: 55 55 230  ks: 200 200 25 .
 figura:plano posicion: 20 30 10 0 normal: 0 -1 -1 0  indicerefraccion: 0.8 reflectividad_Transparente: 1 kd: 230 55 55  ks: 25 200 200 .
-figura:triangulo punto1: 8 6 6 1 punto2: 1 9 6 1 punto3: 5 7 6 1  indicerefraccion: 0.8 reflectividad: 1 kd: 0 0 255 ks: 255 255 255 .
+// figura:triangulo punto1: 8 6 6 1 punto2: 1 9 6 1 punto3: 5 7 6 1  indicerefraccion: 0.8 reflectividad: 1 kd: 0 0 255 ks: 255 255 255 .
