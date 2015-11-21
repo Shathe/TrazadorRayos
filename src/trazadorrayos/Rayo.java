@@ -61,4 +61,5 @@ public class Rayo {
 				+ aux.y, punto.z + aux.z, 1);
 		return resultado;
 	}
+	
 }
