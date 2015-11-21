@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Color;
+
 import javax.vecmath.Matrix3d;
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point4d;
@@ -17,6 +18,7 @@ import javax.vecmath.Vector4d;
 import javax.vecmath.Vector3d;
 
 import java.util.Scanner;
+
 import javax.imageio.ImageIO;
 
 public class Trazador {
@@ -24,6 +26,7 @@ public class Trazador {
 	public static void main(String[] args) {
 		int MaxDepth = 15;
 		double minIntensity = 1;
+		int antialiasing = 3;
 		// TODO code application logic here
 		Trazador trazador = new Trazador();
 		// Cargas la escena
@@ -51,18 +54,68 @@ public class Trazador {
 						/ (double) (pantalla.getPixelesanchura() - 1);
 				double diffAl = pantalla.getAltura()
 						/ (double) (pantalla.getPixelesaltura() - 1);
+
 				Point4d puntoPantalla = new Point4d();
 				/*
 				 * i-centroAn es debido a que en el sistema de la camara el
 				 * pixel que se esta calculando, por ejemplo el (0,0) es el
 				 * (-totalAncho/2, -totalAlto/2)
 				 */
-				puntoPantalla.x = diffAn * (i - centroAn) + diffAn;
-				puntoPantalla.y = diffAl * (-j + centroAl) + diffAl;
-				puntoPantalla.z = -escena.getCamara().getDistanciaPantalla();
-				puntoPantalla.w = 1;
-				// Aqui tienes el centro del pixel en coordenadas de la camara
-				Matrix4d cambioBase = escena.getCamara().getCambioBase();
+				// xPantalla e yPantalla seran el centro del pixel
+				double xPantalla = diffAn * (i - centroAn) + diffAn;
+				double yPantalla = diffAl * (-j + centroAl) + diffAl;
+				
+				double diffAnAntialiasing = Math.abs(diffAn
+						/ (double) (antialiasing - 1));
+				double diffAlAntialiasing = Math.abs(diffAl
+						/ (double) (antialiasing - 1));
+				double red = 0.0;
+				double green = 0.0;
+				double blue = 0.0;
+				for (int a = 0; a < antialiasing * antialiasing; a++) {
+					for (int b = 0; b < antialiasing / antialiasing; b++) {
+						if (xPantalla > 0) {
+							puntoPantalla.x = (Math.random() * diffAnAntialiasing)
+									+ xPantalla;
+						}
+						else {
+							puntoPantalla.x = xPantalla
+									- (diffAnAntialiasing * Math.random());
+						}
+						if (yPantalla > 0) {
+							puntoPantalla.y = (-Math.random() * diffAlAntialiasing)
+									+ yPantalla;
+						}
+						else {
+							puntoPantalla.y = yPantalla
+									- (diffAlAntialiasing * Math.random());
+						}
+
+						puntoPantalla.z = -escena.getCamara()
+								.getDistanciaPantalla();
+						puntoPantalla.w = 1;
+						Matrix4d cambioBase = escena.getCamara()
+								.getCambioBase();
+						puntoPantalla = Escena.multiplyPointMatrix(
+								puntoPantalla, cambioBase);
+						Color color = OperacionesEscena.colorPuntoPantalla(
+								puntoPantalla, escena, MaxDepth, minIntensity);
+						red += color.getRed();
+						green += color.getGreen();
+						blue += color.getBlue();
+					}
+				}
+				red = red / (antialiasing * antialiasing);
+				green = green / (antialiasing * antialiasing);
+				blue = blue / (antialiasing * antialiasing);
+				Color color = new Color((int) red, (int) green, (int) blue);
+				/*
+				 * puntoPantalla.x = xPantalla; puntoPantalla.y = yPantalla;
+				 * puntoPantalla.z = -escena.getCamara().getDistanciaPantalla();
+				 * puntoPantalla.w = 1; // Aqui tienes el centro del pixel en
+				 * coordenadas de la camara Matrix4d cambioBase =
+				 * escena.getCamara().getCambioBase();
+				 */
 				/*
 				 * Este es el punto del centro del pixel(i,j) en coordenadas del
 				 * mundo
@@ -70,10 +123,12 @@ public class Trazador {
 				// double
 				// []a={puntoPantalla.x,puntoPantalla.y,puntoPantalla.z,1};
 				// puntoPantalla = multiplicar(cambioBase, a
-				puntoPantalla = Escena.multiplyPointMatrix(puntoPantalla,
-						cambioBase);
-				Color color = OperacionesEscena.colorPuntoPantalla(
-						puntoPantalla, escena, MaxDepth, minIntensity);
+				/*
+				 * puntoPantalla = Escena.multiplyPointMatrix(puntoPantalla,
+				 * cambioBase); Color color =
+				 * OperacionesEscena.colorPuntoPantalla( puntoPantalla, escena,
+				 * MaxDepth, minIntensity);
+				 */
 				imagen.setRGB(i, j, color.getRGB());
 			}
 		}
