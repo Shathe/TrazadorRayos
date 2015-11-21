@@ -79,7 +79,8 @@ public class OperacionesEscena {
 			Point4d punto = Interseccion.intersecta(rayo, figura);
 
 			double reflec = figura.getIndiceReflectividad();
-			double refrac = figura.getIndiceRefraccion();
+                        double refrac = 0;
+                        if(figura.getIndiceRefraccion()!=0) refrac = 1/figura.getIndiceRefraccion();//suponemos que el exterior es 1
 
 			/*
 			 * Ahora se calcula la direccion del angulo refractado y del angulo
@@ -111,20 +112,23 @@ public class OperacionesEscena {
 			// ahora calculas el angulo reflejado
 			// T=(Iref*(normal*Rayo)-Raiz(1-Iref²(1-(normal*rayo)²)))
 			// *normal-Iref*rayo
-			double auxR = refrac
-					* (normal.dot(rayo.getDireccion()))
+                        Vector4d direccionRayo=new Vector4d(rayo.getDireccion());
+                        direccionRayo.negate();
+                       
+			double auxR = (refrac
+					* (normal.dot(direccionRayo)))
 					- Math.sqrt(1
-							- refrac
+							- (refrac
 							* refrac
-							* (1 - normal.dot(rayo.getDireccion())
-									* normal.dot(rayo.getDireccion())));
+							* (1 - (normal.dot(direccionRayo)
+									* normal.dot(direccionRayo)))));
 
-			refractado.x = auxR * normal.x - refrac * rayo.getDireccion().x;
-			refractado.y = auxR * normal.y - refrac * rayo.getDireccion().y;
-			refractado.z = auxR * normal.z - refrac * rayo.getDireccion().z;
-			refractado.w = auxR * normal.w - refrac * rayo.getDireccion().w;
+			refractado.x = auxR * normal.x - refrac * direccionRayo.x;
+			refractado.y = auxR * normal.y - refrac * direccionRayo.y;
+			refractado.z = auxR * normal.z - refrac * direccionRayo.z;
+			refractado.w = 0;
 			refractado.normalize(); 
-
+                        
 			/*
 			 * Ahora tienes el angulo refractado y el angulo reflejado, ahora
 			 * para calcular el color, primero tienes que mirar el color que
@@ -191,13 +195,13 @@ public class OperacionesEscena {
                                     cosenoDif=Math.abs(cosenoDif);
                                     double IpartDifR = figura.kd.getRed()
                                                     * escena.getFoco().getColor().getRed() / 255
-                                                    * cosenoDif;
+                                                    * cosenoDif*TapanObjetosTranslucidos;
                                     double IpartDifG = figura.kd.getGreen()
                                                     * escena.getFoco().getColor().getGreen() / 255
-                                                    * cosenoDif;
+                                                    * cosenoDif*TapanObjetosTranslucidos;
                                     double IpartDifB = figura.kd.getBlue()
                                                     * escena.getFoco().getColor().getBlue() / 255
-                                                    * cosenoDif;
+                                                    * cosenoDif*TapanObjetosTranslucidos;
                                     // especular
                                     rayoAlOjo.normalize();
                                     double aux2 = 2 * normal.dot(rayoAlFoco);
@@ -224,24 +228,24 @@ public class OperacionesEscena {
                                     cosenoEsp = Math.pow(cosenoEsp, 150);
                                     double IpartEspR = figura.ks.getRed()
                                                     * escena.getFoco().getColor().getRed() / 255
-                                                    * cosenoEsp;
+                                                    * cosenoEsp*TapanObjetosTranslucidos;
                                     double IpartEspG = figura.ks.getGreen()
                                                     * escena.getFoco().getColor().getGreen() / 255
-                                                    * cosenoEsp;
+                                                    * cosenoEsp*TapanObjetosTranslucidos;
                                     double IpartEspB = figura.ks.getBlue()
                                                     * escena.getFoco().getColor().getBlue() / 255
-                                                    * cosenoEsp;
+                                                    * cosenoEsp*TapanObjetosTranslucidos;
 
                                     intensidadR += IpartDifR + IpartEspR;
                                     intensidadG += IpartDifG + IpartEspG;
                                     intensidadB += IpartDifB + IpartEspB;
-                                    int red = (int) (intensidadR*TapanObjetosTranslucidos);
-                                    int green = (int) (intensidadG*TapanObjetosTranslucidos);
-                                    int blue = (int) (intensidadB*TapanObjetosTranslucidos);
+                                    int red = (int) (intensidadR);
+                                    int green = (int) (intensidadG);
+                                    int blue = (int) (intensidadB);
 
-                                    int intensidadReflejadaR = (int)(reflec *TapanObjetosTranslucidos* IpartDifR);
-                                    int intensidadReflejadaG = (int)(reflec *TapanObjetosTranslucidos* IpartDifG);
-                                    int intensidadReflejadaB =(int)( reflec *TapanObjetosTranslucidos* IpartDifB);
+                                    int intensidadReflejadaR = (int)(reflec * IpartDifR);
+                                    int intensidadReflejadaG = (int)(reflec * IpartDifG);
+                                    int intensidadReflejadaB =(int)( reflec * IpartDifB);
                                     Color colorRayoReflejado = new Color(
                                                      intensidadReflejadaR, intensidadReflejadaG,
                                                     intensidadReflejadaB);
@@ -249,9 +253,9 @@ public class OperacionesEscena {
                                                     colorRayoReflejado);
 
 
-                                      double intensidadRefractadoR=(1-reflec)*TapanObjetosTranslucidos*escena.getFoco().getColor().getRed();
-                                      double  intensidadRefractadoG=(1-reflec)*TapanObjetosTranslucidos*escena.getFoco().getColor().getGreen();
-                                      double intensidadRefractadoB=(1-reflec)*TapanObjetosTranslucidos*escena.getFoco().getColor().getBlue();
+                                      double intensidadRefractadoR=(1-reflec)*escena.getFoco().getColor().getRed();
+                                      double  intensidadRefractadoG=(1-reflec)*escena.getFoco().getColor().getGreen();
+                                      double intensidadRefractadoB=(1-reflec)*escena.getFoco().getColor().getBlue();
                                       Color colorRayoRefractado=new Color((int)intensidadRefractadoR,
                                       (int)intensidadRefractadoG,(int)intensidadRefractadoB);
                                       Rayo rayoRefractado = new Rayo(refractado, punto, colorRayoRefractado);
@@ -272,10 +276,7 @@ public class OperacionesEscena {
                                           boolean esperarRefraccion=false;
                                           if (figura instanceof Esfera) {
                                               esperarRefraccion=true;
-                                          }
-                                          else{
-                                              int a=0;
-                                          }
+                                          } 
                                           Color colorRefractado = colorDesdeRayo(escena, rayoRefractado,
                                       MaxDepth--, minIntensity, figura,esperarRefraccion);
                                           red += colorRefractado.getRed();
