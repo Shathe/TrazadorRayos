@@ -161,6 +161,7 @@ public class OperacionesEscena {
 					Rayo rayoRefractado = new Rayo(refractado, punto,
 							colorRayoRefractado);
 
+					//si hay suficiente intensidad reflejada, lanzamos el rayo
 					if (MaxDepth > 0
 							&& (intensidadReflejadaR + intensidadReflejadaG + intensidadReflejadaB) > minIntensity) {
 						Color colorReflejado = colorDesdeRayo(escena,
@@ -170,7 +171,7 @@ public class OperacionesEscena {
 						intensidadPunto.blue += colorReflejado.getBlue();
 						intensidadPunto.green += colorReflejado.getGreen();
 					}
-
+					//si hay suficiente intensidad refractada, lanzamos el rayo
 					if (MaxDepth > 0
 							&& (intensidadRefractadoR + intensidadRefractadoB + intensidadRefractadoG) > minIntensity) {
 						boolean esperarRefraccion = false;

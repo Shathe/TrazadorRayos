@@ -24,8 +24,8 @@ public class Escena {
 	private Pantalla pantalla = null;
 	private Camara camara = null;
 	private Foco foco = null;
-	private static Matrix4d matrizTransformacionIdentidad = new Matrix4d(1, 0,
-			0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+	private static Matrix4d matrizTransformacionIdentidad = new Matrix4d(1, 0, 0, 0,
+			0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
 	public Escena(Foco foco, Camara camara, Pantalla pantalla) {
 		this.foco = foco;
@@ -213,11 +213,7 @@ public class Escena {
 							cadena = escenaFichero.next();
 						}
 					}
-					Matrix4d mTEsfera = new Matrix4d(
-							matrizTransformacionIdentidad);
-					mTEsfera.setElement(3, 0, posicion.x);
-					mTEsfera.setElement(3, 1, posicion.y);
-					mTEsfera.setElement(3, 2, posicion.z);
+					Matrix4d mTEsfera = matrizTraslacion(posicion);
 					Point4d posicionEsfera = new Point4d(0, 0, 0, 1);
 					posicionEsfera = multiplyPointMatrix(posicionEsfera,
 							mTEsfera);
@@ -266,11 +262,7 @@ public class Escena {
 							cadena = escenaFichero.next();
 						}
 					}
-					Matrix4d mTPlano = new Matrix4d(
-							matrizTransformacionIdentidad);
-					mTPlano.setElement(3, 0, posicion.x);
-					mTPlano.setElement(3, 1, posicion.y);
-					mTPlano.setElement(3, 2, posicion.z);
+					Matrix4d mTPlano = matrizTraslacion(posicion);
 					Point4d posicionPlano = new Point4d(0, 0, 0, 1);
 					posicionPlano = multiplyPointMatrix(posicionPlano, mTPlano);
 					Plano plano = new Plano(posicionPlano, normal, refraccion,
@@ -329,23 +321,15 @@ public class Escena {
 						}
 
 					}
-					Matrix4d mTTriangulo = new Matrix4d(
-							matrizTransformacionIdentidad);
-					mTTriangulo.setElement(3, 0, punto1.x);
-					mTTriangulo.setElement(3, 1, punto1.y);
-					mTTriangulo.setElement(3, 2, punto1.z);
+					Matrix4d mTTriangulo = matrizTraslacion(punto1);
 					Point4d punto1Triangulo = new Point4d(0, 0, 0, 1);
 					punto1Triangulo = multiplyPointMatrix(punto1Triangulo,
 							mTTriangulo);
-					mTTriangulo.setElement(3, 0, punto2.x);
-					mTTriangulo.setElement(3, 1, punto2.y);
-					mTTriangulo.setElement(3, 2, punto2.z);
+					mTTriangulo = matrizTraslacion(punto2);
 					Point4d punto2Triangulo = new Point4d(0, 0, 0, 1);
 					punto2Triangulo = multiplyPointMatrix(punto2Triangulo,
 							mTTriangulo);
-					mTTriangulo.setElement(3, 0, punto3.x);
-					mTTriangulo.setElement(3, 1, punto3.y);
-					mTTriangulo.setElement(3, 2, punto3.z);
+					mTTriangulo = matrizTraslacion(punto3);
 					Point4d punto3Triangulo = new Point4d(0, 0, 0, 1);
 					punto3Triangulo = multiplyPointMatrix(punto3Triangulo,
 							mTTriangulo);
@@ -400,6 +384,20 @@ public class Escena {
 						* matrix.getElement(1, 3) + point.z
 						* matrix.getElement(2, 3) + point.w
 						* matrix.getElement(3, 3));
+	}
+
+	/**
+	 * Devuelve la matriz de transformacion de traslacion
+	 * 
+	 * @param posicion
+	 * @return
+	 */
+	public static Matrix4d matrizTraslacion(Point4d posicion) {
+		Matrix4d mT = new Matrix4d(matrizTransformacionIdentidad);
+		mT.setElement(3, 0, posicion.x);
+		mT.setElement(3, 1, posicion.y);
+		mT.setElement(3, 2, posicion.z);
+		return mT;
 	}
 
 }
