@@ -6,19 +6,10 @@ package trazadorrayos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.awt.Color;
-
-import javax.vecmath.Matrix3d;
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point4d;
-import javax.vecmath.Vector4d;
-import javax.vecmath.Vector3d;
-
-import java.util.Scanner;
-
 import javax.imageio.ImageIO;
 
 public class Trazador {
@@ -28,7 +19,6 @@ public class Trazador {
 		double minIntensity = 1;
 		int antialiasing = 3;
 		// TODO code application logic here
-		Trazador trazador = new Trazador();
 		// Cargas la escena
 		Escena escena = Escena.leerEscena("escena.txt");
 		// Se crea el bufer para crear la imagen

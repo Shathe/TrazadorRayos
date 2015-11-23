@@ -1,7 +1,5 @@
 package trazadorrayos;
 
-import java.awt.Color;
-
 import javax.vecmath.Point4d;
 import javax.vecmath.Vector4d;
 
