@@ -21,7 +21,8 @@ public class OperacionesEscena {
 			if (desde != siguienteFigura) {
 				Point4d puntoInterseccion = Interseccion.intersecta(rayo,
 						siguienteFigura);
-				if (puntoInterseccion != null) {
+				if (puntoInterseccion != null && puntoInterseccion.x!=punto.x 
+                                        && puntoInterseccion.y!=punto.y && puntoInterseccion.z!=punto.z ) {
 					double distancia = punto.distanceSquared(puntoInterseccion);
 					if (distancia < distanciaMenor) {
 						distanciaMenor = distancia;
@@ -110,12 +111,9 @@ public class OperacionesEscena {
 					escena.getFiguras(), figura);
 
 			if (refractadoParaSalir) {
-				double intensidadRefractadoR = transparencia
-						* escena.getFoco().getColor().getRed();
-				double intensidadRefractadoG = transparencia
-						* escena.getFoco().getColor().getGreen();
-				double intensidadRefractadoB = transparencia
-						* escena.getFoco().getColor().getBlue();
+				double intensidadRefractadoR = rayo.getColor().getRed();
+				double intensidadRefractadoG = rayo.getColor().getGreen();
+				double intensidadRefractadoB = rayo.getColor().getBlue();
 				Color colorRayoRefractado = new Color(
 						(int) intensidadRefractadoR,
 						(int) intensidadRefractadoG,
@@ -139,22 +137,22 @@ public class OperacionesEscena {
 					Intensidad intensidadPunto = new Intensidad();
 					// calculamos la intensidad en el punto, en RGB
 					intensidadPunto.calcularIntensidadPunto(noVisible, punto,
-							escena, figura);
+							escena, figura,rayo);
 					// intensidad reflejada
-					int intensidadReflejadaR = (int) (reflec * intensidadPunto.IpartDifR);
-					int intensidadReflejadaG = (int) (reflec * intensidadPunto.IpartDifG);
-					int intensidadReflejadaB = (int) (reflec * intensidadPunto.IpartDifB);
+					int intensidadReflejadaR = (int) (reflec * figura.ks.getRed());
+					int intensidadReflejadaG = (int) (reflec * figura.ks.getGreen());
+					int intensidadReflejadaB = (int) (reflec * figura.ks.getBlue());
 					Color colorRayoReflejado = new Color(intensidadReflejadaR,
 							intensidadReflejadaG, intensidadReflejadaB);
 					Rayo rayoReflejado = new Rayo(reflejado, punto,
 							colorRayoReflejado);
 					// intensidad refractada
 					double intensidadRefractadoR = transparencia
-							* escena.getFoco().getColor().getRed();
+							* rayo.getColor().getRed();
 					double intensidadRefractadoG = transparencia
-							* escena.getFoco().getColor().getGreen();
+							* rayo.getColor().getGreen();
 					double intensidadRefractadoB = transparencia
-							* escena.getFoco().getColor().getBlue();
+							* rayo.getColor().getBlue();
 					Color colorRayoRefractado = new Color(
 							(int) intensidadRefractadoR,
 							(int) intensidadRefractadoG,
@@ -207,15 +205,7 @@ public class OperacionesEscena {
 		int mayor = 0;
 		if (blue > mayor) mayor = blue;
 		if (red > mayor) mayor = red;
-		if (green > mayor) mayor = green;
-		if (mayor > 255) {
-
-			double indiceReduccion = (double) mayor / 255;
-			indiceReduccion = Math.sqrt(indiceReduccion);
-			red = (int) (red / indiceReduccion);
-			green = (int) (green / indiceReduccion);
-			blue = (int) (blue / indiceReduccion);
-		}
+		if (green > mayor) mayor = green; 
 
 		if (red > 255) red = 255;
 		if (green > 255) green = 255;
