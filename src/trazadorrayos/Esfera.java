@@ -18,9 +18,9 @@ public class Esfera extends Figura {
 	private double radio = 0.0;
 	private Point4d centro = null;
 
-	public Esfera(Point4d centro, double refraccion, double reflexion,
+	public Esfera(Point4d centro, double refraccion, double reflexion,double transparencia,
 			Color kd, Color ks, double radio) {
-		super(refraccion, reflexion, kd, ks);
+		super(refraccion, reflexion,transparencia, kd, ks);
 		this.radio = radio;
 		this.centro = centro;
 

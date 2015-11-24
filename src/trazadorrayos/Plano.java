@@ -17,8 +17,8 @@ public class Plano extends Figura {
     private double D=2;
 
     public Plano(Point4d punto, Vector4d normal, double refraccion,
-                    double reflexion, Color kd, Color ks ) {
-            super( refraccion, reflexion, kd, ks);
+                    double reflexion,double transparencia, Color kd, Color ks ) {
+            super( refraccion, reflexion,transparencia, kd, ks);
             this.punto = punto;
             this.normal = normal;
     }

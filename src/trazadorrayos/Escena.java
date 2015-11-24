@@ -79,6 +79,7 @@ public class Escena {
 			int altura = 0;
 			double refraccion = 0.0;
 			double reflectividad = 0.0;
+			double transparencia = 0.0;
 			Color KD = null;
 			Color KS = null;
 			int radio = 0;
@@ -172,8 +173,7 @@ public class Escena {
 					}
 					Matrix4d mTFoco = matrizTraslacion(punto);
 					Point4d posicionFoco = new Point4d(0, 0, 0, 1);
-					posicionFoco = multiplyPointMatrix(posicionFoco,
-							mTFoco);
+					posicionFoco = multiplyPointMatrix(posicionFoco, mTFoco);
 					posicionFoco = multiplyPointMatrix(posicionFoco,
 							camara.getCambioBase());
 					foco = new Foco(posicionFoco, color, intensidad,
@@ -197,8 +197,13 @@ public class Escena {
 							refraccion = Float.parseFloat(escenaFichero.next());
 							cadena = escenaFichero.next();
 						}
-						else if (cadena.equals("reflectividad_Transparente:")) {
+						else if (cadena.equals("reflectividad:")) {
 							reflectividad = Float.parseFloat(escenaFichero
+									.next());
+							cadena = escenaFichero.next();
+						}
+						else if (cadena.equals("transparencia:")) {
+							transparencia = Float.parseFloat(escenaFichero
 									.next());
 							cadena = escenaFichero.next();
 						}
@@ -226,7 +231,7 @@ public class Escena {
 					posicionEsfera = multiplyPointMatrix(posicionEsfera,
 							camara.getCambioBase());
 					Esfera esfera = new Esfera(posicionEsfera, refraccion,
-							reflectividad, KD, KS, radio);
+							reflectividad,transparencia, KD, KS, radio);
 					System.out.println(esfera);
 					figuras.add(esfera);
 					break;
@@ -245,8 +250,13 @@ public class Escena {
 							refraccion = Float.parseFloat(escenaFichero.next());
 							cadena = escenaFichero.next();
 						}
-						else if (cadena.equals("reflectividad_Transparente:")) {
+						else if (cadena.equals("reflectividad:")) {
 							reflectividad = Float.parseFloat(escenaFichero
+									.next());
+							cadena = escenaFichero.next();
+						}
+						else if (cadena.equals("transparencia:")) {
+							transparencia = Float.parseFloat(escenaFichero
 									.next());
 							cadena = escenaFichero.next();
 						}
@@ -276,7 +286,7 @@ public class Escena {
 					posicionPlano = multiplyPointMatrix(posicionPlano,
 							camara.getCambioBase());
 					Plano plano = new Plano(posicionPlano, normal, refraccion,
-							reflectividad, KD, KS);
+							reflectividad, transparencia,KD, KS);
 					System.out.println(plano);
 					figuras.add(plano);
 
@@ -317,6 +327,11 @@ public class Escena {
 									.next());
 							cadena = escenaFichero.next();
 						}
+						else if (cadena.equals("transparencia:")) {
+							transparencia = Float.parseFloat(escenaFichero
+									.next());
+							cadena = escenaFichero.next();
+						}
 						else if (cadena.equals("kd:")) {
 							KD = new Color(escenaFichero.nextShort(),
 									escenaFichero.nextShort(),
@@ -351,7 +366,7 @@ public class Escena {
 							camara.getCambioBase());
 					Triangulo triangulo = new Triangulo(punto1Triangulo,
 							punto2Triangulo, punto3Triangulo, refraccion,
-							reflectividad, KD, KS);
+							reflectividad,transparencia, KD, KS);
 					System.out.println(triangulo);
 					figuras.add(triangulo);
 					break;

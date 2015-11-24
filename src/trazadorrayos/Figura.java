@@ -18,12 +18,14 @@ public class Figura {
 	Color ks = null;
 	private double indiceRefraccion = 0;
 	private double indiceReflectividad = 0;
+	private double transparencia =0;
 
-	public Figura(double refraccion, double reflexion, Color kd, Color ks) {
+	public Figura(double refraccion, double reflexion,double transparencia, Color kd, Color ks) {
 		this.kd = kd;
 		this.ks = ks;
 		indiceRefraccion = refraccion;
 		indiceReflectividad = reflexion;
+		this.transparencia=transparencia;
 	}
 
 	public Color getKd() {
@@ -48,6 +50,10 @@ public class Figura {
 
 	public double getIndiceReflectividad() {
 		return indiceReflectividad;
+	}
+	
+	public double getTransparencia(){
+		return transparencia;
 	}
 
 	public Vector4d getNormal(Point4d puntoInterseccion) {

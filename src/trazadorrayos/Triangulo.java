@@ -16,8 +16,8 @@ public class Triangulo extends Figura {
 	private Vector4d normal = null;
 
 	public Triangulo(Point4d punto1, Point4d punto2, Point4d punto3,
-			double refraccion, double reflexion, Color kd, Color ks) {
-		super(refraccion, reflexion, kd, ks);
+			double refraccion, double reflexion,double transparencia, Color kd, Color ks) {
+		super(refraccion, reflexion,transparencia, kd, ks);
 		this.punto1 = punto1;
 		this.punto2 = punto2;
 		this.punto3 = punto3;
