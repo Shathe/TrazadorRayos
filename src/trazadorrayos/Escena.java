@@ -231,7 +231,7 @@ public class Escena {
 					posicionEsfera = multiplyPointMatrix(posicionEsfera,
 							camara.getCambioBase());
 					Esfera esfera = new Esfera(posicionEsfera, refraccion,
-							reflectividad,transparencia, KD, KS, radio);
+							reflectividad, transparencia, KD, KS, radio);
 					System.out.println(esfera);
 					figuras.add(esfera);
 					break;
@@ -285,8 +285,11 @@ public class Escena {
 					posicionPlano = multiplyPointMatrix(posicionPlano, mTPlano);
 					posicionPlano = multiplyPointMatrix(posicionPlano,
 							camara.getCambioBase());
+					Point4d auxNormal = multiplyPointMatrix(new Point4d(normal),
+							camara.getCambioBase());
+					normal=new Vector4d(auxNormal);
 					Plano plano = new Plano(posicionPlano, normal, refraccion,
-							reflectividad, transparencia,KD, KS);
+							reflectividad, transparencia, KD, KS);
 					System.out.println(plano);
 					figuras.add(plano);
 
@@ -366,7 +369,7 @@ public class Escena {
 							camara.getCambioBase());
 					Triangulo triangulo = new Triangulo(punto1Triangulo,
 							punto2Triangulo, punto3Triangulo, refraccion,
-							reflectividad,transparencia, KD, KS);
+							reflectividad, transparencia, KD, KS);
 					System.out.println(triangulo);
 					figuras.add(triangulo);
 					break;
