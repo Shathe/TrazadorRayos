@@ -15,8 +15,8 @@ import javax.imageio.ImageIO;
 public class Trazador {
 
 	public static void main(String[] args) {
-		int MaxDepth = 15;
-		double minIntensity = 1;
+		int MaxDepth = 7;
+		//double minIntensity = 1;
 		int antialiasing = 3;
 		// TODO code application logic here
 		// Cargas la escena
@@ -89,7 +89,7 @@ public class Trazador {
 						puntoPantalla = Escena.multiplyPointMatrix(
 								puntoPantalla, cambioBase);
 						Color color = OperacionesEscena.colorPuntoPantalla(
-								puntoPantalla, escena, MaxDepth, minIntensity);
+								puntoPantalla, escena, MaxDepth);
 						red += color.getRed();
 						green += color.getGreen();
 						blue += color.getBlue();

@@ -1,9 +1,9 @@
-figura:camara direccion: 1 1 1 0 distanciaPantalla: 3  posicion: -9 -3 -3 1 .
-figura:foco posicion: -3 4 -4 1 intensidad: 4 Iambiente: 0.1 color: 255 255 255 .
-figura:pantalla pixelanchura: 1500  pixelaltura: 1000 anchura: 6 altura: 4 .
-figura:esfera posicion: -5 -3 -18 1  indicerefraccion: 1 reflectividad: 0 transparencia: 1  kd: 0 0 0 ks: 255 255 255 radio: 2 .
-figura:esfera posicion: -2 5 -15 1  indicerefraccion: 0 reflectividad: 1 transparencia: 0 kd: 40 40 40 ks: 215 215 215 radio: 2 .
-figura:esfera posicion: 0 1 -15 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 230 55 55 ks: 25 200 200 radio: 2 .
+figura:camara direccion: 1 1 1 0 distanciaPantalla: 4  posicion: 0 7 30 1 .
+figura:foco posicion: 0 7 -1 1 intensidad: 4 Iambiente: 0.1 color: 255 255 255 .
+figura:pantalla pixelanchura: 1920  pixelaltura: 1080 anchura: 19 altura: 10 .
+figura:esfera posicion: -5 -3 -15 1  indicerefraccion: 1.3 reflectividad: 0 transparencia: 1  kd: 180 180 180 ks: 75 75 75 radio: 1 .
+figura:esfera posicion: -2 5 -15 1  indicerefraccion: 0 reflectividad: 1 transparencia: 0 kd: 40 40 40 ks: 215 215 215 radio: 1 .
+figura:esfera posicion: 0 1 -15 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 230 55 55 ks: 25 200 200 radio: 1 .
 figura:esfera posicion: 4 3 -13 1  indicerefraccion: 0 reflectividad: 0.5 transparencia: 0 kd: 230 55 55 ks: 25 200 200 radio: 2 .
 // figura:plano posicion: 10 30 10 1 normal: -1 -1 -1 0  indicerefraccion: 0.8 reflectividad: 1 transparencia: 0 kd: 130 130 130  ks: 125 125 125 .
 figura:plano posicion: 0 0 -30 1 normal: -1 -1 0 0  indicerefraccion: 0 reflectividad: 1 transparencia: 0 kd: 55 230 55  ks: 200 25 200 .
