@@ -161,7 +161,7 @@ public class OperacionesEscena {
 							null);
 
 					// si hay suficiente intensidad reflejada, lanzamos el rayo
-					if (MaxDepth > 0) {
+					if (MaxDepth > 0 && figura.getIndiceReflectividad()>0) {
 						Color colorReflejado = colorDesdeRayo(escena,
 								rayoReflejado, MaxDepth--, 
 								figura, false);
@@ -170,7 +170,7 @@ public class OperacionesEscena {
 						intensidadPunto.green += figura.getIndiceReflectividad()*colorReflejado.getGreen();
 					}
 					// si hay suficiente intensidad refractada, lanzamos el rayo
-					if (MaxDepth > 0) {
+					if (MaxDepth > 0 && figura.getTransparencia()>0) {
 						boolean esperarRefraccion = false;
 						if (figura instanceof Esfera) {
 							esperarRefraccion = true;
