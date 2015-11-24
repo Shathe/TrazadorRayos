@@ -43,12 +43,12 @@ public class Intensidad {
 		// Caso en el que da negativo debido a que el objeto
 		// refracta por dentro
 		cosenoDif = Math.abs(cosenoDif);
-		IpartDifR = figura.kd.getRed() * rayo.getColor().getRed()
+		IpartDifR = figura.kd.getRed() * escena.getFoco().getColor().getRed()
 				/ 255 * cosenoDif * TapanObjetosTranslucidos;
 		IpartDifG = figura.kd.getGreen()
-				* rayo.getColor().getGreen() / 255 * cosenoDif
+				* escena.getFoco().getColor().getGreen() / 255 * cosenoDif
 				* TapanObjetosTranslucidos;
-		IpartDifB = figura.kd.getBlue() * rayo.getColor().getBlue()
+		IpartDifB = figura.kd.getBlue() * escena.getFoco().getColor().getBlue()
 				/ 255 * cosenoDif * TapanObjetosTranslucidos;
 		// especular
 
@@ -67,13 +67,13 @@ public class Intensidad {
 		cosenoEsp = Math.pow(cosenoEsp, 150);
 		// ks * cos * color foco * grado sombra
 		 IpartEspR = figura.ks.getRed()
-				* rayo.getColor().getRed() / 255 * cosenoEsp
+				* escena.getFoco().getColor().getRed() / 255 * cosenoEsp
 				* TapanObjetosTranslucidos;
 		 IpartEspG = figura.ks.getGreen()
-				* rayo.getColor().getGreen() / 255 * cosenoEsp
+				* escena.getFoco().getColor().getGreen() / 255 * cosenoEsp
 				* TapanObjetosTranslucidos;
 		 IpartEspB = figura.ks.getBlue()
-				* rayo.getColor().getBlue() / 255 * cosenoEsp
+				* escena.getFoco().getColor().getBlue() / 255 * cosenoEsp
 				* TapanObjetosTranslucidos;
 		// intensidad en el punto = ambiental + difusa + especular
 		intensidadR += IpartDifR + IpartEspR;
