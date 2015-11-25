@@ -289,6 +289,7 @@ public class Escena {
 					Point4d auxNormal = multiplyPointMatrix(
 							new Point4d(normal), camara.getCambioBase());
 					normal = new Vector4d(auxNormal);
+					normal.normalize();
 
 					Plano plano = new Plano(posicionPlano, normal, refraccion,
 							reflectividad, transparencia, KD, KS);

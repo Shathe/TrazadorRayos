@@ -88,6 +88,9 @@ public class Trazador {
 								.getCambioBase();
 						puntoPantalla = Escena.multiplyPointMatrix(
 								puntoPantalla, cambioBase);
+						if(i==960 && j==540){
+							System.out.println("weba");
+						}
 						Color color = OperacionesEscena.colorPuntoPantalla(
 								puntoPantalla, escena, MaxDepth);
 						red += color.getRed();

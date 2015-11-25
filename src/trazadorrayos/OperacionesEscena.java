@@ -67,8 +67,16 @@ public class OperacionesEscena {
 	public static Color colorDesdeRayo(Escena escena, Rayo rayo, int MaxDepth,
                 Figura desde, boolean refractadoParaSalir) {
 		Color color = null;
-		Figura figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
-				rayo.getPunto(), rayo, escena.getCamara(), desde);
+		Figura figura=null;
+		if (refractadoParaSalir) {
+			figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
+					rayo.getPunto(), rayo, escena.getCamara(), null);
+		}
+		else{
+			figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
+					rayo.getPunto(), rayo, escena.getCamara(), desde);
+		}
+		 
 		if (figura != null && Interseccion.intersecta(rayo, figura) != null) {
 			/*
 			 * Ahora tenemos que intersecta con la figura y tenemos que obtener
@@ -77,7 +85,7 @@ public class OperacionesEscena {
 			Point4d punto = Interseccion.intersecta(rayo, figura);
 			double reflec = figura.getIndiceReflectividad();
 			double transparencia = figura.getTransparencia();
-			double refrac = 0;
+			double refrac = 1;
 			if (figura.getIndiceRefraccion() != 0)
 				refrac = 1 / figura.getIndiceRefraccion();// suponemos que el
 															// exterior es 1
@@ -183,7 +191,15 @@ public class OperacionesEscena {
 						intensidadPunto.green +=figura.getTransparencia()* colorRefractado.getGreen();
 
 					}
-
+					/*
+					 * Si el punto en e que has calculado no es del todo visible
+					 * debido a que hay objetos translucidos no totales, hay que recalcular
+					 * la intensidad
+					 */
+					double indiceVisibilidad=1-noVisible;
+					intensidadPunto.red=(int)(intensidadPunto.red*indiceVisibilidad);
+					intensidadPunto.blue=(int)(intensidadPunto.blue*indiceVisibilidad);
+					intensidadPunto.green=(int)(intensidadPunto.green*indiceVisibilidad);
 					color = normalizarColor(intensidadPunto.red,
 							intensidadPunto.green, intensidadPunto.blue);
 
@@ -299,9 +315,9 @@ public class OperacionesEscena {
 			if (puntoInterseccion != null) {
 				double distanciaPuntoFoco = punto.distanceSquared(foco
 						.getPosicion());
-				double distanciaInterseccionFoco = puntoInterseccion
-						.distanceSquared(foco.getPosicion());
-				if (distanciaInterseccionFoco < distanciaPuntoFoco
+				double distanciaInterseccionPunto = puntoInterseccion
+						.distanceSquared(punto);
+				if (distanciaInterseccionPunto < distanciaPuntoFoco
 						&& intersecta < (1 - figuras.get(i).getTransparencia())) {
 					intersecta = (1 - figuras.get(i).getTransparencia());
 				}
