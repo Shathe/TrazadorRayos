@@ -82,7 +82,7 @@ public class Escena {
 			double transparencia = 0.0;
 			Color KD = null;
 			Color KS = null;
-			int radio = 0;
+			double radio = 0;
 			Vector4d normal = null;
 			Point4d punto1 = null;
 			Point4d punto2 = null;
@@ -101,17 +101,17 @@ public class Escena {
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("direccion:")) {
-							direccion = new Vector4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							direccion = new Vector4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("posicion:")) {
-							posicion = new Point4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							posicion = new Point4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 							cadena = escenaFichero.next();
 						}
 					}
@@ -147,10 +147,10 @@ public class Escena {
 					cadena = escenaFichero.next();
 					while (!cadena.equals(".")) {
 						if (cadena.equals("posicion:")) {
-							punto = new Point4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							punto = new Point4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("color:")) {
@@ -186,10 +186,10 @@ public class Escena {
 					cadena = escenaFichero.next();
 					while (!cadena.equals(".")) {
 						if (cadena.equals("posicion:")) {
-							posicion = new Point4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							posicion = new Point4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 
 							cadena = escenaFichero.next();
 						}
@@ -220,7 +220,7 @@ public class Escena {
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("radio:")) {
-							radio = escenaFichero.nextInt();
+							radio = Float.parseFloat(escenaFichero.next());
 							cadena = escenaFichero.next();
 						}
 					}
@@ -239,10 +239,10 @@ public class Escena {
 					cadena = escenaFichero.next();
 					while (!cadena.equals(".")) {
 						if (cadena.equals("posicion:")) {
-							posicion = new Point4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							posicion = new Point4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 
 							cadena = escenaFichero.next();
 						}
@@ -273,10 +273,10 @@ public class Escena {
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("normal:")) {
-							normal = new Vector4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							normal = new Vector4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 							cadena = escenaFichero.next();
 						}
 					}
@@ -301,26 +301,26 @@ public class Escena {
 					cadena = escenaFichero.next();
 					while (!cadena.equals(".")) {
 						if (cadena.equals("punto1:")) {
-							punto1 = new Point4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							punto1 = new Point4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("punto2:")) {
-							punto2 = new Point4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							punto2 = new Point4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("punto3:")) {
-							punto3 = new Point4d(escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt(),
-									escenaFichero.nextInt());
+							punto3 = new Point4d(Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()),
+									Float.parseFloat(escenaFichero.next()));
 
 							cadena = escenaFichero.next();
 						}

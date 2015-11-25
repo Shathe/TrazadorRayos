@@ -9,7 +9,7 @@ figura:esfera posicion: 4 3 -13 1  indicerefraccion: 0 reflectividad: 0.5 transp
 figura:plano posicion: -3 -10 -30 1 normal: 0 1 0 0  indicerefraccion: 0 reflectividad: 0.1 transparencia: 0 kd: 55 230 55  ks: 200 25 200 .
 figura:plano posicion: 0 -10 -30 1 normal: -1 0 1 0  indicerefraccion: 0 reflectividad: 0.1 transparencia: 0 kd: 55 55 230  ks: 200 200 25 .
 figura:plano posicion: 0 -10 -30 1 normal: 1 0 1 0  indicerefraccion: 0 reflectividad: 0.1 transparencia: 0 kd: 230 55 55  ks: 25 200 200 .
-figura:triangulo punto1: 2 -4 -10 1 punto2: 3 0 -10 1 punto3: 6 -4 -10 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
-figura:triangulo punto1: 2 -4 -10 1  punto2: 1 -2 -12 1 punto3: 3 0 -10 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
-figura:triangulo punto1: 2 -4 -10 1  punto2: 6 -4 -10 1 punto3:  1 -2 -12 1 indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
+figura:triangulo punto1: 2.5 -4 -10 1 punto2: 3 0 -10 1 punto3: 6 -4 -10 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
+figura:triangulo punto1: 2.5 -4 -10 1  punto2: 1 -2 -12 1 punto3: 3 0 -10 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
+figura:triangulo punto1: 2.5 -4 -10 1  punto2: 6 -4 -10 1 punto3:  1 -2 -12 1 indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
 figura:triangulo punto1: 1 -2 -12 1 punto2: 3 0 -10 1 punto3: 6 -4 -10 1 indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
