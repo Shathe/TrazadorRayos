@@ -5,7 +5,6 @@
 package trazadorrayos;
 
 import javax.vecmath.Point4d;
-import javax.vecmath.Vector3d;
 import javax.vecmath.Vector4d;
 
 /**
@@ -133,14 +132,12 @@ public class Interseccion {
 			}
 			// evaluamos t en la ecuacion del rayo
 			double casos = rayo.getDireccion().dot(plano.getNormal(null));
-
 			if (casos < 0.0) {
 				if (landa >= 0.0) {
 					interseccion = rayo.evaluar(landa);
 				}
 				// else no se ve
 			}
-
 			// else no intersecta
 		}
 		else if (figura instanceof Triangulo) {
@@ -163,7 +160,6 @@ public class Interseccion {
 			Point4d p = rayo.evaluar(landa);
 			// comprobamos que tienen el mismo signo
 			// S1=((p2-p1)x(p-p1)) * n
-
 			double S1 = Operaciones.crossProduct(
 					Operaciones.sub(triangulo.getPunto2(),
 							triangulo.getPunto1()),

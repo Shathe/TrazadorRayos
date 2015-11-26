@@ -62,6 +62,32 @@ public class Operaciones {
 		mT.setElement(3, 2, posicion.z);
 		return mT;
 	}
+
+	public static Matrix4d rotacionX(double angulo) {
+		Matrix4d mRotacion = new Matrix4d(1.0, 0.0, 0.0, 0.0, 0.0,
+				Math.cos(Math.toRadians(angulo)), Math.sin(Math
+						.toRadians(angulo)), 0.0, 0.0, -Math.sin(Math
+						.toRadians(angulo)), Math.cos(Math.toRadians(angulo)),
+				0.0, 0.0, 0.0, 0.0, 1.0);
+		return mRotacion;
+	}
+
+	public static Matrix4d rotacionY(double angulo) {
+		Matrix4d mRotacion = new Matrix4d(Math.cos(Math.toRadians(angulo)),
+				0.0, -Math.sin(Math.toRadians(angulo)), 0.0, 0.0, 1.0, 0.0,
+				0.0, Math.sin(Math.toRadians(angulo)), 0.0, Math.cos(Math
+						.toRadians(angulo)), 0.0, 0.0, 0.0, 0.0, 1.0);
+		return mRotacion;
+	}
+
+	public static Matrix4d rotacionZ(double angulo) {
+		Matrix4d mRotacion = new Matrix4d(Math.cos(Math.toRadians(angulo)),
+				Math.sin(Math.toRadians(angulo)), 0.0, 0.0, -Math.sin(Math
+						.toRadians(angulo)), Math.cos(Math.toRadians(angulo)),
+				0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+		return mRotacion;
+	}
+
 	public static Vector4d sub(Point4d v1, Point4d v2) {
 		return new Vector4d(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, 1);
 	}

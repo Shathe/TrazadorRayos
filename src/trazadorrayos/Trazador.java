@@ -8,8 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
-
-import javax.vecmath.Matrix4d;
 import javax.vecmath.Point4d;
 import javax.imageio.ImageIO;
 

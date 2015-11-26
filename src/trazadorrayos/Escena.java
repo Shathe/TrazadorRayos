@@ -24,8 +24,6 @@ public class Escena {
 	private Pantalla pantalla = null;
 	private Camara camara = null;
 	private Foco foco = null;
-	private static Matrix4d matrizTransformacionIdentidad = new Matrix4d(1, 0,
-			0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
 	public Escena(Foco foco, Camara camara, Pantalla pantalla) {
 		this.foco = foco;
@@ -60,11 +58,11 @@ public class Escena {
 	public static Escena leerEscena(String fichero) {
 		Escena escena = null;
 		try {
+			Scanner escenaFichero = new Scanner(new File(fichero));
 			Foco foco = null;
 			Camara camara = null;
 			Pantalla pantalla = null;
 			ArrayList<Figura> figuras = new ArrayList<Figura>();
-			Scanner escenaFichero = new Scanner(new File(fichero));
 			String figura = "";
 			Point4d punto = null;
 			Color color = null;
@@ -101,14 +99,16 @@ public class Escena {
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("direccion:")) {
-							direccion = new Vector4d(Float.parseFloat(escenaFichero.next()),
+							direccion = new Vector4d(
+									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()));
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("posicion:")) {
-							posicion = new Point4d(Float.parseFloat(escenaFichero.next()),
+							posicion = new Point4d(
+									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()));
@@ -147,10 +147,11 @@ public class Escena {
 					cadena = escenaFichero.next();
 					while (!cadena.equals(".")) {
 						if (cadena.equals("posicion:")) {
-							punto = new Point4d(Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()));
+							punto = new Point4d(Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()));
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("color:")) {
@@ -173,9 +174,10 @@ public class Escena {
 					}
 					Matrix4d mTFoco = Operaciones.matrizTraslacion(punto);
 					Point4d posicionFoco = new Point4d(0, 0, 0, 1);
-					posicionFoco = Operaciones.multiplyPointMatrix(posicionFoco, mTFoco);
-					posicionFoco = Operaciones.multiplyPointMatrix(posicionFoco,
-							camara.getCambioBase());
+					posicionFoco = Operaciones.multiplyPointMatrix(
+							posicionFoco, mTFoco);
+					posicionFoco = Operaciones.multiplyPointMatrix(
+							posicionFoco, camara.getCambioBase());
 					foco = new Foco(posicionFoco, color, intensidad,
 							intensidadAmbiente);
 
@@ -186,7 +188,8 @@ public class Escena {
 					cadena = escenaFichero.next();
 					while (!cadena.equals(".")) {
 						if (cadena.equals("posicion:")) {
-							posicion = new Point4d(Float.parseFloat(escenaFichero.next()),
+							posicion = new Point4d(
+									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()));
@@ -226,10 +229,10 @@ public class Escena {
 					}
 					Matrix4d mTEsfera = Operaciones.matrizTraslacion(posicion);
 					Point4d posicionEsfera = new Point4d(0, 0, 0, 1);
-					posicionEsfera = Operaciones.multiplyPointMatrix(posicionEsfera,
-							mTEsfera);
-					posicionEsfera = Operaciones.multiplyPointMatrix(posicionEsfera,
-							camara.getCambioBase());
+					posicionEsfera = Operaciones.multiplyPointMatrix(
+							posicionEsfera, mTEsfera);
+					posicionEsfera = Operaciones.multiplyPointMatrix(
+							posicionEsfera, camara.getCambioBase());
 					Esfera esfera = new Esfera(posicionEsfera, refraccion,
 							reflectividad, transparencia, KD, KS, radio);
 					System.out.println(esfera);
@@ -239,7 +242,8 @@ public class Escena {
 					cadena = escenaFichero.next();
 					while (!cadena.equals(".")) {
 						if (cadena.equals("posicion:")) {
-							posicion = new Point4d(Float.parseFloat(escenaFichero.next()),
+							posicion = new Point4d(
+									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()));
@@ -273,7 +277,8 @@ public class Escena {
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("normal:")) {
-							normal = new Vector4d(Float.parseFloat(escenaFichero.next()),
+							normal = new Vector4d(
+									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()),
 									Float.parseFloat(escenaFichero.next()));
@@ -282,9 +287,10 @@ public class Escena {
 					}
 					Matrix4d mTPlano = Operaciones.matrizTraslacion(posicion);
 					Point4d posicionPlano = new Point4d(0, 0, 0, 1);
-					posicionPlano = Operaciones.multiplyPointMatrix(posicionPlano, mTPlano);
-					posicionPlano = Operaciones.multiplyPointMatrix(posicionPlano,
-							camara.getCambioBase());
+					posicionPlano = Operaciones.multiplyPointMatrix(
+							posicionPlano, mTPlano);
+					posicionPlano = Operaciones.multiplyPointMatrix(
+							posicionPlano, camara.getCambioBase());
 
 					Point4d auxNormal = Operaciones.multiplyPointMatrix(
 							new Point4d(normal), camara.getCambioBase());
@@ -301,26 +307,29 @@ public class Escena {
 					cadena = escenaFichero.next();
 					while (!cadena.equals(".")) {
 						if (cadena.equals("punto1:")) {
-							punto1 = new Point4d(Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()));
+							punto1 = new Point4d(Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()));
 
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("punto2:")) {
-							punto2 = new Point4d(Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()));
+							punto2 = new Point4d(Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()));
 
 							cadena = escenaFichero.next();
 						}
 						else if (cadena.equals("punto3:")) {
-							punto3 = new Point4d(Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()),
-									Float.parseFloat(escenaFichero.next()));
+							punto3 = new Point4d(Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()), Float.parseFloat(escenaFichero
+									.next()));
 
 							cadena = escenaFichero.next();
 						}
@@ -354,27 +363,91 @@ public class Escena {
 					}
 					Matrix4d mTTriangulo = Operaciones.matrizTraslacion(punto1);
 					Point4d punto1Triangulo = new Point4d(0, 0, 0, 1);
-					punto1Triangulo = Operaciones.multiplyPointMatrix(punto1Triangulo,
-							mTTriangulo);
-					punto1Triangulo = Operaciones.multiplyPointMatrix(punto1Triangulo,
-							camara.getCambioBase());
+					punto1Triangulo = Operaciones.multiplyPointMatrix(
+							punto1Triangulo, mTTriangulo);
+					punto1Triangulo = Operaciones.multiplyPointMatrix(
+							punto1Triangulo, camara.getCambioBase());
 					mTTriangulo = Operaciones.matrizTraslacion(punto2);
 					Point4d punto2Triangulo = new Point4d(0, 0, 0, 1);
-					punto2Triangulo = Operaciones.multiplyPointMatrix(punto2Triangulo,
-							mTTriangulo);
-					punto2Triangulo = Operaciones.multiplyPointMatrix(punto2Triangulo,
-							camara.getCambioBase());
+					punto2Triangulo = Operaciones.multiplyPointMatrix(
+							punto2Triangulo, mTTriangulo);
+					punto2Triangulo = Operaciones.multiplyPointMatrix(
+							punto2Triangulo, camara.getCambioBase());
 					mTTriangulo = Operaciones.matrizTraslacion(punto3);
 					Point4d punto3Triangulo = new Point4d(0, 0, 0, 1);
-					punto3Triangulo = Operaciones.multiplyPointMatrix(punto3Triangulo,
-							mTTriangulo);
-					punto3Triangulo = Operaciones.multiplyPointMatrix(punto3Triangulo,
-							camara.getCambioBase());
+					punto3Triangulo = Operaciones.multiplyPointMatrix(
+							punto3Triangulo, mTTriangulo);
+					punto3Triangulo = Operaciones.multiplyPointMatrix(
+							punto3Triangulo, camara.getCambioBase());
 					Triangulo triangulo = new Triangulo(punto1Triangulo,
 							punto2Triangulo, punto3Triangulo, refraccion,
 							reflectividad, transparencia, KD, KS);
 					System.out.println(triangulo);
 					figuras.add(triangulo);
+					break;
+				case "figura:compleja":
+					cadena = escenaFichero.next();
+					String obj = "";
+					while (!cadena.equals(".")) {
+						if (cadena.equals("obj:")) {
+							obj = escenaFichero.next();
+							cadena = escenaFichero.next();
+						}
+
+						else if (cadena.equals("indicerefraccion:")) {
+							refraccion = Float.parseFloat(escenaFichero.next());
+							cadena = escenaFichero.next();
+						}
+						else if (cadena.equals("reflectividad:")) {
+							reflectividad = Float.parseFloat(escenaFichero
+									.next());
+							cadena = escenaFichero.next();
+						}
+						else if (cadena.equals("transparencia:")) {
+							transparencia = Float.parseFloat(escenaFichero
+									.next());
+							cadena = escenaFichero.next();
+						}
+						else if (cadena.equals("kd:")) {
+							KD = new Color(escenaFichero.nextShort(),
+									escenaFichero.nextShort(),
+									escenaFichero.nextShort());
+							cadena = escenaFichero.next();
+						}
+						else if (cadena.equals("ks:")) {
+							KS = new Color(escenaFichero.nextShort(),
+									escenaFichero.nextShort(),
+									escenaFichero.nextShort());
+							cadena = escenaFichero.next();
+						}
+					}
+					ArrayList<Triangulo> lTriangulo = LeerObj.leerFigura(obj,
+							refraccion, reflectividad, transparencia, KD, KS);
+					Matrix4d mT = Operaciones.matrizTraslacion(new Point4d(0,0,-50,1));
+					
+					for(int i=0;i<lTriangulo.size();i++){
+						Matrix4d mRotacion=Operaciones.rotacionY(45);
+						Point4d aux = Operaciones.multiplyPointMatrix(
+								lTriangulo.get(i).getPunto1(), mT);
+						aux = Operaciones.multiplyPointMatrix(
+								aux, camara.getCambioBase());
+						//aux=Operaciones.multiplyPointMatrix(aux, mRotacion);
+						Point4d aux2 = Operaciones.multiplyPointMatrix(
+								lTriangulo.get(i).getPunto2(), mT);
+						aux2 = Operaciones.multiplyPointMatrix(
+								aux2, camara.getCambioBase());
+						//aux2=Operaciones.multiplyPointMatrix(aux2, mRotacion);
+						Point4d aux3 = Operaciones.multiplyPointMatrix(
+								lTriangulo.get(i).getPunto3(), mT);
+						aux3 = Operaciones.multiplyPointMatrix(
+								aux3, camara.getCambioBase());
+						//aux3=Operaciones.multiplyPointMatrix(aux3, mRotacion);
+						lTriangulo.get(i).setPunto1(aux);
+						lTriangulo.get(i).setPunto2(aux2);
+						lTriangulo.get(i).setPunto3(aux3);
+					}
+					figuras.add(lTriangulo.get(25));
+					//figuras.addAll(lTriangulo);
 					break;
 				case "//":
 					break;
@@ -399,7 +472,5 @@ public class Escena {
 		}
 		return escena;
 	}
-
-
 
 }

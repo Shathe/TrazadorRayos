@@ -80,8 +80,6 @@ public class OperacionesEscena {
 			 * su color
 			 */
 			Point4d punto = Interseccion.intersecta(rayo, figura);
-			double reflec = figura.getIndiceReflectividad();
-			double transparencia = figura.getTransparencia();
 			double refrac = 1;
 			if (figura.getIndiceRefraccion() != 0)
 				refrac = 1 / figura.getIndiceRefraccion();// suponemos que el
