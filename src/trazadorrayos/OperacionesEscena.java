@@ -21,25 +21,23 @@ public class OperacionesEscena {
 			if (desde != siguienteFigura) {
 				Point4d puntoInterseccion = Interseccion.intersecta(rayo,
 						siguienteFigura);
-				if (puntoInterseccion != null && puntoInterseccion.x!=punto.x 
-                                        && puntoInterseccion.y!=punto.y && puntoInterseccion.z!=punto.z ) {
+				if (puntoInterseccion != null && puntoInterseccion.x != punto.x
+						&& puntoInterseccion.y != punto.y
+						&& puntoInterseccion.z != punto.z) {
 					double distancia = punto.distanceSquared(puntoInterseccion);
 					if (distancia < distanciaMenor) {
 						distanciaMenor = distancia;
 						figura = siguienteFigura;
 					}
-
 				}
 			}
 		}
-
 		return figura;
 	}
 
 	public static Color colorPuntoPantalla(Point4d puntoPixelPantalla,
 			Escena escena, int maxDepth) {
 		Color color = new Color(0, 0, 0);
-
 		/*
 		 * Ahora se crea un rayo que pase por el punto de la pantalla y con
 		 * direccion (puntoCamara-puntopantalla)
@@ -56,8 +54,7 @@ public class OperacionesEscena {
 		 * la escen, y si lo hace, quedarnos unicamente con el objeto mas
 		 * cercano a pa pantalla
 		 */
-		color = colorDesdeRayo(escena, rayo, maxDepth, null,
-				false);
+		color = colorDesdeRayo(escena, rayo, maxDepth, null, false);
 		return color;
 	}
 
@@ -65,18 +62,18 @@ public class OperacionesEscena {
 	 * Devuelve el color que devuelve un rayo al golpear una figura en un punto
 	 */
 	public static Color colorDesdeRayo(Escena escena, Rayo rayo, int MaxDepth,
-                Figura desde, boolean refractadoParaSalir) {
+			Figura desde, boolean refractadoParaSalir) {
 		Color color = null;
-		Figura figura=null;
+		Figura figura = null;
 		if (refractadoParaSalir) {
 			figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
 					rayo.getPunto(), rayo, escena.getCamara(), null);
 		}
-		else{
+		else {
 			figura = OperacionesEscena.FiguraMasCercana(escena.getFiguras(),
 					rayo.getPunto(), rayo, escena.getCamara(), desde);
 		}
-		 
+
 		if (figura != null && Interseccion.intersecta(rayo, figura) != null) {
 			/*
 			 * Ahora tenemos que intersecta con la figura y tenemos que obtener
@@ -119,9 +116,12 @@ public class OperacionesEscena {
 					escena.getFiguras(), figura);
 
 			if (refractadoParaSalir) {
-				double intensidadRefractadoR = escena.getFoco().getColor().getRed();
-				double intensidadRefractadoG = escena.getFoco().getColor().getGreen();
-				double intensidadRefractadoB = escena.getFoco().getColor().getBlue();
+				double intensidadRefractadoR = escena.getFoco().getColor()
+						.getRed();
+				double intensidadRefractadoG = escena.getFoco().getColor()
+						.getGreen();
+				double intensidadRefractadoB = escena.getFoco().getColor()
+						.getBlue();
 				Color colorRayoRefractado = new Color(
 						(int) intensidadRefractadoR,
 						(int) intensidadRefractadoG,
@@ -129,82 +129,70 @@ public class OperacionesEscena {
 				Rayo rayoRefractado = new Rayo(refractado, punto,
 						colorRayoRefractado);
 				return colorDesdeRayo(escena, rayoRefractado, MaxDepth--,
-						 figura, false);
+						figura, false);
 			}
 			else {
 				if (noVisible == 1) {
 					double intensidad = escena.getFoco()
 							.getIntensidadAmbiente();
+					//color=I*Kd
 					int red = (int) (intensidad * figura.kd.getRed());
 					int blue = (int) (intensidad * figura.kd.getBlue());
 					int green = (int) (intensidad * figura.kd.getGreen());
 					color = new Color(red, green, blue);
-
 				}
 				else {
 					Intensidad intensidadPunto = new Intensidad();
-					// calculamos la intensidad en el punto, en RGB
+					/**
+					 *  calculamos la intensidad en el punto, en RGB
+					 *  la ambiental, la difusa y la especular
+					 */
 					intensidadPunto.calcularIntensidadPunto(noVisible, punto,
-							escena, figura,rayo);
-					// intensidad reflejada
-					/*int intensidadReflejadaR = (int) (reflec * figura.ks.getRed());
-					int intensidadReflejadaG = (int) (reflec * figura.ks.getGreen());
-					int intensidadReflejadaB = (int) (reflec * figura.ks.getBlue());
-					Color colorRayoReflejado = new Color(intensidadReflejadaR,
-							intensidadReflejadaG, intensidadReflejadaB);*/
-					Rayo rayoReflejado = new Rayo(reflejado, punto,
-							null);
-					// intensidad refractada
-					/*double intensidadRefractadoR = transparencia
-							* rayo.getColor().getRed();
-					double intensidadRefractadoG = transparencia
-							* rayo.getColor().getGreen();
-					double intensidadRefractadoB = transparencia
-							* rayo.getColor().getBlue();
-					Color colorRayoRefractado = new Color(
-							(int) intensidadRefractadoR,
-							(int) intensidadRefractadoG,
-							(int) intensidadRefractadoB);*/
-					Rayo rayoRefractado = new Rayo(refractado, punto,
-							null);
-
+							escena, figura, rayo);
+					Rayo rayoReflejado = new Rayo(reflejado, punto, null);
+					Rayo rayoRefractado = new Rayo(refractado, punto, null);
 					// si hay suficiente intensidad reflejada, lanzamos el rayo
-					if (MaxDepth > 0 && figura.getIndiceReflectividad()>0) {
+					if (MaxDepth > 0 && figura.getIndiceReflectividad() > 0) {
 						Color colorReflejado = colorDesdeRayo(escena,
-								rayoReflejado, MaxDepth--, 
-								figura, false);
-						intensidadPunto.red += figura.getIndiceReflectividad()*colorReflejado.getRed();
-						intensidadPunto.blue += figura.getIndiceReflectividad()*colorReflejado.getBlue();
-						intensidadPunto.green += figura.getIndiceReflectividad()*colorReflejado.getGreen();
+								rayoReflejado, MaxDepth--, figura, false);
+						intensidadPunto.red += figura.getIndiceReflectividad()
+								* colorReflejado.getRed();
+						intensidadPunto.blue += figura.getIndiceReflectividad()
+								* colorReflejado.getBlue();
+						intensidadPunto.green += figura
+								.getIndiceReflectividad()
+								* colorReflejado.getGreen();
 					}
 					// si hay suficiente intensidad refractada, lanzamos el rayo
-					if (MaxDepth > 0 && figura.getTransparencia()>0) {
+					if (MaxDepth > 0 && figura.getTransparencia() > 0) {
 						boolean esperarRefraccion = false;
 						if (figura instanceof Esfera) {
 							esperarRefraccion = true;
 						}
 						Color colorRefractado = colorDesdeRayo(escena,
-								rayoRefractado, MaxDepth--, 
-								figura, esperarRefraccion);
-						intensidadPunto.red += figura.getTransparencia()*colorRefractado.getRed();
-						intensidadPunto.blue += figura.getTransparencia()*colorRefractado.getBlue();
-						intensidadPunto.green +=figura.getTransparencia()* colorRefractado.getGreen();
+								rayoRefractado, MaxDepth--, figura,
+								esperarRefraccion);
+						//intensidad+(indiceTransparencia*intensidadRefrac)
+						intensidadPunto.red += figura.getTransparencia()
+								* colorRefractado.getRed();
+						intensidadPunto.blue += figura.getTransparencia()
+								* colorRefractado.getBlue();
+						intensidadPunto.green += figura.getTransparencia()
+								* colorRefractado.getGreen();
 
 					}
 					/*
 					 * Si el punto en e que has calculado no es del todo visible
-					 * debido a que hay objetos translucidos no totales, hay que recalcular
-					 * la intensidad
+					 * debido a que hay objetos translucidos no totales, hay que
+					 * recalcular la intensidad
 					 */
-					double indiceVisibilidad=1-noVisible;
-					intensidadPunto.red=(int)(intensidadPunto.red*indiceVisibilidad);
-					intensidadPunto.blue=(int)(intensidadPunto.blue*indiceVisibilidad);
-					intensidadPunto.green=(int)(intensidadPunto.green*indiceVisibilidad);
+					double indiceVisibilidad = 1 - noVisible;
+					intensidadPunto.red = (int) (intensidadPunto.red * indiceVisibilidad);
+					intensidadPunto.blue = (int) (intensidadPunto.blue * indiceVisibilidad);
+					intensidadPunto.green = (int) (intensidadPunto.green * indiceVisibilidad);
 					color = normalizarColor(intensidadPunto.red,
 							intensidadPunto.green, intensidadPunto.blue);
-
 				}
-
 			}
 		}
 		else {
@@ -214,19 +202,24 @@ public class OperacionesEscena {
 		return color;
 	}
 
+	/**
+	 * Si la intensidad de algun color sobre pasa el limite, se capa a 255
+	 * 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @return
+	 */
 	public static Color normalizarColor(int red, int green, int blue) {
 
 		int mayor = 0;
 		if (blue > mayor) mayor = blue;
 		if (red > mayor) mayor = red;
-		if (green > mayor) mayor = green; 
-
+		if (green > mayor) mayor = green;
 		if (red > 255) red = 255;
 		if (green > 255) green = 255;
 		if (blue > 255) blue = 255;
-		// System.out.println(red+" "+green+" "+blue);
 		return new Color(red, green, blue);
-
 	}
 
 	/**
@@ -237,19 +230,13 @@ public class OperacionesEscena {
 	 * @return
 	 */
 	public static Vector4d rayoReflejado(Vector4d normal, Rayo rayo) {
-
-		Vector4d reflejado = new Vector4d();
+		Vector4d reflejado = new Vector4d(normal);
 		// 2*(V*N)N
 		double aux = 2 * normal.dot(rayo.getDireccion());
-		reflejado.x = aux * normal.x;
-		reflejado.y = aux * normal.y;
-		reflejado.z = aux * normal.z;
+		reflejado.scale(aux);
 		reflejado.w = normal.w;
 		// V-2*(V*N)N
-		reflejado.x = rayo.getDireccion().x - reflejado.x;
-		reflejado.z = rayo.getDireccion().z - reflejado.z;
-		reflejado.y = rayo.getDireccion().y - reflejado.y;
-		reflejado.w = rayo.getDireccion().w - reflejado.w;
+		reflejado.sub(rayo.getDireccion(), reflejado);
 		reflejado.normalize();
 		return reflejado;
 	}
@@ -264,17 +251,17 @@ public class OperacionesEscena {
 	 */
 	public static Vector4d rayoRefractado(double refrac, Vector4d normal,
 			Rayo rayo) {
-		Vector4d refractado = new Vector4d();
+		Vector4d refractado = new Vector4d(normal);
 		Vector4d direccionRayo = new Vector4d(rayo.getDireccion());
 		direccionRayo.negate();
-
+		// auxR=(n(N.I)-sqrt(1-n^2(1-(N.I)^2)))N-nI
 		double auxR = (refrac * (normal.dot(direccionRayo)))
 				- Math.sqrt(1 - (refrac * refrac * (1 - (normal
 						.dot(direccionRayo) * normal.dot(direccionRayo)))));
-
-		refractado.x = auxR * normal.x - refrac * direccionRayo.x;
-		refractado.y = auxR * normal.y - refrac * direccionRayo.y;
-		refractado.z = auxR * normal.z - refrac * direccionRayo.z;
+		// refractado=auxR*N-refrac*direccionRayo
+		refractado.scale(auxR);
+		direccionRayo.scale(refrac);
+		refractado.sub(refractado, direccionRayo);
 		refractado.w = 0;
 		refractado.normalize();
 		return refractado;
@@ -293,25 +280,23 @@ public class OperacionesEscena {
 			ArrayList<Figura> figuras, Figura figura) {
 		double intersecta = 0;
 		Vector4d rayoAlFoco = new Vector4d();
-		rayoAlFoco.x = foco.getPosicion().x - punto.x;
-		rayoAlFoco.y = foco.getPosicion().y - punto.y;
-		rayoAlFoco.z = foco.getPosicion().z - punto.z;
+		rayoAlFoco.sub(foco.getPosicion(), punto);
 		rayoAlFoco.w = 0;
 		rayoAlFoco.normalize();
+		// cos(L, N)
 		double cosenoDif = rayoAlFoco.dot(figura.getNormal(punto))
 				/ figura.getNormal(punto).length() / rayoAlFoco.length();
-
 		if (cosenoDif < 0) {
 			// solo se ve si la figura refracta
 			intersecta = (1 - figura.getTransparencia());
 		}
-
+		// miramos si intersectamos con alguna figura de la escena
 		for (int i = 0; i < figuras.size() && intersecta != 1; i++) {
-
 			Rayo rayoPuntoFoco = new Rayo(rayoAlFoco, punto);
-
 			Point4d puntoInterseccion = Interseccion.intersecta(rayoPuntoFoco,
 					figuras.get(i));
+			// si hay interseccion, hay que mirar si esta mas cerca del foco, o
+			// si es visible esa interseccion
 			if (puntoInterseccion != null) {
 				double distanciaPuntoFoco = punto.distanceSquared(foco
 						.getPosicion());

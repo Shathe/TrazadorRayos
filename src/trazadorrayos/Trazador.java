@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
+
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point4d;
 import javax.imageio.ImageIO;
@@ -16,7 +17,7 @@ public class Trazador {
 
 	public static void main(String[] args) {
 		int MaxDepth = 7;
-		//double minIntensity = 1;
+		// double minIntensity = 1;
 		int antialiasing = 3;
 		// TODO code application logic here
 		// Cargas la escena
@@ -54,7 +55,7 @@ public class Trazador {
 				// xPantalla e yPantalla seran el centro del pixel
 				double xPantalla = diffAn * (i - centroAn) + diffAn;
 				double yPantalla = diffAl * (-j + centroAl) + diffAl;
-				
+				// calculamos el incremento de al y an dentro del propio pixel
 				double diffAnAntialiasing = Math.abs(diffAn
 						/ (double) (antialiasing - 1));
 				double diffAlAntialiasing = Math.abs(diffAl
@@ -62,35 +63,41 @@ public class Trazador {
 				double red = 0.0;
 				double green = 0.0;
 				double blue = 0.0;
+				// lanzamos [antialiasing^2] rayos aleatoriamente, aunque
+				// delimitados
+				// por la division del pixel
 				for (int a = 0; a < antialiasing * antialiasing; a++) {
 					for (int b = 0; b < antialiasing / antialiasing; b++) {
+						/**
+						 * segun donde estemos en la pantalla, los valores de x
+						 * e y pueden ser negativos, lo tenemos en cuenta en el
+						 * incremento
+						 */
 						if (xPantalla > 0) {
-							puntoPantalla.x = (Math.random() * a*diffAnAntialiasing)
+							puntoPantalla.x = (Math.random() * a * diffAnAntialiasing)
 									+ xPantalla;
 						}
 						else {
 							puntoPantalla.x = xPantalla
-									- (diffAnAntialiasing * a* Math.random());
+									- (diffAnAntialiasing * a * Math.random());
 						}
 						if (yPantalla > 0) {
-							puntoPantalla.y = (-Math.random() * b*diffAlAntialiasing)
+							puntoPantalla.y = (-Math.random() * b * diffAlAntialiasing)
 									+ yPantalla;
 						}
 						else {
 							puntoPantalla.y = yPantalla
-									- (diffAlAntialiasing * b*Math.random());
+									- (diffAlAntialiasing * b * Math.random());
 						}
 
 						puntoPantalla.z = -escena.getCamara()
 								.getDistanciaPantalla();
 						puntoPantalla.w = 1;
-						Matrix4d cambioBase = escena.getCamara()
-								.getCambioBase();
-						puntoPantalla = Escena.multiplyPointMatrix(
-								puntoPantalla, cambioBase);
-						if(i==960 && j==540){
-							System.out.println("weba");
-						}
+						// cambiamos las coordeandas de la pantalla a
+						// coordenadas del mundo
+						puntoPantalla = Operaciones.multiplyPointMatrix(
+								puntoPantalla, escena.getCamara()
+										.getCambioBase());
 						Color color = OperacionesEscena.colorPuntoPantalla(
 								puntoPantalla, escena, MaxDepth);
 						red += color.getRed();
@@ -98,29 +105,14 @@ public class Trazador {
 						blue += color.getBlue();
 					}
 				}
+				// hacemos la media
 				red = red / (antialiasing * antialiasing);
 				green = green / (antialiasing * antialiasing);
 				blue = blue / (antialiasing * antialiasing);
 				Color color = new Color((int) red, (int) green, (int) blue);
 				/*
-				 * puntoPantalla.x = xPantalla; puntoPantalla.y = yPantalla;
-				 * puntoPantalla.z = -escena.getCamara().getDistanciaPantalla();
-				 * puntoPantalla.w = 1; // Aqui tienes el centro del pixel en
-				 * coordenadas de la camara Matrix4d cambioBase =
-				 * escena.getCamara().getCambioBase();
-				 */
-				/*
 				 * Este es el punto del centro del pixel(i,j) en coordenadas del
 				 * mundo
-				 */
-				// double
-				// []a={puntoPantalla.x,puntoPantalla.y,puntoPantalla.z,1};
-				// puntoPantalla = multiplicar(cambioBase, a
-				/*
-				 * puntoPantalla = Escena.multiplyPointMatrix(puntoPantalla,
-				 * cambioBase); Color color =
-				 * OperacionesEscena.colorPuntoPantalla( puntoPantalla, escena,
-				 * MaxDepth, minIntensity);
 				 */
 				imagen.setRGB(i, j, color.getRGB());
 			}

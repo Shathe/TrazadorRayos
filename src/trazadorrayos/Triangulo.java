@@ -41,7 +41,7 @@ public class Triangulo extends Figura {
 		 */
 		Vector4d normal = new Vector4d();
 		normal.w = 0;
-		Vector4d solucion = crossProduct(vector2, vector1);
+		Vector4d solucion = Operaciones.crossProduct(vector2, vector1);
 		solucion.normalize();
 		this.normal = new Vector4d(solucion.x, solucion.y, solucion.z, solucion.w);
 	}
@@ -96,10 +96,5 @@ public class Triangulo extends Figura {
 		return this.normal;
 	}
 
-	public Vector4d crossProduct(Vector4d a, Vector4d b) {
-		Vector3d aux = new Vector3d(a.x, a.y, a.z);
-		Vector3d bux = new Vector3d(b.x, b.y, b.z);
-		aux.cross(aux, bux);
-		return new Vector4d(aux.x, aux.y, aux.z, a.w);
-	}
+
 }
