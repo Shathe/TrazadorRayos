@@ -5,7 +5,6 @@
 package trazadorrayos;
 
 import javax.vecmath.Point4d;
-import javax.vecmath.Vector3d;
 import javax.vecmath.Vector4d;
 
 /**
@@ -121,7 +120,7 @@ public class Interseccion {
 			// calculamos el punto de la interseccion
 			// numerador(n * a + D)
 			// (p1 -a)n
-			double numerador = puntoMenosPunto(plano.getPunto(),
+			double numerador = Operaciones.sub(plano.getPunto(),
 					rayo.getPunto()).dot(plano.getNormal(null));
 			double landa = 0.0;
 			if (numerador != 0.0) {
@@ -133,14 +132,12 @@ public class Interseccion {
 			}
 			// evaluamos t en la ecuacion del rayo
 			double casos = rayo.getDireccion().dot(plano.getNormal(null));
-
 			if (casos < 0.0) {
 				if (landa >= 0.0) {
 					interseccion = rayo.evaluar(landa);
 				}
 				// else no se ve
 			}
-
 			// else no intersecta
 		}
 		else if (figura instanceof Triangulo) {
@@ -149,7 +146,7 @@ public class Interseccion {
 			// intersecta con el plano en el que esta el triangulo
 			// calculamos el punto de interseccion de ese plano
 			// numerador=(p1-a)* n
-			Vector4d vectorTriangulo = puntoMenosPunto(triangulo.getPunto1(),
+			Vector4d vectorTriangulo = Operaciones.sub(triangulo.getPunto1(),
 					rayo.getPunto());
 			double numerador = vectorTriangulo.dot(N);
 			double landa = 0.0;
@@ -163,29 +160,28 @@ public class Interseccion {
 			Point4d p = rayo.evaluar(landa);
 			// comprobamos que tienen el mismo signo
 			// S1=((p2-p1)x(p-p1)) * n
-
-			double S1 = crossProduct(
-					puntoMenosPunto(triangulo.getPunto2(),
+			double S1 = Operaciones.crossProduct(
+					Operaciones.sub(triangulo.getPunto2(),
 							triangulo.getPunto1()),
-					puntoMenosPunto(p, triangulo.getPunto1())).dot(N);
+							Operaciones.sub(p, triangulo.getPunto1())).dot(N);
 
 			// S2=((p3-p2)x(p-p2))* n
-			double S2 = crossProduct(
-					puntoMenosPunto(triangulo.getPunto3(),
+			double S2 = Operaciones.crossProduct(
+					Operaciones.sub(triangulo.getPunto3(),
 							triangulo.getPunto2()),
-					puntoMenosPunto(p, triangulo.getPunto2())).dot(N);
+							Operaciones.sub(p, triangulo.getPunto2())).dot(N);
 			// S1=((p1-p3)x(p-p3)) * n
-			double S3 = crossProduct(
-					puntoMenosPunto(triangulo.getPunto1(),
+			double S3 = Operaciones.crossProduct(
+					Operaciones.sub(triangulo.getPunto1(),
 							triangulo.getPunto3()),
-					puntoMenosPunto(p, triangulo.getPunto3())).dot(N);
+							Operaciones.sub(p, triangulo.getPunto3())).dot(N);
 
 			// else no intersecta con el triangulo
 			double casos = rayo.getDireccion().dot(N);
 			if (casos < 0.0) {
 				if (landa >= 0.0) {
-					if ((S1 > 0 && S2 > 0 && S3 > 0)
-							|| (S1 < 0 && S2 < 0 && S3 < 0)) {
+					if ((S1 >= 0 && S2 >= 0 && S3 >= 0)
+							|| (S1 <= 0 && S2 <= 0 && S3 <= 0)) {
 						// esta dentro del triangulo
 						// System.out.println(landa);
 						interseccion = rayo.evaluar(landa);
@@ -200,15 +196,6 @@ public class Interseccion {
 		return interseccion;
 	}
 
-	public static Vector4d puntoMenosPunto(Point4d v1, Point4d v2) {
-		return new Vector4d(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, 1);
-	}
 
-	public static Vector4d crossProduct(Vector4d a, Vector4d b) {
-		Vector3d aux = new Vector3d(a.x, a.y, a.z);
-		Vector3d bux = new Vector3d(b.x, b.y, b.z);
-		aux.cross(aux, bux);
-		return new Vector4d(aux.x, aux.y, aux.z, a.w);
-	}
 
 }

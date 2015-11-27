@@ -35,10 +35,10 @@ public class Camara {
 		w.normalize();
 		// u = up x w/|up x w|
 		Vector4d up = new Vector4d(1, 0, 0, 0); //puede ser cualquiera
-		u = OperacionesVectores.crossProduct(up, w);
+		u = Operaciones.crossProduct(up, w);
 		u.normalize();
 		// v = w x u
-		v = OperacionesVectores.crossProduct(w, u);
+		v = Operaciones.crossProduct(w, u);
 
 	}
 
