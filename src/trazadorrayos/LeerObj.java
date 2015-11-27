@@ -32,8 +32,8 @@ public class LeerObj {
 					int v1 = leerV(obj.next());
 					int v2 = leerV(obj.next());
 					int v3 = leerV(obj.next());
-					Triangulo t = new Triangulo(lV.get(v1), lV.get(v2),
-							lV.get(v3), refraccion, reflexion, transparencia, kd, ks);
+					Triangulo t = new Triangulo(lV.get(v1), lV.get(v3),
+							lV.get(v2), refraccion, reflexion, transparencia, kd, ks);
 					lTriangulos.add(t);
 					break;
 				}

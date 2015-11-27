@@ -109,7 +109,7 @@ public class OperacionesEscena {
 			 * iliminacion, es decir solo la luz ambiental, sino hay
 			 * intereseccion ya pasas al tercer modelo
 			 */
-
+			
 			double noVisible = interseccionAFocoTapado(punto, escena.getFoco(),
 					escena.getFiguras(), figura);
 

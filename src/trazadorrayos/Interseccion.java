@@ -180,8 +180,8 @@ public class Interseccion {
 			double casos = rayo.getDireccion().dot(N);
 			if (casos < 0.0) {
 				if (landa >= 0.0) {
-					if ((S1 > 0 && S2 > 0 && S3 > 0)
-							|| (S1 < 0 && S2 < 0 && S3 < 0)) {
+					if ((S1 >= 0 && S2 >= 0 && S3 >= 0)
+							|| (S1 <= 0 && S2 <= 0 && S3 <= 0)) {
 						// esta dentro del triangulo
 						// System.out.println(landa);
 						interseccion = rayo.evaluar(landa);

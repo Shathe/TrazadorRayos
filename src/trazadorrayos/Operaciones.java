@@ -64,11 +64,10 @@ public class Operaciones {
 	}
 
 	public static Matrix4d rotacionX(double angulo) {
-		Matrix4d mRotacion = new Matrix4d(1.0, 0.0, 0.0, 0.0, 0.0,
-				Math.cos(Math.toRadians(angulo)), Math.sin(Math
-						.toRadians(angulo)), 0.0, 0.0, -Math.sin(Math
-						.toRadians(angulo)), Math.cos(Math.toRadians(angulo)),
-				0.0, 0.0, 0.0, 0.0, 1.0);
+		Matrix4d mRotacion = new Matrix4d(1.0, 0.0, 0.0, 0.0,
+				0.0,Math.cos(Math.toRadians(angulo)), Math.sin(Math.toRadians(angulo)), 0.0,
+				0.0, -Math.sin(Math.toRadians(angulo)), Math.cos(Math.toRadians(angulo)),0.0,
+				0.0, 0.0, 0.0, 1.0);
 		return mRotacion;
 	}
 
