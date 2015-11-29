@@ -459,7 +459,7 @@ public class Escena {
 		}
 		ArrayList<Triangulo> lTriangulo = LeerObj.leerFigura(obj, refraccion,
 				reflectividad, transparencia, KD, KS);
-		Matrix4d mT = Operaciones.matrizTraslacion(new Point4d(0, 0, -5, 1));
+		Matrix4d mT = Operaciones.matrizTraslacion(new Point4d(0, -0.5, -1, 1));
 
 		for (int i = 0; i < lTriangulo.size(); i++) {
 			Matrix4d mRotacion = Operaciones.rotacionY(40);
