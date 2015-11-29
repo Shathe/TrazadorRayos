@@ -13,6 +13,7 @@ figura:plano posicion: 0 -10 -100 1 normal: 1 0 1 0  indicerefraccion: 0 reflect
 // figura:triangulo punto1: 2.5 -4 -10 1  punto2: 1 -2 -12 1 punto3: 3 0 -10 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
 // figura:triangulo punto1: 2.5 -4 -10 1  punto2: 6 -4 -10 1 punto3:  1 -2 -12 1 indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
 // figura:triangulo punto1: 1 -2 -12 1 punto2: 3 0 -10 1 punto3: 6 -4 -10 1 indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
-figura:compleja obj: Pommy.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
+// figura:compleja obj: Pommy.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
 // figura:compleja obj: Bird.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
-// figura:compleja obj: Rabbit.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
+// figura:compleja obj: Lich_King.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
+//figura:compleja obj: Rabbit.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .

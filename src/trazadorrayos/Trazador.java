@@ -55,17 +55,17 @@ public class Trazador {
 				double yPantalla = diffAl * (-j + centroAl) + diffAl;
 				// calculamos el incremento de al y an dentro del propio pixel
 				double diffAnAntialiasing = Math.abs(diffAn
-						/ (double) (antialiasing - 1));
+						/ (double) (antialiasing ));
 				double diffAlAntialiasing = Math.abs(diffAl
-						/ (double) (antialiasing - 1));
+						/ (double) (antialiasing ));
 				double red = 0.0;
 				double green = 0.0;
 				double blue = 0.0;
 				// lanzamos [antialiasing^2] rayos aleatoriamente, aunque
 				// delimitados
 				// por la division del pixel
-				for (int a = 0; a < antialiasing * antialiasing; a++) {
-					for (int b = 0; b < antialiasing / antialiasing; b++) {
+				for (int a = 0; a < antialiasing ; a++) {
+					for (int b = 0; b < antialiasing ; b++) {
 						/**
 						 * segun donde estemos en la pantalla, los valores de x
 						 * e y pueden ser negativos, lo tenemos en cuenta en el
