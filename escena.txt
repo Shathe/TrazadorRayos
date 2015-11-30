@@ -1,14 +1,14 @@
 figura:camara direccion: 1 1 1 0 distanciaPantalla: 5 posicion: 0 0 0 1 .
 figura:foco posicion: -3 3 0 1 intensidad: 4 Iambiente: 0.1 color: 255 255 255 .
 figura:pantalla pixelanchura: 1920  pixelaltura: 1080 anchura: 19 altura: 10 .
-figura:esfera posicion: -6 -4 -15 1  indicerefraccion: 1.3 reflectividad: 0 transparencia: 0.9  kd: 0 0 0 ks: 255 255 255 radio: 2 .
-figura:esfera posicion: 7 5 -11 1  indicerefraccion: 1 reflectividad: 1 transparencia: 0.2 kd: 40 40 40 ks: 215 215 215 radio: 2 .
-figura:esfera posicion: 0 4 -15 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 230 55 55 ks: 25 200 200 radio: 1 .
-figura:esfera posicion: -4 3 -13 1  indicerefraccion: 0 reflectividad: 0.5 transparencia: 0 kd: 230 55 55 ks: 25 200 200 radio: 2 .
+figura:esfera posicion: 0 -7 -12 1  indicerefraccion: 1.3 reflectividad: 0 transparencia: 0.9  kd: 0 0 0 ks: 255 255 255 radio: 2 .
+figura:esfera posicion: 7 5 -11 1  indicerefraccion: 1 reflectividad: 1 transparencia: 0 kd: 40 40 40 ks: 215 215 215 radio: 2 .
+figura:esfera posicion: 0 4 -18 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 230 55 230 ks: 25 200 25 radio: 1 .
+figura:esfera posicion: -5 3 -9 1  indicerefraccion: 0 reflectividad: 0.5 transparencia: 0 kd: 230 230 55 ks: 25 25 200 radio: 2 .
 // figura:plano posicion: 10 30 10 1 normal: -1 -1 -1 0  indicerefraccion: 0.8 reflectividad: 1 transparencia: 0 kd: 130 130 130  ks: 125 125 125 .
-figura:plano posicion: -3 -60 -100 1 normal: 0 1 0 0  indicerefraccion: 0 reflectividad: 0.1 transparencia: 0 kd: 55 230 55  ks: 200 25 200 .
-figura:plano posicion: 0 -10 -100 1 normal: -1 0 1 0  indicerefraccion: 0 reflectividad: 0.1 transparencia: 0 kd: 55 55 230  ks: 200 200 25 .
-figura:plano posicion: 0 -10 -100 1 normal: 1 0 1 0  indicerefraccion: 0 reflectividad: 0.1 transparencia: 0 kd: 230 55 55  ks: 25 200 200 .
+figura:plano posicion: -3 -10 -20 1 normal: 0 1 0 0  indicerefraccion: 0 reflectividad: 0.1 transparencia: 0 kd: 55 230 55  ks: 200 25 200 .
+figura:plano posicion: 0 -10 -20 1 normal: -1 0 1 0  indicerefraccion: 0 reflectividad: 0.1 transparencia: 0 kd: 55 55 230  ks: 200 200 25 .
+figura:plano posicion: 0 -10 -20 1 normal: 1 0 1 0  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 230 55 55  ks: 25 200 200 .
 // figura:triangulo punto1: 2.5 -4 -10 1 punto2: 3 0 -10 1 punto3: 6 -4 -10 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
 // figura:triangulo punto1: 2.5 -4 -10 1  punto2: 1 -2 -12 1 punto3: 3 0 -10 1  indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
 // figura:triangulo punto1: 2.5 -4 -10 1  punto2: 6 -4 -10 1 punto3:  1 -2 -12 1 indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
@@ -16,4 +16,4 @@ figura:plano posicion: 0 -10 -100 1 normal: 1 0 1 0  indicerefraccion: 0 reflect
 // figura:compleja obj: Pommy.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
 // figura:compleja obj: Bird.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
 // figura:compleja obj: Lich_King.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
-//figura:compleja obj: Rabbit.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
+// figura:compleja obj: Rabbit.obj indicerefraccion: 0 reflectividad: 0 transparencia: 0 kd: 200 200 55 ks: 55 55 200 .
