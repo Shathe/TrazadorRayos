@@ -16,7 +16,7 @@ public class Trazador {
 	public static void main(String[] args) {
 		int MaxDepth = 7;
 		// double minIntensity = 1;
-		int antialiasing = 3;
+		int antialiasing = 1;
 		// TODO code application logic here
 		// Cargas la escena
 		Escena escena = Escena.leerEscena("escena.txt");
