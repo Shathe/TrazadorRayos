@@ -14,7 +14,7 @@ import javax.vecmath.Point4d;
  *
  */
 public class Camara {
-
+	double intensidadAmbiente;
 	private Point4d posicion = null; // e
 	private int distanciaPantalla = 0;
 	private Vector4d direccion = new Vector4d();// el vector g
@@ -24,7 +24,9 @@ public class Camara {
 	private Vector4d v = new Vector4d();
 	private Matrix4d cambioBase = new Matrix4d();// [u v w posicion]
 
-	public Camara(Vector4d direccion, int distanciaPantalla, Point4d posicion) {
+	public Camara(Vector4d direccion, int distanciaPantalla, Point4d posicion,
+			double intensidadAmbiente) {
+		this.intensidadAmbiente=intensidadAmbiente;
 		this.posicion = posicion;
 		this.distanciaPantalla = distanciaPantalla;
 		this.direccion = direccion;
@@ -34,7 +36,7 @@ public class Camara {
 		w.negate();
 		w.normalize();
 		// u = up x w/|up x w|
-		Vector4d up = new Vector4d(1, 0, 0, 0); //puede ser cualquiera
+		Vector4d up = new Vector4d(1, 0, 0, 0); // puede ser cualquiera
 		u = Operaciones.crossProduct(up, w);
 		u.normalize();
 		// v = w x u
@@ -59,6 +61,10 @@ public class Camara {
 		cambioBase.setRow(2, w);
 		cambioBase.setRow(3, posicion.x, posicion.y, posicion.z, posicion.w);
 		return cambioBase;
+	}
+	
+	public double getIntensidadAmbiente(){
+		return intensidadAmbiente;
 	}
 
 	public Point4d getPosicion() {

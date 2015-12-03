@@ -23,12 +23,12 @@ public class Escena {
 	private ArrayList<Figura> figuras = new ArrayList<Figura>();
 	private Pantalla pantalla = null;
 	private Camara camara = null;
-	private Foco foco = null;
+	private ArrayList<Foco> focos = null;
 	static Scanner escenaFichero;
 	static String cadena = "";
 
-	public Escena(Foco foco, Camara camara, Pantalla pantalla) {
-		this.foco = foco;
+	public Escena(ArrayList<Foco> focos, Camara camara, Pantalla pantalla) {
+		this.focos = focos;
 		this.camara = camara;
 		this.pantalla = pantalla;
 	}
@@ -53,8 +53,12 @@ public class Escena {
 		return camara;
 	}
 
-	public Foco getFoco() {
-		return foco;
+	public Foco getFoco(int i) {
+		return focos.get(i);
+	}
+
+	public ArrayList<Foco> getFocos() {
+		return focos;
 	}
 
 	public static Escena leerEscena(String fichero) {
@@ -65,6 +69,7 @@ public class Escena {
 			Camara camara = null;
 			Pantalla pantalla = null;
 			ArrayList<Figura> figuras = new ArrayList<Figura>();
+			ArrayList<Foco> focos = new ArrayList<Foco>();
 			String figura = "";
 			// recorremos el fichero
 			while (escenaFichero.hasNextLine()) {
@@ -81,6 +86,7 @@ public class Escena {
 					break;
 				case "figura:foco":
 					foco = foco(camara);
+					focos.add(foco);
 					System.out.println(foco);
 					break;
 				case "figura:esfera":
@@ -116,7 +122,7 @@ public class Escena {
 			}
 
 			escenaFichero.close();
-			escena = new Escena(foco, camara, pantalla);
+			escena = new Escena(focos, camara, pantalla);
 			escena.anadirSetFiguras(figuras);
 
 		}
@@ -130,6 +136,8 @@ public class Escena {
 		String cadena = escenaFichero.next();
 		int distanciaPantalla = 0;
 		Vector4d direccion = null;
+		double intensidadAmbiente = 0;
+
 		Point4d posicion = null;
 		while (!cadena.equals(".")) {
 			if (cadena.equals("distanciaPantalla:")) {
@@ -151,8 +159,13 @@ public class Escena {
 						Float.parseFloat(escenaFichero.next()));
 				cadena = escenaFichero.next();
 			}
+			else if (cadena.equals("Iambiente:")) {
+				intensidadAmbiente = Float.parseFloat(escenaFichero.next());
+				cadena = escenaFichero.next();
+			}
 		}
-		return new Camara(direccion, distanciaPantalla, posicion);
+		return new Camara(direccion, distanciaPantalla, posicion,
+				intensidadAmbiente);
 	}
 
 	public static Pantalla pantalla(Camara camara) {
@@ -186,8 +199,6 @@ public class Escena {
 	public static Foco foco(Camara camara) {
 		Point4d punto = null;
 		Color color = null;
-		double intensidad = 0;
-		double intensidadAmbiente = 0;
 		cadena = escenaFichero.next();
 		while (!cadena.equals(".")) {
 			if (cadena.equals("posicion:")) {
@@ -202,15 +213,6 @@ public class Escena {
 						escenaFichero.nextShort(), escenaFichero.nextShort());
 				cadena = escenaFichero.next();
 			}
-			else if (cadena.equals("intensidad:")) {
-				intensidad = Float.parseFloat(escenaFichero.next());
-				cadena = escenaFichero.next();
-
-			}
-			else if (cadena.equals("Iambiente:")) {
-				intensidadAmbiente = Float.parseFloat(escenaFichero.next());
-				cadena = escenaFichero.next();
-			}
 
 		}
 		Matrix4d mTFoco = Operaciones.matrizTraslacion(punto);
@@ -218,7 +220,7 @@ public class Escena {
 		posicionFoco = Operaciones.multiplyPointMatrix(posicionFoco, mTFoco);
 		posicionFoco = Operaciones.multiplyPointMatrix(posicionFoco,
 				camara.getCambioBase());
-		return new Foco(posicionFoco, color, intensidad, intensidadAmbiente);
+		return new Foco(posicionFoco, color);
 	}
 
 	public static Esfera esfera(Camara camara) {

@@ -1,5 +1,6 @@
-figura:camara direccion: 1 1 1 0 distanciaPantalla: 35 posicion: 0 0 0 1 .
-figura:foco posicion: -3 0 0 1 intensidad: 4 Iambiente: 0.2 color: 255 255 255 .
+figura:camara direccion: 1 1 1 0 distanciaPantalla: 35 posicion: 0 0 0 1 Iambiente: 0.2 .
+figura:foco posicion: 12 6 0 1  color: 255 255 255 .
+figura:foco posicion: -10 0 0 1  color: 255 255 255 .
 figura:pantalla pixelanchura: 1920  pixelaltura: 1080 anchura: 19 altura: 10 .
 figura:esfera posicion: 0 -2 -50 1  indicerefraccion: 2 reflectividad: 0 transparencia: 1  kd: 0 0 0 ks: 255 255 255 radio: 2 .
 figura:esfera posicion: 8 5 -61 1  indicerefraccion: 0 reflectividad: 1 transparencia: 0 kd: 40 40 40 ks: 215 215 215 radio: 2 .
