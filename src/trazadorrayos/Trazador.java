@@ -16,7 +16,7 @@ public class Trazador {
 	public static void main(String[] args) {
 		int MaxDepth = 7;
 		// double minIntensity = 1;
-		int antialiasing = 1;
+		int antialiasing = 2;
 		// TODO code application logic here
 		// Cargas la escena
 		Escena escena = Escena.leerEscena("escena.txt");
@@ -66,7 +66,7 @@ public class Trazador {
 				// por la division del pixel
 				for (int a = 0; a < antialiasing ; a++) {
 					for (int b = 0; b < antialiasing ; b++) {
-						/**
+						/*
 						 * segun donde estemos en la pantalla, los valores de x
 						 * e y pueden ser negativos, lo tenemos en cuenta en el
 						 * incremento

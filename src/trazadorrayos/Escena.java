@@ -231,6 +231,7 @@ public class Escena {
 		Color KD = null;
 		Color KS = null;
 		double radio = 0;
+		boolean ambiental = false;
 		cadena = escenaFichero.next();
 		while (!cadena.equals(".")) {
 			if (cadena.equals("posicion:")) {
@@ -267,6 +268,10 @@ public class Escena {
 				radio = Float.parseFloat(escenaFichero.next());
 				cadena = escenaFichero.next();
 			}
+			else if (cadena.equals("amb:")) {
+				ambiental = escenaFichero.nextBoolean();
+				cadena = escenaFichero.next();
+			}
 		}
 		Matrix4d mTEsfera = Operaciones.matrizTraslacion(posicion);
 		Point4d posicionEsfera = new Point4d(0, 0, 0, 1);
@@ -275,7 +280,7 @@ public class Escena {
 		posicionEsfera = Operaciones.multiplyPointMatrix(posicionEsfera,
 				camara.getCambioBase());
 		return new Esfera(posicionEsfera, refraccion, reflectividad,
-				transparencia, KD, KS, radio);
+				transparencia, KD, KS, radio, ambiental);
 	}
 
 	public static Plano plano(Camara camara) {
@@ -461,31 +466,37 @@ public class Escena {
 		}
 		ArrayList<Triangulo> lTriangulo = LeerObj.leerFigura(obj, refraccion,
 				reflectividad, transparencia, KD, KS);
-		Matrix4d mT = Operaciones.matrizTraslacion(new Point4d(0, -1, -9, 1));
+		Matrix4d mT = Operaciones.matrizTraslacion(new Point4d(8, -5, -40, 1));
 
 		for (int i = 0; i < lTriangulo.size(); i++) {
-			Matrix4d mRotacion = Operaciones.rotacionY(0);
+			Matrix4d mRotacionY = Operaciones.rotacionY(0);
 			Matrix4d mRotacionX = Operaciones.rotacionX(0);
+			Matrix4d mRotacionZ = Operaciones.rotacionZ(0);
+
+			Matrix4d mEscalar = Operaciones.escalar(11,11,11);
 			Point4d aux = Operaciones.multiplyPointMatrix(lTriangulo.get(i)
-					.getPunto1(), mRotacion);
+					.getPunto1(), mEscalar);
+			aux = Operaciones.multiplyPointMatrix(aux, mRotacionY);
+
 			aux = Operaciones.multiplyPointMatrix(aux, mRotacionX);
 			aux = Operaciones.multiplyPointMatrix(aux, mT);
 			aux = Operaciones.multiplyPointMatrix(aux, camara.getCambioBase());
 
 			Point4d aux2 = Operaciones.multiplyPointMatrix(lTriangulo.get(i)
-					.getPunto2(), mRotacion);
-			aux2 = Operaciones.multiplyPointMatrix(aux2, mRotacionX);
+					.getPunto2(), mEscalar);
+			aux2 = Operaciones.multiplyPointMatrix(aux2, mRotacionY);
 
+			aux2 = Operaciones.multiplyPointMatrix(aux2, mRotacionX);
 			aux2 = Operaciones.multiplyPointMatrix(aux2, mT);
 			aux2 = Operaciones
 					.multiplyPointMatrix(aux2, camara.getCambioBase());
 
 			Point4d aux3 = Operaciones.multiplyPointMatrix(lTriangulo.get(i)
-					.getPunto3(), mRotacion);
+					.getPunto3(), mEscalar);
+			aux3 = Operaciones.multiplyPointMatrix(aux3, mRotacionY);
+
 			aux3 = Operaciones.multiplyPointMatrix(aux3, mRotacionX);
-
 			aux3 = Operaciones.multiplyPointMatrix(aux3, mT);
-
 			aux3 = Operaciones
 					.multiplyPointMatrix(aux3, camara.getCambioBase());
 

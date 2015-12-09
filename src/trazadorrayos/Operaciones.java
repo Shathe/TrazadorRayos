@@ -64,10 +64,11 @@ public class Operaciones {
 	}
 
 	public static Matrix4d rotacionX(double angulo) {
-		Matrix4d mRotacion = new Matrix4d(1.0, 0.0, 0.0, 0.0,
-				0.0,Math.cos(Math.toRadians(angulo)), Math.sin(Math.toRadians(angulo)), 0.0,
-				0.0, -Math.sin(Math.toRadians(angulo)), Math.cos(Math.toRadians(angulo)),0.0,
-				0.0, 0.0, 0.0, 1.0);
+		Matrix4d mRotacion = new Matrix4d(1.0, 0.0, 0.0, 0.0, 0.0,
+				Math.cos(Math.toRadians(angulo)), Math.sin(Math
+						.toRadians(angulo)), 0.0, 0.0, -Math.sin(Math
+						.toRadians(angulo)), Math.cos(Math.toRadians(angulo)),
+				0.0, 0.0, 0.0, 0.0, 1.0);
 		return mRotacion;
 	}
 
@@ -85,6 +86,12 @@ public class Operaciones {
 						.toRadians(angulo)), Math.cos(Math.toRadians(angulo)),
 				0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 		return mRotacion;
+	}
+
+	public static Matrix4d escalar(int x, int y, int z) {
+		Matrix4d escalar = new Matrix4d(x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0,
+				0, 0, 1);
+		return escalar;
 	}
 
 	public static Vector4d sub(Point4d v1, Point4d v2) {

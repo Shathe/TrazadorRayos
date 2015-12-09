@@ -157,57 +157,73 @@ public class OperacionesEscena {
 					color = new Color(red, green, blue);
 				}
 				else {
-					Intensidad intensidadPunto = new Intensidad();
-					/**
-					 * calculamos la intensidad en el punto, en RGB la
-					 * ambiental, la difusa y la especular
-					 */
-					intensidadPunto.calcularIntensidadPunto(noVisible, punto,
-							escena, figura, rayo, numFoco);
-					Rayo rayoReflejado = new Rayo(reflejado, punto, null);
-					Rayo rayoRefractado = new Rayo(refractado, punto, null);
-					// si hay suficiente intensidad reflejada, lanzamos el rayo
-					if (MaxDepth > 0 && figura.getIndiceReflectividad() > 0) {
-						Color colorReflejado = colorDesdeRayo(escena,
-								rayoReflejado, MaxDepth--, figura, false,
-								numFoco);
-						intensidadPunto.red += figura.getIndiceReflectividad()
-								* colorReflejado.getRed();
-						intensidadPunto.blue += figura.getIndiceReflectividad()
-								* colorReflejado.getBlue();
-						intensidadPunto.green += figura
-								.getIndiceReflectividad()
-								* colorReflejado.getGreen();
+					if (figura.getAmbiental()) {
+						// figura solo ambiental
+						double intensidad = escena.getCamara()
+								.getIntensidadAmbiente();
+						// color=I*Kd
+						int red = (int) (intensidad * figura.kd.getRed());
+						int blue = (int) (intensidad * figura.kd.getBlue());
+						int green = (int) (intensidad * figura.kd.getGreen());
+						color = new Color(red, green, blue);
 					}
-					// si hay suficiente intensidad refractada, lanzamos el rayo
-					if (MaxDepth > 0 && figura.getTransparencia() > 0) {
-						boolean esperarRefraccion = false;
-						if (figura instanceof Esfera) {
-							esperarRefraccion = true;
+					else {
+						Intensidad intensidadPunto = new Intensidad();
+						/**
+						 * calculamos la intensidad en el punto, en RGB la
+						 * ambiental, la difusa y la especular
+						 */
+						intensidadPunto.calcularIntensidadPunto(noVisible,
+								punto, escena, figura, rayo, numFoco);
+						Rayo rayoReflejado = new Rayo(reflejado, punto, null);
+						Rayo rayoRefractado = new Rayo(refractado, punto, null);
+						// si hay suficiente intensidad reflejada, lanzamos el
+						// rayo
+						if (MaxDepth > 0 && figura.getIndiceReflectividad() > 0) {
+							Color colorReflejado = colorDesdeRayo(escena,
+									rayoReflejado, MaxDepth--, figura, false,
+									numFoco);
+							intensidadPunto.red += figura
+									.getIndiceReflectividad()
+									* colorReflejado.getRed();
+							intensidadPunto.blue += figura
+									.getIndiceReflectividad()
+									* colorReflejado.getBlue();
+							intensidadPunto.green += figura
+									.getIndiceReflectividad()
+									* colorReflejado.getGreen();
 						}
-						Color colorRefractado = colorDesdeRayo(escena,
-								rayoRefractado, MaxDepth--, figura,
-								esperarRefraccion, numFoco);
-						// intensidad+(indiceTransparencia*intensidadRefrac)
-						intensidadPunto.red += figura.getTransparencia()
-								* colorRefractado.getRed();
-						intensidadPunto.blue += figura.getTransparencia()
-								* colorRefractado.getBlue();
-						intensidadPunto.green += figura.getTransparencia()
-								* colorRefractado.getGreen();
+						// si hay suficiente intensidad refractada, lanzamos el
+						// rayo
+						if (MaxDepth > 0 && figura.getTransparencia() > 0) {
+							boolean esperarRefraccion = false;
+							if (figura instanceof Esfera) {
+								esperarRefraccion = true;
+							}
+							Color colorRefractado = colorDesdeRayo(escena,
+									rayoRefractado, MaxDepth--, figura,
+									esperarRefraccion, numFoco);
+							// intensidad+(indiceTransparencia*intensidadRefrac)
+							intensidadPunto.red += figura.getTransparencia()
+									* colorRefractado.getRed();
+							intensidadPunto.blue += figura.getTransparencia()
+									* colorRefractado.getBlue();
+							intensidadPunto.green += figura.getTransparencia()
+									* colorRefractado.getGreen();
 
+						}
+						/*
+						 * Si el punto en e que has calculado no es del todo
+						 * visible debido a que hay objetos translucidos no
+						 * totales, hay que recalcular la intensidad
+						 */
+						double indiceVisibilidad = 1 - noVisible;
+						intensidadPunto.red = (int) (intensidadPunto.red * indiceVisibilidad);
+						intensidadPunto.blue = (int) (intensidadPunto.blue * indiceVisibilidad);
+						intensidadPunto.green = (int) (intensidadPunto.green * indiceVisibilidad);
+						color = normalizarColor(intensidadPunto.red,
+								intensidadPunto.green, intensidadPunto.blue);
 					}
-					/*
-					 * Si el punto en e que has calculado no es del todo visible
-					 * debido a que hay objetos translucidos no totales, hay que
-					 * recalcular la intensidad
-					 */
-					double indiceVisibilidad = 1 - noVisible;
-					intensidadPunto.red = (int) (intensidadPunto.red * indiceVisibilidad);
-					intensidadPunto.blue = (int) (intensidadPunto.blue * indiceVisibilidad);
-					intensidadPunto.green = (int) (intensidadPunto.green * indiceVisibilidad);
-					color = normalizarColor(intensidadPunto.red,
-							intensidadPunto.green, intensidadPunto.blue);
 				}
 			}
 		}

@@ -19,13 +19,15 @@ public class Figura {
 	private double indiceRefraccion = 0;
 	private double indiceReflectividad = 0;
 	private double transparencia =0;
+	private boolean ambiental=false;
 
-	public Figura(double refraccion, double reflexion,double transparencia, Color kd, Color ks) {
+	public Figura(double refraccion, double reflexion,double transparencia, Color kd, Color ks, boolean ambiental) {
 		this.kd = kd;
 		this.ks = ks;
 		indiceRefraccion = refraccion;
 		indiceReflectividad = reflexion;
 		this.transparencia=transparencia;
+		this.ambiental=ambiental;
 	}
 
 	public Color getKd() {
@@ -56,6 +58,14 @@ public class Figura {
 		return transparencia;
 	}
 
+	public boolean getAmbiental(){
+		return ambiental;
+	}
+	
+	public void setAmbiental(boolean ambiental){
+		this.ambiental=ambiental;
+	}
+	
 	public Vector4d getNormal(Point4d puntoInterseccion) {
 		return null;
 	}
