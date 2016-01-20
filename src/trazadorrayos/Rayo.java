@@ -12,6 +12,9 @@ import java.awt.Color;
 
 public class Rayo {
 
+/*
+Un rayo tiene una direccion y un punto. El color también se puede transmitir aunque no se utilizará
+*/
 	private Vector4d direccion;
 	private Point4d punto;
 	private Color color;
