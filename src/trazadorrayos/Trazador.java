@@ -14,15 +14,16 @@ import javax.imageio.ImageIO;
 public class Trazador {
 
 	public static void main(String[] args) {
+		long init = System.currentTimeMillis();
 		int MaxDepth = 7;
 		// double minIntensity = 1;
-		int antialiasing = 2;
+		int antialiasing = 1;
 		// TODO code application logic here
 		// Cargas la escena
 		Escena escena = Escena.leerEscena("escena.txt");
 		// Se crea el bufer para crear la imagen
 		BufferedImage imagen = new BufferedImage((int) escena.getPantalla()
-				.getPixelesanchura(), (int) escena.getPantalla()
+				.getPixelesanchura(), (int) escena.getPantalla() 
 				.getPixelesaltura(), BufferedImage.TYPE_INT_RGB);
 		// Para cada pixel
 		Pantalla pantalla = escena.getPantalla();
@@ -55,17 +56,17 @@ public class Trazador {
 				double yPantalla = diffAl * (-j + centroAl) + diffAl;
 				// calculamos el incremento de al y an dentro del propio pixel
 				double diffAnAntialiasing = Math.abs(diffAn
-						/ (double) (antialiasing ));
+						/ (double) (antialiasing));
 				double diffAlAntialiasing = Math.abs(diffAl
-						/ (double) (antialiasing ));
+						/ (double) (antialiasing));
 				double red = 0.0;
 				double green = 0.0;
 				double blue = 0.0;
 				// lanzamos [antialiasing^2] rayos aleatoriamente, aunque
 				// delimitados
 				// por la division del pixel
-				for (int a = 0; a < antialiasing ; a++) {
-					for (int b = 0; b < antialiasing ; b++) {
+				for (int a = 0; a < antialiasing; a++) {
+					for (int b = 0; b < antialiasing; b++) {
 						/*
 						 * segun donde estemos en la pantalla, los valores de x
 						 * e y pueden ser negativos, lo tenemos en cuenta en el
@@ -117,7 +118,10 @@ public class Trazador {
 		}
 		try {
 			ImageIO.write(imagen, "jpg", new File("foto.jpg"));
+			long end = System.currentTimeMillis();
+			System.out.println("Tiempo transcurrido "+(end-init));
 		}
+
 		catch (IOException e) {
 			System.out.println("Error de escritura");
 		}

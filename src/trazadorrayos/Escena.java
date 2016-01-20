@@ -75,6 +75,9 @@ public class Escena {
 			while (escenaFichero.hasNextLine()) {
 
 				figura = escenaFichero.next();
+				/*
+				 * Segun el objeto que se lee se procesa y se añade a la escena
+				 */
 				switch (figura) {
 				case "figura:camara":
 					camara = camara();
@@ -111,20 +114,15 @@ public class Escena {
 				case "//":
 					break;
 				}
-				// Cargar escena del fichero
-
 				try {
 					escenaFichero.nextLine();
 				}
 				catch (Exception e) {
 				}
-
 			}
-
 			escenaFichero.close();
 			escena = new Escena(focos, camara, pantalla);
 			escena.anadirSetFiguras(figuras);
-
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -132,6 +130,12 @@ public class Escena {
 		return escena;
 	}
 
+	/**
+	 * Lee las variables de la camara del fichero, la crea y la añade a la
+	 * escena
+	 * 
+	 * @return
+	 */
 	public static Camara camara() {
 		String cadena = escenaFichero.next();
 		int distanciaPantalla = 0;
@@ -168,6 +172,12 @@ public class Escena {
 				intensidadAmbiente);
 	}
 
+	/**
+	 * Lee las variables de la pantalla del fichero, la crea y la añade a la
+	 * escena
+	 * 
+	 * @return
+	 */
 	public static Pantalla pantalla(Camara camara) {
 		int anchuraPixel = 0;
 		int alturaPixel = 0;
@@ -196,6 +206,11 @@ public class Escena {
 		return new Pantalla(anchuraPixel, alturaPixel, anchura, altura);
 	}
 
+	/**
+	 * Lee las variables del foco del fichero, lo crea y lo añade a la escena
+	 * 
+	 * @return
+	 */
 	public static Foco foco(Camara camara) {
 		Point4d punto = null;
 		Color color = null;
@@ -215,6 +230,12 @@ public class Escena {
 			}
 
 		}
+		/*
+		 * Aplicamos transformaciones con las matrices de transformacion,
+		 * Traslacion
+		 * Haciendo despues un cambio de base de coordenadas de la camara al mundo
+		 * para que no se deforme
+		 */
 		Matrix4d mTFoco = Operaciones.matrizTraslacion(punto);
 		Point4d posicionFoco = new Point4d(0, 0, 0, 1);
 		posicionFoco = Operaciones.multiplyPointMatrix(posicionFoco, mTFoco);
@@ -223,6 +244,12 @@ public class Escena {
 		return new Foco(posicionFoco, color);
 	}
 
+	/**
+	 * Lee las variables de la esfera del fichero, la crea y la añade a la
+	 * escena
+	 * 
+	 * @return
+	 */
 	public static Esfera esfera(Camara camara) {
 		Point4d posicion = null;
 		double refraccion = 0.0;
@@ -273,6 +300,12 @@ public class Escena {
 				cadena = escenaFichero.next();
 			}
 		}
+		/*
+		 * Aplicamos transformaciones con las matrices de transformacion,
+		 * Traslacion
+		 * Haciendo despues un cambio de base de coordenadas de la camara al mundo
+		 * para que no se deforme
+		 */
 		Matrix4d mTEsfera = Operaciones.matrizTraslacion(posicion);
 		Point4d posicionEsfera = new Point4d(0, 0, 0, 1);
 		posicionEsfera = Operaciones.multiplyPointMatrix(posicionEsfera,
@@ -283,6 +316,11 @@ public class Escena {
 				transparencia, KD, KS, radio, ambiental);
 	}
 
+	/**
+	 * Lee las variables del plano del fichero, lo crea y lo añade a la escena
+	 * 
+	 * @return
+	 */
 	public static Plano plano(Camara camara) {
 		Point4d posicion = new Point4d(0, 0, 0, 0);
 		double refraccion = 0.0;
@@ -331,6 +369,12 @@ public class Escena {
 				cadena = escenaFichero.next();
 			}
 		}
+		/*
+		 * Aplicamos transformaciones con las matrices de transformacion,
+		 * Traslacion
+		 * Haciendo despues un cambio de base de coordenadas de la camara al mundo
+		 * para que no se deforme
+		 */
 		Matrix4d mTPlano = Operaciones.matrizTraslacion(posicion);
 		Point4d posicionPlano = new Point4d(0, 0, 0, 1);
 		posicionPlano = Operaciones.multiplyPointMatrix(posicionPlano, mTPlano);
@@ -346,6 +390,12 @@ public class Escena {
 				transparencia, KD, KS);
 	}
 
+	/**
+	 * Lee las variables del triangulo del fichero, lo crea y lo añade a la
+	 * escena
+	 * 
+	 * @return
+	 */
 	public static Triangulo triangulo(Camara camara) {
 		double refraccion = 0.0;
 		double reflectividad = 0.0;
@@ -405,6 +455,12 @@ public class Escena {
 			}
 
 		}
+		/*
+		 * Aplicamos transformaciones con las matrices de transformacion,
+		 * Traslacion
+		 * Haciendo despues un cambio de base de coordenadas de la camara al mundo
+		 * para que no se deforme
+		 */
 		Matrix4d mTTriangulo = Operaciones.matrizTraslacion(punto1);
 		Point4d punto1Triangulo = new Point4d(0, 0, 0, 1);
 		punto1Triangulo = Operaciones.multiplyPointMatrix(punto1Triangulo,
@@ -427,6 +483,12 @@ public class Escena {
 				refraccion, reflectividad, transparencia, KD, KS);
 	}
 
+	/**
+	 * Lee el fichero obj, y crea la figura compuesta por triangulos y lo añade
+	 * a la escena
+	 * 
+	 * @return
+	 */
 	public static ArrayList<Triangulo> compleja(Camara camara) {
 		double refraccion = 0.0;
 		double reflectividad = 0.0;
@@ -466,40 +528,38 @@ public class Escena {
 		}
 		ArrayList<Triangulo> lTriangulo = LeerObj.leerFigura(obj, refraccion,
 				reflectividad, transparencia, KD, KS);
-		Matrix4d mT = Operaciones.matrizTraslacion(new Point4d(8, -5, -40, 1));
+		Matrix4d mT = Operaciones.matrizTraslacion(new Point4d(0, -5, -57, 1));
 
 		for (int i = 0; i < lTriangulo.size(); i++) {
-			Matrix4d mRotacionY = Operaciones.rotacionY(0);
+			/*
+			 * Aplicamos transformaciones con las matrices de transformacion,
+			 * rotacion en x,y,z. Traslacion. Y escalado
+			 * Haciendo despues un cambio de base de coordenadas de la camara al mundo
+			 * para que no se deforme
+			 */
+			Matrix4d mRotacionY = Operaciones.rotacionY(-90);
 			Matrix4d mRotacionX = Operaciones.rotacionX(0);
-			Matrix4d mRotacionZ = Operaciones.rotacionZ(0);
-
-			Matrix4d mEscalar = Operaciones.escalar(11,11,11);
+			Matrix4d mEscalar = Operaciones.escalar(11, 11, 11);
 			Point4d aux = Operaciones.multiplyPointMatrix(lTriangulo.get(i)
 					.getPunto1(), mEscalar);
 			aux = Operaciones.multiplyPointMatrix(aux, mRotacionY);
-
 			aux = Operaciones.multiplyPointMatrix(aux, mRotacionX);
 			aux = Operaciones.multiplyPointMatrix(aux, mT);
 			aux = Operaciones.multiplyPointMatrix(aux, camara.getCambioBase());
-
 			Point4d aux2 = Operaciones.multiplyPointMatrix(lTriangulo.get(i)
 					.getPunto2(), mEscalar);
 			aux2 = Operaciones.multiplyPointMatrix(aux2, mRotacionY);
-
 			aux2 = Operaciones.multiplyPointMatrix(aux2, mRotacionX);
 			aux2 = Operaciones.multiplyPointMatrix(aux2, mT);
 			aux2 = Operaciones
 					.multiplyPointMatrix(aux2, camara.getCambioBase());
-
 			Point4d aux3 = Operaciones.multiplyPointMatrix(lTriangulo.get(i)
 					.getPunto3(), mEscalar);
 			aux3 = Operaciones.multiplyPointMatrix(aux3, mRotacionY);
-
 			aux3 = Operaciones.multiplyPointMatrix(aux3, mRotacionX);
 			aux3 = Operaciones.multiplyPointMatrix(aux3, mT);
 			aux3 = Operaciones
 					.multiplyPointMatrix(aux3, camara.getCambioBase());
-
 			lTriangulo.get(i).setPunto1(aux);
 			lTriangulo.get(i).setPunto2(aux2);
 			lTriangulo.get(i).setPunto3(aux3);
